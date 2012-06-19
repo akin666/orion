@@ -25,6 +25,9 @@ public:
 	void detach( EntityID id );
 
 	virtual bool has( EntityID id );
+
+	virtual std::string getName();
+	virtual bool parse( EntityID id , rapidxml::xml_node<> *node );
 };
 
 typedef std::vector< Property* > PropertySet;

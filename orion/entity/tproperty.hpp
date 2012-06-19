@@ -78,6 +78,18 @@ public:
 	{
 		return data;
 	}
+
+	// Specialize
+	virtual std::string getName()
+	{
+		return "";
+	}
+
+	// Specialize
+	virtual bool parse( EntityID id , rapidxml::xml_node<> *node )
+	{
+		return false;
+	}
 };
 
 } // namespace orion

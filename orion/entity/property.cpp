@@ -43,4 +43,14 @@ bool Property::has( EntityID id )
 	return false;
 }
 
+std::string Property::getName()
+{
+	return "null";
+}
+
+bool Property::parse( EntityID id , rapidxml::xml_node<> *node )
+{
+	return false;
+}
+
 } // namespace orion
