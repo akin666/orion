@@ -48,17 +48,17 @@ bool PropertyGroup::parse( EntityID id , rapidxml::xml_node<> *node )
 		return false;
 	}
 
+	// node == <entity>
 	bool success = true;
-	do
+	for( rapidxml::xml_node<> *child = node->first_node() ; child != NULL ; child = child->next_sibling() )
 	{
-		PropertyMap::iterator iter = properties.find( std::string( node->name() ) );
+		PropertyMap::iterator iter = properties.find( std::string( child->name() ) );
 
 		if( iter != properties.end() )
 		{
-			success = iter->second->parse( id , node ) && success;
+			success = iter->second->parse( id , child ) && success;
 		}
 	}
-	while( (node = node->next_sibling()) != NULL );
 
 	return success;
 }
