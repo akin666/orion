@@ -1,0 +1,16 @@
+
+#ifndef THREADPOOL_H_
+#include <tpool/threadpool.hpp>
+#include <global>
+
+#define DO_WORK( work ) { if( orion::getGlobal<orion::ThreadPool>() != NULL ) \
+						{ \
+							orion::getSingleton<orion::ThreadPool>()->schedule( &work ); \
+						} \
+						else if( work.begin() ) \
+						{ \
+							work.run(); \
+							work.end(); \
+						} }
+
+#endif

@@ -1,0 +1,103 @@
+/*
+ * global
+ *
+ *  Created on: 9.1.2012
+ *      Author: akin
+ */
+
+#ifndef _GLOBAL_HPP_
+#define _GLOBAL_HPP_
+
+#include <iostream>
+#include <thread>
+#include <stdexcept>
+
+namespace orion
+{
+
+template <class CType>
+class Global
+{
+protected:
+	static std::mutex mutex;
+	static CType *singleton;
+public:
+	static bool isSet()
+	{
+		return singleton != NULL;
+	}
+
+	static CType *reset()
+	{
+		CType *tmp = singleton;
+		singleton = NULL;
+		return tmp;
+	}
+
+	static void set( CType *ct )
+	{
+		singleton = ct;
+	}
+
+	static CType *get()
+	{
+		return singleton;
+	}
+
+	static void safeSet( CType *ct )
+	{
+		std::lock_guard<std::mutex> lock(mutex);
+		singleton = ct;
+	}
+
+	static CType *safeGet()
+	{
+		std::lock_guard<std::mutex> lock(mutex);
+		return singleton;
+	}
+	
+	static CType *create()
+	{
+		std::lock_guard<std::mutex> lock(mutex);
+		if( singleton == NULL ) 
+		{
+			singleton = new CType();
+		}
+		return singleton;
+	}
+};
+
+template <class CType>
+CType *Global<CType>::singleton = NULL;
+template <class CType>
+std::mutex Global<CType>::mutex;
+
+// Syntactical Sugar:
+// unsetSingleton<MyClass>();
+template <class CType>
+CType *getGlobal() 
+{
+	return Global<CType>::get();
+}
+
+template <class CType>
+CType *createGlobal()
+{
+	return Global<CType>::create();
+}
+
+template <class CType>
+void setGlobal( CType *ct ) 
+{
+	Global<CType>::set( ct );
+}
+
+template <class CType>
+void unsetGlobal() 
+{
+	Global<CType>::unset();
+}
+
+}
+
+#endif /* SINGLETON_HPP_ */

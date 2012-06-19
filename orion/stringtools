@@ -1,0 +1,43 @@
+
+// 
+// StringTools
+// this is to create all the needed tools for minor
+// string operations, that are missing from std::string
+// (i know boost, could provide stuff, but boost is like #include <uglyWorld> )
+// 
+
+#ifndef STRINGTOOLS_H_
+#define STRINGTOOLS_H_
+
+#include <string>
+#include <sstream>
+
+namespace orion {
+namespace stringtools {
+
+void toUpper( std::string& str );
+void toLower( std::string& str );
+
+template <class T>
+bool from_string(T& t,
+		const std::string& s,
+		std::ios_base& (*f)(std::ios_base&))
+{
+	std::istringstream iss(s);
+	return !(iss >> f >> t).fail();
+}
+
+template<typename T, typename F>
+T to_ot( const F from )
+{
+	std::stringstream temp;
+	temp << from;
+	T to = T();
+	temp >> to;
+	return to;
+}
+
+} // stringtools
+} // orion
+
+#endif

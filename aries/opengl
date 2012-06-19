@@ -1,0 +1,96 @@
+
+#ifndef _OPENGL_HEAD_
+#define _OPENGL_HEAD_
+
+#include <iostream>
+#include <orion>
+
+//#define USE_GLEE
+//#define USE_GLEW
+//#define USE_GLFW
+//#define USE_SDL
+//#define USE_GL
+
+#define GL_NULL 0
+
+#ifdef USE_GLEE
+# include "../lib/GLee.h"
+#else
+# warning NO GLEE
+#endif
+
+#ifdef USE_GLEW
+# define GLEW_STATIC
+# include <GL/glew.h>
+# define GL_INITIALIZATION ( glewInit() == GLEW_OK )
+#else
+# warning NO GLEW
+#endif
+
+#ifdef USE_GLFW
+# include <GL/glfw.h>
+#else
+# warning NO GLFW
+#endif
+
+#ifdef USE_SDL
+# include <SDL.h>
+#else
+# warning NO SDL
+#endif
+
+#ifdef USE_GL
+# include <GL/gl.h>
+#else
+# warning NO GL
+#endif
+
+#ifdef USE_GL3
+# include <GL/gl3.h>
+#else
+# warning NO GL3
+#endif
+
+#ifndef GL_INITIALIZATION
+# define GL_INITIALIZATION true
+#endif
+
+// TODO!
+#if 0
+# define _OPENGL_ES1_
+# define _OPENGL_ES2_
+# define _OPENGL_2_0_
+# define _OPENGL_2_1_
+# define _OPENGL_3_0_
+# define _OPENGL_3_1_
+# define _OPENGL_3_2_
+# define _OPENGL_3_3_
+# define _OPENGL_4_0_
+# define _OPENGL_4_1_
+#endif
+
+#if not defined(LOG_SYSTEM_ERROR)
+# define LOG_SYSTEM_ERROR LOG->error
+#endif
+
+#define GL_FLUSH_ERRORS() while( glGetError() != GL_NO_ERROR )
+
+#ifndef _RELEASE
+# define GL_TEST_ERROR(txt) { \
+  int gl_error_var; \
+  while( ( gl_error_var = glGetError() ) != GL_NO_ERROR ) { \
+  switch( gl_error_var ) { \
+	case GL_NO_ERROR : break; \
+	case GL_INVALID_VALUE : { LOG_SYSTEM_ERROR( "%s:%i GL_INVALID_VALUE %s" , __FILE__ , __LINE__ , txt ); break; } \
+	case GL_INVALID_ENUM : { LOG_SYSTEM_ERROR( "%s:%i GL_INVALID_ENUM %s" , __FILE__ , __LINE__ , txt ); break; } \
+	case GL_INVALID_OPERATION : { LOG_SYSTEM_ERROR( "%s:%i GL_INVALID_OPERATION %s" , __FILE__ , __LINE__ , txt ); break; } \
+	case GL_STACK_OVERFLOW : { LOG_SYSTEM_ERROR( "%s:%i GL_STACK_OVERFLOW %s" , __FILE__ , __LINE__ , txt ); break; } \
+	case GL_STACK_UNDERFLOW : { LOG_SYSTEM_ERROR( "%s:%i GL_STACK_UNDERFLOW %s" , __FILE__ , __LINE__ , txt ); break; } \
+	case GL_OUT_OF_MEMORY : { LOG_SYSTEM_ERROR( "%s:%i GL_OUT_OF_MEMORY %s" , __FILE__ , __LINE__ , txt ); break; } \
+	default : { LOG_SYSTEM_ERROR( "%s:%i GL WTF! %s" , __FILE__ , __LINE__ , txt ); break; } \
+  } } }
+#else
+# define GL_TEST_ERROR(txt)
+#endif
+
+#endif // _OPENGL_H_ 
