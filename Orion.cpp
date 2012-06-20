@@ -2,7 +2,7 @@
 // Name        : Orion.cpp
 // Author      : Mikael Korpela
 // Version     :
-// Copyright   : C
+// Copyright   : All rights reserved.
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
