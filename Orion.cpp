@@ -11,7 +11,8 @@
 
 using namespace orion;
 
-int main()
+//int main()
+int mann()
 {
 	std::cout << "Hello World!!!" << std::endl;
 

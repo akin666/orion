@@ -9,7 +9,7 @@
 #define _GLOBAL_HPP_
 
 #include <iostream>
-#include <thread>
+#include <uthread>
 #include <stdexcept>
 
 namespace orion

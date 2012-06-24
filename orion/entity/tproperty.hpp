@@ -23,7 +23,7 @@ protected:
 
 	virtual void attachEntity( EntityID id )
 	{
-		Map::iterator iter = data.find( id );
+		typename Map::iterator iter = data.find( id );
 		if( iter != data.end() )
 		{
 			return;
@@ -35,7 +35,7 @@ protected:
 
 	virtual void detachEntity( EntityID id )
 	{
-		Map::iterator iter = data.find( id );
+		typename Map::iterator iter = data.find( id );
 		if( iter == data.end() )
 		{
 			return;
@@ -62,7 +62,7 @@ public:
 
 	PType& get( EntityID id )
 	{
-		Map::iterator iter = data.find( id );
+		typename Map::iterator iter = data.find( id );
 		if( iter != data.end() )
 		{
 			return *(iter->second);
