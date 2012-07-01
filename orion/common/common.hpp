@@ -14,6 +14,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <list>
 #include <string>
 #include <glm/glm>
 #include <rapidxml/rapidxml.hpp>

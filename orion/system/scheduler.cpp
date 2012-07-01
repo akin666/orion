@@ -7,6 +7,7 @@
 
 #include "scheduler.hpp"
 #include <exception/exceptionhandler.hpp>
+#include <platform/platform.h>
 
 namespace orion {
 
@@ -53,6 +54,11 @@ void Scheduler::add( EventTaskInterface *task )
 void Scheduler::add( RenderTask *task )
 {
 	renderTasks.push_back( task );
+}
+
+void Scheduler::schedule( Tick time , Action *action )
+{
+	actionQueu.add( time , action );
 }
 
 void Scheduler::remove( LogicTask *task )
@@ -112,15 +118,26 @@ void Scheduler::run()
 		runStateStack();
 		for( ; current < nextRender ; ++current )
 		{
+			// Query platform for input or whatever.
+			platformQuery();
+
+			// Fire up TICK based actions
+			actionQueu.run( current );
+
+			// Resolve events for this TICK (this means joystick key etc. events are handled just before logic)
+			for( EventSet::iterator iter = eventTasks.begin() ; iter != eventTasks.end() ; ++iter )
+			{
+				(*iter)->run();
+			}
+
+			// Logical tasks are run.
 			for( LogicSet::iterator iter = logicTasks.begin() ; iter != logicTasks.end() ; ++iter )
 			{
 				(*iter)->run();
 			}
+
+			// Simulation tasks are run.
 			for( SimulationSet::iterator iter = simulationTasks.begin() ; iter != simulationTasks.end() ; ++iter )
-			{
-				(*iter)->run();
-			}
-			for( EventSet::iterator iter = eventTasks.begin() ; iter != eventTasks.end() ; ++iter )
 			{
 				(*iter)->run();
 			}

@@ -35,6 +35,10 @@ MicroSecond getMicroSecond( const Time& time );
 Time parseTime( std::string str );
 std::string timeToString( const Time& time );
 
+// Platform tick queries
+// (for query joystick, mouse, keyboard, if you have to)
+void platformQuery();
+
 } // orion
 
 #endif /* PLATFORM_H_ */

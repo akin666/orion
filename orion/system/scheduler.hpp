@@ -20,6 +20,7 @@
 #include "rendertask.hpp"
 #include <state/statestack.hpp>
 #include <orion>
+#include "actionqueue.hpp"
 
 namespace orion {
 
@@ -38,6 +39,8 @@ protected:
 
 	Tick current;
 	Tick nextRender;
+
+	ActionQueue actionQueu;
 public:
 	Scheduler();
 	virtual ~Scheduler();
@@ -50,6 +53,8 @@ public:
 	void add( SimulationTask *task );
 	void add( EventTaskInterface *task );
 	void add( RenderTask *task );
+
+	void schedule( Tick time , Action *action );
 
 	void remove( LogicTask *task );
 	void remove( SimulationTask *task );
