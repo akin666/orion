@@ -32,7 +32,7 @@ Month getMonth( const Time& time );
 Second getSecond( const Time& time );
 MilliSecond getMilliSecond( const Time& time );
 MicroSecond getMicroSecond( const Time& time );
-Time parseTime( std::string string );
+Time parseTime( std::string str );
 std::string timeToString( const Time& time );
 
 } // orion

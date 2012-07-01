@@ -11,6 +11,7 @@ namespace orion
 {
 
 Token::Token()
+: id( 0 )
 {
 }
 

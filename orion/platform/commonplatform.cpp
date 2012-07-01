@@ -36,8 +36,7 @@ void getTime( Time& time )
 	timeval tmp;
 	gettimeofday( &tmp , NULL );
 
-	time.s = tmp.tv_sec;
-	time.us = tmp.tv_usec;
+	time.us = tmp.tv_usec + (tmp.tv_sec * S_TO_US);
 }
 
 Time getTime( Year year, Month month, Day day, Hour hour, Minute minute, Second second, MicroSecond ms )
@@ -46,8 +45,7 @@ Time getTime( Year year, Month month, Day day, Hour hour, Minute minute, Second 
 	timeval tmp;
 	gettimeofday( &tmp , NULL );
 
-	time.s = tmp.tv_sec;
-	time.us = tmp.tv_usec;
+	time.us = tmp.tv_usec + (tmp.tv_sec * S_TO_US);
 
 	return time;
 }
@@ -59,7 +57,8 @@ Timezone getTimezone( )
 
 Year getYear( const Time& time )
 {
-	time_t rawtime = time.s;
+	// [0,xxx] humans use [0,xxx]
+	time_t rawtime = time.us * US_TO_S;
 	struct tm * info;
 	info = localtime ( &rawtime );
 
@@ -68,7 +67,8 @@ Year getYear( const Time& time )
 
 Day getDayOfYear( const Time& time )
 {
-	time_t rawtime = time.s;
+	// [1,xxx] humans use [1,xxx]
+	time_t rawtime = time.us * US_TO_S;
 	struct tm * info;
 	info = localtime ( &rawtime );
 
@@ -77,7 +77,8 @@ Day getDayOfYear( const Time& time )
 
 Day getDayOfMonth( const Time& time )
 {
-	time_t rawtime = time.s;
+	// [1,xx] humans use [1,xx]
+	time_t rawtime = time.us * US_TO_S;
 	struct tm * info;
 	info = localtime ( &rawtime );
 
@@ -86,7 +87,8 @@ Day getDayOfMonth( const Time& time )
 
 Hour getHour( const Time& time )
 {
-	time_t rawtime = time.s;
+	// [0,23] humans use [0,23]
+	time_t rawtime = time.us * US_TO_S;
 	struct tm * info;
 	info = localtime ( &rawtime );
 
@@ -95,7 +97,8 @@ Hour getHour( const Time& time )
 
 Minute getMinute( const Time& time )
 {
-	time_t rawtime = time.s;
+	// [0,59] humans use [0,59]
+	time_t rawtime = time.us * US_TO_S;
 	struct tm * info;
 	info = localtime ( &rawtime );
 
@@ -104,21 +107,23 @@ Minute getMinute( const Time& time )
 
 Month getMonth( const Time& time )
 {
-	time_t rawtime = time.s;
+	// [0,11] humans use [1,12]
+	time_t rawtime = time.us * US_TO_S;
 	struct tm * info;
 	info = localtime ( &rawtime );
 
-	return info->tm_mon + 1; // 0-11??? jeez dudes..
+	return info->tm_mon + 1; // 0-11??? jeez dudes, did you drink too much when you designed this api...
 }
 
 Second getSecond( const Time& time )
 {
-	return time.s % 60;
+	// [0,59] humans use [0,59]
+	return ((Second)(time.us  * US_TO_S)) % 60;
 }
 
 MilliSecond getMilliSecond( const Time& time )
 {
-	return (MilliSecond)(time.us * 0.001);
+	return (MilliSecond)(time.us * US_TO_MS);
 }
 
 MicroSecond getMicroSecond( const Time& time )
@@ -126,14 +131,16 @@ MicroSecond getMicroSecond( const Time& time )
 	return time.us;
 }
 
-Time parseTime( std::string string )
+Time parseTime( std::string str )
 {
+	// TODO!
 	Time time;
 	return time;
 }
 
 std::string timeToString( const Time& time )
 {
+	// TODO!
 	return "";
 }
 

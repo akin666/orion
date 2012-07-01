@@ -8,7 +8,9 @@
 #ifndef COMMON_HPP_
 #define COMMON_HPP_
 
-#include <defines.hpp>
+#include <defines.hpp>	// From the game itself.
+
+#include "stdtypes.h"	// takes care of orion standard types.
 #include <iostream>
 #include <vector>
 #include <map>
@@ -23,7 +25,9 @@
  // PI/360.0f =
 #define PI_OVER_360 0.0087266462599716478846184538424431
 
-#define US_TO_S 1000000
+#define US_TO_S 0.000001
+#define US_TO_MS 0.001
+#define S_TO_US  1000000
 #define MS_TO_S 1000
 
 #define H_IN_DAY 24
@@ -31,39 +35,34 @@
 #define S_IN_MIN 60
 
 namespace orion {
-
-	typedef signed int 		sint;
-	typedef unsigned int 	uint;
-	typedef signed char 	schar;
-	typedef unsigned char 	uchar;
-	typedef signed short 	sshort;
-	typedef unsigned short 	ushort;
-    typedef float 			vec;
-
-    typedef unsigned int 	UNICODE;
-    typedef unsigned int 	UTF32;
-    typedef unsigned short 	UNICODE16;
-    typedef unsigned short 	UTF16;
-    typedef unsigned char 	UTF8;
-    typedef unsigned int 	BufferIndex;
+    typedef uint32		 	UNICODE;
+    typedef uint32		 	UTF32;
+    typedef uint16		 	UNICODE16;
+    typedef uint16		 	UTF16;
+    typedef uint8		 	UTF8;
+    typedef uint32		 	BufferIndex;
 
     // Time
-    typedef int				Year;
-    typedef int				Month;
-    typedef int				Day;
-    typedef int				Hour;
-    typedef int				Minute;
-    typedef unsigned int 	Second;
-    typedef unsigned int 	MicroSecond;
-    typedef unsigned int 	MilliSecond;
-    typedef unsigned int 	Tick;
-    typedef int				Timezone;
+    typedef int32			Year;
+    typedef int32			Month;
+    typedef int32			Day;
+    typedef int32			Hour;
+    typedef int32			Minute;
+    typedef int32		 	Second;
+    typedef int32 			MicroSecond;
+    typedef int32 			MilliSecond;
+    typedef int32		 	Tick;
+    typedef int32			Timezone;
+
+    // Time
+    typedef uint64			PreciseTime;
+    typedef float64			FloatTime;
 
     // Tick info
     const int SimulationFPS = 66;
     const float SimulationStep = 1.0f / SimulationFPS;
 
-    typedef uint 			EntityID;
+    typedef uint64 			EntityID;
     typedef std::vector<EntityID> EntitySet;
     typedef std::map<std::string, EntityID> EntityNameMap;
     typedef std::map<std::string, EntitySet> EntitySetMap;

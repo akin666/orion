@@ -12,30 +12,12 @@ namespace orion {
 
 void add( Time& s , const Time& s2 )
 {
-	MicroSecond overall = s.us + s2.us;
-	s.us = overall % US_TO_S;
-
-	if( s.us < 0 )
-	{
-		--s.s; // take one
-		s.us += US_TO_S; // add one
-	}
-
-	s.s += s2.s + ( overall / US_TO_S );
+	s.us += s2.us;
 }
 
 void subtract( Time& s , const Time& s2 )
 {
-	MicroSecond overall = s.us + (-s2.us);
-	s.us = overall % US_TO_S;
-
-	if( s.us < 0 )
-	{
-		--s.s; // take one
-		s.us += US_TO_S; // add one
-	}
-
-	s.s += (-s2.s) + ( overall / US_TO_S );
+	s.us -= s2.us;
 }
 
 Date::Date()
@@ -54,9 +36,9 @@ Date::Date(Year year, Month month, Day day, Hour hour, Minute minute, Second sec
 {
 }
 
-Date::Date(std::string string)
+Date::Date(std::string str)
 {
-	(*this) = ::orion::parseTime( string );
+	(*this) = ::orion::parseTime( str );
 }
 
 Date::~Date()
@@ -75,7 +57,7 @@ bool Date::before(const Date & val)
 
 bool Date::operator ==(const Date & val) const
 {
-	return (s == val.s) && (us == val.us);
+	return (us == val.us);
 }
 
 bool Date::operator !=(const Date & val) const
@@ -85,43 +67,26 @@ bool Date::operator !=(const Date & val) const
 
 bool Date::operator <(const Date & val) const
 {
-	if( s == val.s )
-	{
-		return us < val.us;
-	}
-	return s < val.s;
+	return us < val.us;
 }
 
 bool Date::operator >(const Date & val) const
 {
-	if( s == val.s )
-	{
-		return us > val.us;
-	}
-	return s > val.s;
+	return us > val.us;
 }
 
 bool Date::operator <=(const Date & val) const
 {
-	if( s == val.s )
-	{
-		return us <= val.us;
-	}
-	return s < val.s;
+	return us <= val.us;
 }
 
 bool Date::operator >=(const Date & val) const
 {
-	if( s == val.s )
-	{
-		return us >= val.us;
-	}
-	return s > val.s;
+	return us >= val.us;
 }
 
 Date & Date::operator =(const Date & val)
 {
-	s = val.s;
 	us = val.us;
 
 	return *this;

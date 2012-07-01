@@ -15,13 +15,35 @@ namespace orion {
 class Time
 {
 public:
-	Second s;
-	MicroSecond us;
+	PreciseTime us;
 
 	Time()
-	: s(0),us(0) {}
+	: us(0) {}
 	Time( const Time& o )
-	: s(o.s),us(o.us) {}
+	: us(o.us) {}
+
+	FloatTime toFloatTime()
+	{
+		return us * US_TO_S;
+	}
+
+	Time& operator = ( const FloatTime& val )
+	{
+		// TODO! research what are the losses with this conversion.
+		// and at what levels the losses begin to show (days, years, millenia?)
+		us = (PreciseTime)(val * S_TO_US);
+		return *this;
+	}
+
+	operator FloatTime()
+	{
+		return us * US_TO_S;
+	}
+
+	operator PreciseTime()
+	{
+		return us;
+	}
 };
 
 } // orion
