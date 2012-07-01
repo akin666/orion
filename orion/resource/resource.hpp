@@ -8,20 +8,15 @@
 #ifndef RESOURCE_HPP_
 #define RESOURCE_HPP_
 
+#include <orion>
+
 namespace orion
 {
 
 class Resource
 {
 protected:
-	enum State
-	{
-		None = 		0x0000,
-		Buffered = 	0x0001,
-		Loaded = 	0x0002,
-		BufferedLoaded = Buffered + Loaded
-	};
-	State state;
+	uint32 state;
 
 	void setLoaded( bool val );
 	void setBuffered( bool val );

@@ -51,7 +51,7 @@
 									<listOptionValue builtIn="false" value="opengl32"/>
 									<listOptionValue builtIn="false" value="boost_thread"/>
 								</option>
-								<option id="gnu.cpp.link.option.paths.1325339643" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths"/>
+								<option id="gnu.cpp.link.option.paths.1325339643" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1199355570" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -62,7 +62,6 @@
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-			<storageModule moduleId="scannerConfiguration"/>
 			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 		</cconfiguration>
@@ -114,7 +113,7 @@
 									<listOptionValue builtIn="false" value="opengl32"/>
 									<listOptionValue builtIn="false" value="boost_thread"/>
 								</option>
-								<option id="gnu.cpp.link.option.paths.1141469542" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths"/>
+								<option id="gnu.cpp.link.option.paths.1141469542" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1831616104" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -125,7 +124,6 @@
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-			<storageModule moduleId="scannerConfiguration"/>
 			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 		</cconfiguration>
@@ -152,4 +150,5 @@
 		</scannerConfigBuildInfo>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>

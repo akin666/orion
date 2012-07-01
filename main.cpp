@@ -6,6 +6,10 @@
 
 #include <SDL/SDL.h>
 
+#include <profiler/profiler.hpp>
+
+using namespace orion;
+
 int main ( int argc, char** argv )
 {
     // initialize SDL video
@@ -27,23 +31,11 @@ int main ( int argc, char** argv )
         return 1;
     }
 
-    // load an image
-    SDL_Surface* bmp = SDL_LoadBMP("cb.bmp");
-    if (!bmp)
-    {
-        printf("Unable to load bitmap: %s\n", SDL_GetError());
-        return 1;
-    }
-    
-    // centre the bitmap on screen
-    SDL_Rect dstrect;
-    dstrect.x = (screen->w - bmp->w) / 2;
-    dstrect.y = (screen->h - bmp->h) / 2;
-
     // program main loop
     bool done = false;
     while (!done)
     {
+    	PROFILER_START( "keys." );
         // message processing loop
         SDL_Event event;
         while (SDL_PollEvent(&event))
@@ -68,21 +60,20 @@ int main ( int argc, char** argv )
         } // end of message processing
 
         // DRAWING STARTS HERE
+
+        PROFILER_END( "keys." );
         
         // clear screen
+    	PROFILER_START( "fillscreen." );
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
-
-        // draw bitmap
-        SDL_BlitSurface(bmp, 0, screen, &dstrect);
+        PROFILER_END( "fillscreen." );
 
         // DRAWING ENDS HERE
 
+        PROFILER_PRINT();
         // finally, update the screen :)
         SDL_Flip(screen);
     } // end main loop
-
-    // free loaded bitmap
-    SDL_FreeSurface(bmp);
 
     // all is well ;)
     printf("Exited cleanly\n");
