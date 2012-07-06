@@ -1,18 +1,33 @@
 
 // Orion SDL Platform!
 
-#include <orion>
+#include "sdl_detect.hpp"
 
-// platform detection
-#if defined( USE_SDL ) and ( defined(OS_WINDOWS) or defined(OS_LINUX) or defined(OS_MAC) )
+#ifdef SDL_PLATFORM
 
 #include <stdgl>
+
 #include <profiler/profiler.hpp>
+#include <application.hpp>
+#include <sdl/sdl_video.hpp>
+#include <openal/openal_audio.hpp>
+
+#include <main>
 
 using namespace orion;
 
 int main ( int argc, char** argv )
 {
+	Main<
+		Application,
+		SDLVideo ,
+		OpenALAudio ,
+		Log ,
+		ResourceManager ,
+		Allocator
+		>
+		app;
+
     // initialize SDL video
     if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
@@ -32,10 +47,16 @@ int main ( int argc, char** argv )
         return 1;
     }
 
+   if( !app.initialize( argc , argv ) )
+   {
+	   return 1;
+   }
+
     // program main loop
-    bool done = false;
-    while (!done)
+    while( app.stillRunning() )
     {
+    	app.run();
+
     	PROFILER_START( "keys." );
         // message processing loop
         SDL_Event event;
@@ -46,15 +67,15 @@ int main ( int argc, char** argv )
             {
                 // exit if the window is closed
             case SDL_QUIT:
-                done = true;
+//                done = true;
                 break;
 
                 // check for keypresses
             case SDL_KEYDOWN:
                 {
                     // exit if ESCAPE is pressed
-                    if (event.key.keysym.sym == SDLK_ESCAPE)
-                        done = true;
+//                    if (event.key.keysym.sym == SDLK_ESCAPE)
+//                        done = true;
                     break;
                 }
             } // end switch
@@ -81,4 +102,4 @@ int main ( int argc, char** argv )
     return 0;
 }
 
-#endif // platform detection
+#endif // SDL_PLATFORM

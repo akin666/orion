@@ -14,20 +14,11 @@ namespace orion {
 ApplicationInterface::ApplicationInterface()
 {
 	attachListener<ApplicationEvent>( this );
-
-	setGlobal<ApplicationInterface>( this );
 }
 
 ApplicationInterface::~ApplicationInterface()
 {
 	detachListener<ApplicationEvent>( this );
-
-	setGlobal<ApplicationInterface>( NULL );
-}
-
-void ApplicationInterface::run()
-{
-	createGlobal< Scheduler >()->run();
 }
 
 } // namespace orion

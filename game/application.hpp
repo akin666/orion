@@ -19,7 +19,9 @@ public:
 	Application();
 	virtual ~Application();
 
-	virtual void initialize();
+	virtual bool stillRunning();
+
+	virtual bool initialize( StringSet& args );
 
 	virtual bool handle( const ApplicationEvent& event );
 

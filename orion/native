@@ -1,16 +1,17 @@
 /*
- * platform.h
+ * native
  *
  *  Created on: 16.6.2012
  *      Author: akin
+ *      
+ *   Native platform functions.
+ *      
  */
 
-#ifndef PLATFORM_H_
-#define PLATFORM_H_
+#ifndef NATIVE_H_
+#define NATIVE_H_
 
 #include <orion>
-
-#define COMMON_PLATFORM
 
 namespace orion {
 
@@ -41,4 +42,4 @@ void platformQuery();
 
 } // orion
 
-#endif /* PLATFORM_H_ */
+#endif // NATIVE_H_

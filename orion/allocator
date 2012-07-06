@@ -1,5 +1,5 @@
 /*
- * allocator.hpp
+ * allocator
  *
  *  Created on: 16.6.2012
  *      Author: akin
@@ -16,16 +16,13 @@ namespace orion {
 
 class Allocator
 {
-public:
-	static void set( Allocator *allocator );
-	static Allocator *get();
-protected:
-	static Allocator *allocator;
 protected:
 	// own data..
 public:
 	Allocator();
 	virtual ~Allocator();
+	
+	virtual bool initialize();
 
 	template <class CType>
 	CType *create()

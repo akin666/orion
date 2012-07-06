@@ -14,4 +14,6 @@
 #define USE_SDL
 #define USE_OPENAL
 
+#define USE_COMMON_NATIVE
+
 #endif // DEFINES_HPP_

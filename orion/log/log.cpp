@@ -7,7 +7,7 @@
 
 #include "log.hpp"
 #include <iostream>
-#include <platform/platform.h>
+#include <native>
 #include <stdarg.h>
 #include <stdio.h>
 

@@ -16,8 +16,14 @@ Application::~Application()
 {
 }
 
-void Application::initialize()
+bool Application::initialize( StringSet& args )
 {
+	return true;
+}
+
+bool Application::stillRunning()
+{
+	return true;
 }
 
 bool Application::handle( const ApplicationEvent& event )

@@ -9,7 +9,7 @@
 #define TPROPERTY_HPP_
 
 #include "property.hpp"
-#include "allocator.hpp"
+#include <allocator>
 
 namespace orion {
 
@@ -29,7 +29,7 @@ protected:
 			return;
 		}
 
-		PType *n = Allocator::get()->create<PType>();
+		PType *n = Global<Allocator>::get()->create<PType>();
 		data[ id ] = n;
 	}
 
@@ -43,7 +43,7 @@ protected:
 
 		PType *n = iter->second;
 		data.erase( iter );
-		Allocator::get()->destroy( n );
+		Global<Allocator>::get()->destroy( n );
 	}
 public:
 	TProperty()
@@ -68,7 +68,7 @@ public:
 			return *(iter->second);
 		}
 
-		PType *n = Allocator::get()->create<PType>();
+		PType *n = Global<Allocator>::get()->create<PType>();
 		data[ id ] = n;
 		return *n;
 	}

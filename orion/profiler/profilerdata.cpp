@@ -6,7 +6,7 @@
  */
 
 #include "profilerdata.hpp"
-#include <platform/platform.h>
+#include <native>
 
 #define PROFILER_IDLE 		0
 #define PROFILER_RUNNING 	1

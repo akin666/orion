@@ -69,6 +69,8 @@ namespace orion {
     typedef std::map<std::string, EntityID> EntityNameMap;
     typedef std::map<std::string, EntitySet> EntitySetMap;
 
+    typedef std::vector<std::string> StringSet;
+
 	enum ColorMode
 	{
 		RGB = 1,

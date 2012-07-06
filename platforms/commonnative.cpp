@@ -1,13 +1,13 @@
 /*
- * commonplatform.cpp
+ * commonnative.cpp
  *
  *  Created on: 16.6.2012
  *      Author: akin
  */
 
-#include "platform.h"
+#include <native>
 
-#ifdef COMMON_PLATFORM
+#ifdef USE_COMMON_NATIVE
 
 #include <iostream>
 #include <sys/time.h>
@@ -152,5 +152,5 @@ void platformQuery()
 
 } // orion
 
-#endif
+#endif // USE_COMMON_NATIVE
 

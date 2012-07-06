@@ -19,9 +19,8 @@ public:
 	ApplicationInterface();
 	virtual ~ApplicationInterface();
 
-	virtual void initialize() = 0;
-
-	void run();
+	virtual bool stillRunning() = 0;
+	virtual bool initialize( StringSet& args ) = 0;
 };
 
 } // namespace orion

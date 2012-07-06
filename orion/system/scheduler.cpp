@@ -7,7 +7,7 @@
 
 #include "scheduler.hpp"
 #include <exception/exceptionhandler.hpp>
-#include <platform/platform.h>
+#include <native>
 
 namespace orion {
 

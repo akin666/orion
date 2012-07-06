@@ -1,0 +1,131 @@
+/*
+ * main.hpp
+ *
+ *  Created on: 6.7.2012
+ *      Author: akin
+ */
+
+#ifndef MAIN_HPP_
+#define MAIN_HPP_
+
+#include <orion>
+#include <video/video.hpp>
+#include <audio/audio.hpp>
+#include <resource/resourcemanager.hpp>
+#include <allocator>
+#include <system/scheduler.hpp>
+
+namespace orion
+{
+
+template < 	
+			class ApplicationPolicy ,	// interface: application/applicationinterface.hpp
+			class VideoPolicy ,			// interface: video/video.hpp
+			class AudioPolicy ,			// interface: audio/audio.hpp
+			class LogPolicy ,			// interface: log/log.hpp
+			class ResourceLoader ,		// interface: resource/resourcemanager.hpp
+			class AllocationManager 	// interface: allocator
+			>
+class Main
+{
+protected:
+	ApplicationPolicy app;
+	VideoPolicy video;
+	AudioPolicy audio;
+	LogPolicy log;
+	ResourceLoader resource;
+	AllocationManager allocation;
+	Scheduler scheduler;
+	
+	StringSet args;
+public:
+	Main()
+	{
+	}
+	
+	~Main()
+	{
+	}
+	
+	bool initialize( int argc = 0 , char *argv[] = NULL )
+	{
+		// convert c style args
+		StringSet arguments;
+		for( int i = 0 ; i < argc ; ++i )
+		{
+			arguments.push_back( argv[i] );
+		}
+
+		return initialize( arguments );
+	}
+	
+	bool initialize( StringSet& args )
+	{
+		this->args = args;
+		
+		////
+		// initialize stuffs
+		////
+		
+		// LOG
+		Global<Log>::set( &log );
+		
+		// Scheduler!
+		Global<Scheduler>::set( &scheduler );
+		
+		// MEMORYMANAGER
+		if( !allocation.initialize() )
+		{
+			LOG->error("Failed to initialize memory manager. Bailing out.");
+			return false;
+		}
+		Global<Allocator>::set( &allocation );
+		
+		// RESOURCEMANAGER
+		if( !resource.initialize() )
+		{
+			LOG->error("Failed to initialize resource manager. Bailing out.");
+			return false;
+		}
+		Global<ResourceManager>::set( &resource );
+		
+		// VIDEO
+		if( !video.initialize() )
+		{
+			LOG->error("Failed to initialize video manager. Bailing out.");
+			return false;
+		}
+		Global<Video>::set( &video );
+		
+		// AUDIO
+		if( !audio.initialize() )
+		{
+			LOG->error("Failed to initialize audio manager. Bailing out.");
+			return false;
+		}
+		Global<Audio>::set( &audio );
+		
+		// APP
+		if( !app.initialize( args ) )
+		{
+			LOG->error("Failed to initialize application. Bailing out.");
+			return false;
+		}
+		Global<ApplicationInterface>::set( &app );
+		
+		return true;
+	}
+
+	bool stillRunning()
+	{
+		return app.stillRunning();
+	}
+
+	void run()
+	{
+		scheduler.run();
+	}
+};
+
+} // namespace orion
+#endif // MAIN_HPP_
