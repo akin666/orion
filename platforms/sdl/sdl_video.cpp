@@ -6,16 +6,38 @@
  */
 
 #include "sdl_video.hpp"
+#include <config/config.hpp>
 
 namespace orion
 {
 
+#define SDLVIDEOF_NONE			0x0000
+#define SDLVIDEOF_INITIALIZED	0x0001
+
 SDLVideo::SDLVideo()
+: flags(SDLVIDEOF_NONE)
 {
 }
 
 SDLVideo::~SDLVideo()
 {
+}
+
+void SDLVideo::setInitialized( bool val )
+{
+	if( val )
+	{
+		flags |= SDLVIDEOF_INITIALIZED;
+	}
+	else
+	{
+		flags &= ~SDLVIDEOF_INITIALIZED;
+	}
+}
+
+bool SDLVideo::isInitialized()
+{
+	return (flags & SDLVIDEOF_INITIALIZED) != 0;
 }
 
 void SDLVideo::listModes(VideoModeSet& set)
@@ -42,11 +64,20 @@ std::string SDLVideo::getTitle()
 
 bool SDLVideo::apply(VideoMode& mode)
 {
-	return true;
+	if( isInitialized() )
+	{
+		return false;
+	}
+
+	return mode.write( *CONFIG , "video" );
 }
 
 bool SDLVideo::initialize()
 {
+	VideoMode mode;
+
+	mode.read( *CONFIG , "video" );
+
 	return true;
 }
 

@@ -15,6 +15,11 @@ namespace orion
 
 class SDLVideo : public Video
 {
+protected:
+	uint32 flags;
+
+	void setInitialized( bool val );
+	bool isInitialized();
 public:
 	SDLVideo();
 	virtual ~SDLVideo();

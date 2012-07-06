@@ -9,6 +9,7 @@
 #define VIDEOMODE_HPP_
 
 #include <orion>
+#include <config/config.hpp>
 
 namespace orion
 {
@@ -57,6 +58,9 @@ public:
 
 	bool getFullscreen() const;
 	void setFullscreen(bool val);
+
+	bool read( Config& config , std::string path );
+	bool write( Config& config , std::string path );
 };
 
 typedef std::vector<VideoMode> VideoModeSet;

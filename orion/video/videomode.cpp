@@ -138,4 +138,39 @@ void VideoMode::setFullscreen(bool val)
 	}
 }
 
+bool VideoMode::read( Config& config , std::string path )
+{
+	glm::ivec2 dim;
+	dim.x = config.get<int32>(	path + ".width" );
+	dim.y = config.get<int32>(	path + ".height" );
+	setDimensions( dim );
+
+	setDpi( config.get<float32>(	path + ".dpi" ) );
+	setRed( config.get<int32>(		path + ".red" ) );
+	setGreen( config.get<int32>(	path + ".green" ) );
+	setBlue( config.get<int32>(		path + ".blue" ) );
+	setAlpha( config.get<int32>(	path + ".alpha" ) );
+	setStencil( config.get<int32>(	path + ".stencil" ) );
+	setDepth( config.get<int32>(	path + ".depth" ) );
+	setFullscreen( config.get<bool>(path + ".fullscreen" ) );
+
+	return true;
+}
+
+bool VideoMode::write( Config& config , std::string path )
+{
+	config.set<int32>(		path + ".width", 		getDimensions().x );
+	config.set<int32>(		path + ".height",		getDimensions().y );
+	config.set<float32>(	path + ".dpi", 			getDpi() );
+	config.set<int32>(		path + ".red", 			getRed() );
+	config.set<int32>(		path + ".green", 		getGreen() );
+	config.set<int32>(		path + ".blue", 		getBlue() );
+	config.set<int32>(		path + ".alpha", 		getAlpha() );
+	config.set<int32>(		path + ".stencil", 		getStencil() );
+	config.set<int32>(		path + ".depth", 		getDepth() );
+	config.set<bool>(		path + ".fullscreen", 	getFullscreen() );
+
+	return true;
+}
+
 } // namespace orion
