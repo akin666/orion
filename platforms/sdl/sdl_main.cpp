@@ -11,6 +11,7 @@
 #include <application.hpp>
 #include <sdl/sdl_video.hpp>
 #include <openal/openal_audio.hpp>
+#include <configloader.hpp>
 
 #include <main>
 
@@ -20,6 +21,7 @@ int main ( int argc, char** argv )
 {
 	Main<
 		Application,
+		ConfigLoader,
 		SDLVideo ,
 		OpenALAudio ,
 		Log ,

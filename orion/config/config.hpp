@@ -73,5 +73,10 @@ public:
 	}
 };
 
+// CONFIG->get<float>("speed");
+// CONFIG->get<float>("speed" , 123.0f );
+// CONFIG->set<float>("speed" , 321.0f);
+#define CONFIG createGlobal<Config>()
+
 } // namespace orion
 #endif // CONFIG_HPP_

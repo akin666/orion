@@ -14,12 +14,15 @@
 #include <resource/resourcemanager.hpp>
 #include <allocator>
 #include <system/scheduler.hpp>
+#include <config/config.hpp>
+#include <loader>
 
 namespace orion
 {
 
 template < 	
 			class ApplicationPolicy ,	// interface: application/applicationinterface.hpp
+			class ConfigLoader ,		// interface: loader (Loader<Config>)
 			class VideoPolicy ,			// interface: video/video.hpp
 			class AudioPolicy ,			// interface: audio/audio.hpp
 			class LogPolicy ,			// interface: log/log.hpp
@@ -36,6 +39,7 @@ protected:
 	ResourceLoader resource;
 	AllocationManager allocation;
 	Scheduler scheduler;
+	Config config;
 	
 	StringSet args;
 public:
@@ -69,6 +73,17 @@ public:
 		
 		// LOG
 		Global<Log>::set( &log );
+
+		// CONFIG
+		{
+			ConfigLoader loader;
+			if( !loader.load( config ) )
+			{
+				LOG->error("Failed to load config. Bailing out.");
+				return false;
+			}
+			Global<Config>::set( &config );
+		}
 		
 		// Scheduler!
 		Global<Scheduler>::set( &scheduler );
