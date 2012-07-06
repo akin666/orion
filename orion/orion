@@ -2,11 +2,10 @@
 #ifndef ORION_HEAD_HPP_
 #define ORION_HEAD_HPP_
 
+// OS comes from here.
 #include <defines.hpp>
 
 // include all _minimal_ orion common headers.
-
-#include <defines.hpp>
 #include "common/common.hpp"
 #include "common/time.hpp"
 #include "log/log.hpp"

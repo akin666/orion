@@ -10,6 +10,7 @@
 #ifndef STDTYPES_H_
 #define STDTYPES_H_
 
+#include <os>
 #include <limits>	// c++ limits
 #include <climits>	// int limits
 #include <cfloat>	// float limits

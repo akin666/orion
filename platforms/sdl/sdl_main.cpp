@@ -1,11 +1,12 @@
-#ifdef __cplusplus
-    #include <cstdlib>
-#else
-    #include <stdlib.h>
-#endif
 
-#include <SDL/SDL.h>
+// Orion SDL Platform!
 
+#include <orion>
+
+// platform detection
+#if defined( USE_SDL ) and ( defined(OS_WINDOWS) or defined(OS_LINUX) or defined(OS_MAC) )
+
+#include <stdgl>
 #include <profiler/profiler.hpp>
 
 using namespace orion;
@@ -79,3 +80,5 @@ int main ( int argc, char** argv )
     printf("Exited cleanly\n");
     return 0;
 }
+
+#endif // platform detection

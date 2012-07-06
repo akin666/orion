@@ -1,8 +1,7 @@
 
-#ifndef _OPENGL_HEAD_
-#define _OPENGL_HEAD_
+#ifndef _STDGL_H_
+#define _STDGL_H_
 
-#include <iostream>
 #include <orion>
 
 //#define USE_GLEE
@@ -14,7 +13,7 @@
 #define GL_NULL 0
 
 #ifdef USE_GLEE
-# include "../lib/GLee.h"
+# include <GL/GLee.h> // todo!
 #else
 # warning NO GLEE
 #endif
@@ -34,7 +33,7 @@
 #endif
 
 #ifdef USE_SDL
-# include <SDL.h>
+# include <SDL/SDL.h>
 #else
 # warning NO SDL
 #endif
@@ -55,18 +54,18 @@
 # define GL_INITIALIZATION true
 #endif
 
-// TODO!
 #if 0
-# define _OPENGL_ES1_
-# define _OPENGL_ES2_
-# define _OPENGL_2_0_
-# define _OPENGL_2_1_
-# define _OPENGL_3_0_
-# define _OPENGL_3_1_
-# define _OPENGL_3_2_
-# define _OPENGL_3_3_
-# define _OPENGL_4_0_
-# define _OPENGL_4_1_
+# define OPENGL_ES1_	0x0001
+# define OPENGL_ES2_	0x0002
+# define OPENGL_2_0_	0x0004
+# define OPENGL_2_1_	0x0008
+# define OPENGL_3_0_	0x0010
+# define OPENGL_3_1_	0x0020
+# define OPENGL_3_2_	0x0040
+# define OPENGL_3_3_	0x0080
+# define OPENGL_4_0_	0x0100
+# define OPENGL_4_1_	0x0200
+# define OPENGL_4_2_	0x0400
 #endif
 
 #if not defined(LOG_SYSTEM_ERROR)
@@ -93,4 +92,4 @@
 # define GL_TEST_ERROR(txt)
 #endif
 
-#endif // _OPENGL_H_ 
+#endif // _STDGL_H_ 

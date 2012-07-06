@@ -10,6 +10,7 @@
 
 #include <defines.hpp>	// From the game itself.
 
+#include <os>
 #include "stdtypes.h"	// takes care of orion standard types.
 #include <iostream>
 #include <vector>

@@ -1,0 +1,45 @@
+
+#ifndef _STDAL_H_
+#define _STDAL_H_
+
+#include <orion>
+
+//#define USE_OPENAL
+
+#define AL_NULL 0
+
+#ifdef USE_OPENAL
+# include <al.h>
+# include <alc.h>
+#else
+# warning NO OPENAL
+#endif
+
+#ifndef AL_INITIALIZATION
+# define AL_INITIALIZATION true
+#endif
+
+#if not defined(LOG_SYSTEM_ERROR)
+# define LOG_SYSTEM_ERROR LOG->error
+#endif
+
+#define AL_FLUSH_ERRORS() while( alGetError() != AL_NO_ERROR )
+
+#ifndef _RELEASE
+# define AL_TEST_ERROR(txt) { \
+  int al_error_var; \
+  while( ( al_error_var = alGetError() ) != AL_NO_ERROR ) { \
+  switch( al_error_var ) { \
+	case AL_NO_ERROR : break; \
+	case AL_INVALID_NAME : { LOG_SYSTEM_ERROR( "%s:%i AL_INVALID_NAME %s" , __FILE__ , __LINE__ , txt ); break; } \
+	case AL_INVALID_ENUM : { LOG_SYSTEM_ERROR( "%s:%i AL_INVALID_ENUM %s" , __FILE__ , __LINE__ , txt ); break; } \
+	case AL_INVALID_VALUE : { LOG_SYSTEM_ERROR( "%s:%i AL_INVALID_VALUE %s" , __FILE__ , __LINE__ , txt ); break; } \
+	case AL_INVALID_OPERATION : { LOG_SYSTEM_ERROR( "%s:%i AL_INVALID_OPERATION %s" , __FILE__ , __LINE__ , txt ); break; } \
+	case AL_OUT_OF_MEMORY : { LOG_SYSTEM_ERROR( "%s:%i AL_OUT_OF_MEMORY %s" , __FILE__ , __LINE__ , txt ); break; } \
+	default : { LOG_SYSTEM_ERROR( "%s:%i AL WTF! %s" , __FILE__ , __LINE__ , txt ); break; } \
+  } } }
+#else
+# define AL_TEST_ERROR(txt)
+#endif
+
+#endif // _STDAL_H_
