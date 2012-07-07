@@ -11,9 +11,7 @@
 #include <orion>
 #include <application/applicationinterface.hpp>
 
-using namespace orion;
-
-class Application : public ApplicationInterface
+class Application : public orion::ApplicationInterface
 {
 public:
 	Application();
@@ -21,9 +19,9 @@ public:
 
 	virtual bool stillRunning();
 
-	virtual bool initialize( StringSet& args );
+	virtual bool initialize( orion::StringSet& args );
 
-	virtual bool handle( const ApplicationEvent& event );
+	virtual bool handle( const orion::ApplicationEvent& event );
 
 	virtual void handleException( const std::exception& exeption );
 };

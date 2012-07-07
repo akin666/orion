@@ -10,6 +10,7 @@
 
 #include <os>
 
+#define USE_GLEW
 #define USE_GL3
 #define USE_SDL
 #define USE_OPENAL

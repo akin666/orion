@@ -7,6 +7,7 @@
 
 #include "application.hpp"
 
+using namespace orion;
 
 Application::Application()
 {

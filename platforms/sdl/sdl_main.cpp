@@ -5,28 +5,29 @@
 
 #ifdef SDL_PLATFORM
 
-#include <stdgl>
-
 #include <profiler/profiler.hpp>
 #include <application.hpp>
-#include <sdl/sdl_video.hpp>
-#include <openal/openal_audio.hpp>
 #include <configloader.hpp>
 
-#include <main>
+#include <sdl/sdl_video.hpp>
+#include <openal/openal_audio.hpp>
 
-using namespace orion;
+#include <engine>
 
-int main ( int argc, char** argv )
+#include <SDL/SDL.h>
+
+#warning Compiling with SDL-MAIN
+
+int main(int argc, char *argv[])
 {
-	Main<
+	orion::Engine<
 		Application,
-		ConfigLoader,
-		SDLVideo ,
-		OpenALAudio ,
-		Log ,
-		ResourceManager ,
-		Allocator
+		orion::ConfigLoader,
+		orion::SDLVideo ,
+		orion::OpenALAudio ,
+		orion::Log ,
+		orion::ResourceManager ,
+		orion::Allocator
 		>
 		app;
 

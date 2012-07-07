@@ -1,12 +1,13 @@
 /*
- * main.hpp
+ * engine
+ * - collection of systems
  *
  *  Created on: 6.7.2012
  *      Author: akin
  */
 
 #ifndef MAIN_HPP_
-#define MAIN_HPP_
+#define _ENGINE_HPP_
 
 #include <orion>
 #include <video/video.hpp>
@@ -29,7 +30,7 @@ template <
 			class ResourceLoader ,		// interface: resource/resourcemanager.hpp
 			class AllocationManager 	// interface: allocator
 			>
-class Main
+class Engine
 {
 protected:
 	ApplicationPolicy app;
@@ -43,11 +44,11 @@ protected:
 	
 	StringSet args;
 public:
-	Main()
+	Engine()
 	{
 	}
 	
-	~Main()
+	~Engine()
 	{
 	}
 	
@@ -143,4 +144,4 @@ public:
 };
 
 } // namespace orion
-#endif // MAIN_HPP_
+#endif // _ENGINE_HPP_

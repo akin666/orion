@@ -11,6 +11,7 @@
 #include "sdl_detect.hpp"
 #ifdef SDL_PLATFORM
 #include <video/video.hpp>
+#include <stdgl>
 
 namespace orion
 {

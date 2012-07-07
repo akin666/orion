@@ -17,7 +17,6 @@ namespace orion {
 #ifdef USE_GLEE
 # include <GL/GLee.h> // todo!
 #else
-# warning NO GLEE
 #endif
 
 #ifdef USE_GLEW
@@ -25,31 +24,27 @@ namespace orion {
 # include <GL/glew.h>
 # define GL_INITIALIZATION ( glewInit() == GLEW_OK )
 #else
-# warning NO GLEW
 #endif
 
 #ifdef USE_GLFW
 # include <GL/glfw.h>
 #else
-# warning NO GLFW
 #endif
 
 #ifdef USE_SDL
 # include <SDL/SDL.h>
 #else
-# warning NO SDL
 #endif
 
 #ifdef USE_GL
 # include <GL/gl.h>
 #else
-# warning NO GL
 #endif
 
 #ifdef USE_GL3
+# define GL3_PROTOTYPES 1
 # include <GL/gl3.h>
 #else
-# warning NO GL3
 #endif
 
 #ifndef GL_INITIALIZATION

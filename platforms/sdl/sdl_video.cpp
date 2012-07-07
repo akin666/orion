@@ -174,6 +174,12 @@ bool SDLVideo::initialize()
 
     atexit(SDL_Quit);
 
+	if( !GL_INITIALIZATION )
+	{
+		LOG->error("Failed to initialize GL\n");
+		return false;
+	}
+
 	rendertarget = new SDLRenderTarget( mode );
 
 	return rendertarget->initialize();
