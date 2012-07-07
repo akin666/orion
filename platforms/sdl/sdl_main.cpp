@@ -30,25 +30,6 @@ int main ( int argc, char** argv )
 		>
 		app;
 
-    // initialize SDL video
-    if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-    {
-        printf( "Unable to init SDL: %s\n", SDL_GetError() );
-        return 1;
-    }
-
-    // make sure SDL cleans up before exit
-    atexit(SDL_Quit);
-
-    // create a new window
-    SDL_Surface* screen = SDL_SetVideoMode(640, 480, 16,
-                                           SDL_HWSURFACE|SDL_DOUBLEBUF);
-    if ( !screen )
-    {
-        printf("Unable to set 640x480 video: %s\n", SDL_GetError());
-        return 1;
-    }
-
    if( !app.initialize( argc , argv ) )
    {
 	   return 1;
@@ -58,7 +39,7 @@ int main ( int argc, char** argv )
     while( app.stillRunning() )
     {
     	app.run();
-
+/*
     	PROFILER_START( "keys." );
         // message processing loop
         SDL_Event event;
@@ -86,21 +67,9 @@ int main ( int argc, char** argv )
         // DRAWING STARTS HERE
 
         PROFILER_END( "keys." );
-        
-        // clear screen
-    	PROFILER_START( "fillscreen." );
-        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
-        PROFILER_END( "fillscreen." );
+        */
+    }
 
-        // DRAWING ENDS HERE
-
-        PROFILER_PRINT();
-        // finally, update the screen :)
-        SDL_Flip(screen);
-    } // end main loop
-
-    // all is well ;)
-    printf("Exited cleanly\n");
     return 0;
 }
 

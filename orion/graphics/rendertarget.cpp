@@ -13,7 +13,21 @@ RenderTarget::RenderTarget()
 {
 }
 
+RenderTarget::RenderTarget( const VideoMode& mode )
+: mode( mode )
+{
+}
+
 RenderTarget::~RenderTarget()
+{
+}
+
+VideoMode& RenderTarget::getVideoMode()
+{
+	return mode;
+}
+
+void RenderTarget::bind()
 {
 }
 

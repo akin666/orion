@@ -4,6 +4,8 @@
 
 #include <orion>
 
+namespace orion {
+
 //#define USE_GLEE
 //#define USE_GLEW
 //#define USE_GLFW
@@ -91,5 +93,10 @@
 #else
 # define GL_TEST_ERROR(txt)
 #endif
+
+#define GL_TEST_START() GL_TEST_ERROR("begin")
+#define GL_TEST_END() GL_TEST_ERROR("end")
+
+} // orion
 
 #endif // _STDGL_H_ 

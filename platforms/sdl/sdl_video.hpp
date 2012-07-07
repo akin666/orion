@@ -8,15 +8,20 @@
 #ifndef SDL_VIDEO_HPP_
 #define SDL_VIDEO_HPP_
 
+#include "sdl_detect.hpp"
+#ifdef SDL_PLATFORM
 #include <video/video.hpp>
 
 namespace orion
 {
 
+class SDLRenderTarget;
 class SDLVideo : public Video
 {
 protected:
 	uint32 flags;
+
+	SDLRenderTarget *rendertarget;
 
 	void setInitialized( bool val );
 	bool isInitialized();
@@ -40,4 +45,5 @@ public:
 };
 
 } // namespace orion
+#endif // SDL_PLATFORM
 #endif // SDL_VIDEO_HPP_
