@@ -38,6 +38,8 @@ public:
 	virtual void setTitle( std::string head );
 	virtual std::string getTitle();
 
+	virtual void query();
+
 	virtual bool apply( VideoMode& mode );
 	virtual bool initialize();
 	virtual void flip();

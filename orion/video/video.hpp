@@ -38,6 +38,7 @@ public:
 	virtual void flip() = 0;
 	virtual void finish() = 0;
 	virtual RenderTarget& getRenderTarget() = 0;
+	virtual void query() = 0;
 };
 
 } // namespace orion

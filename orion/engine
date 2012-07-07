@@ -112,6 +112,7 @@ public:
 			return false;
 		}
 		Global<Video>::set( &video );
+		scheduler.set( &video ); // scheduler needs to know this.
 		
 		// AUDIO
 		if( !audio.initialize() )

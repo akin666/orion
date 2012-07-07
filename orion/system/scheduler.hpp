@@ -21,6 +21,7 @@
 #include <state/statestack.hpp>
 #include <orion>
 #include "actionqueue.hpp"
+#include <video/video.hpp>
 
 namespace orion {
 
@@ -41,9 +42,13 @@ protected:
 	Tick nextRender;
 
 	ActionQueue actionQueu;
+
+	Video *video;
 public:
 	Scheduler();
 	virtual ~Scheduler();
+
+	void set( Video *video );
 
 	Tick getCurrent() const;
 	void setRenderTick( Tick tick );

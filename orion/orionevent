@@ -6,5 +6,6 @@
 #include <event/event.hpp>
 
 #include <event/applicationevent.hpp>
+#include <event/keyevent.hpp>
 
 #endif

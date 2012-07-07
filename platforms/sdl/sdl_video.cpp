@@ -11,6 +11,8 @@
 #include <stdgl>
 #include <graphics/graphicslib.hpp>
 
+#include <orionevent>
+
 namespace orion {
 
 /////
@@ -71,8 +73,15 @@ bool SDLRenderTarget::initialize()
 			480 ,
 			32,
 			SDL_OPENGL |
-			SDL_FULLSCREEN
+			0x0
+			//SDL_FULLSCREEN
 			);
+
+	if( !GL_INITIALIZATION )
+	{
+		LOG->error("Failed to initialize GL\n");
+		return false;
+	}
 
 	return screen != NULL;
 }
@@ -130,11 +139,12 @@ void SDLVideo::listModes(VideoModeSet& set)
 
 bool SDLVideo::isCursorVisible()
 {
-	return true;
+	return SDL_ShowCursor( -1 ) == 1;
 }
 
 void SDLVideo::setCursorVisible(bool val)
 {
+	SDL_ShowCursor( val ? 1 : 0 );
 }
 
 void SDLVideo::setTitle(std::string head)
@@ -144,6 +154,61 @@ void SDLVideo::setTitle(std::string head)
 std::string SDLVideo::getTitle()
 {
 	return "";
+}
+
+void SDLVideo::query()
+{
+    SDL_Event event;
+    while( SDL_PollEvent(&event) )
+    {
+        // check for messages
+        switch( event.type )
+        {
+			case SDL_QUIT:
+			{
+				ApplicationEvent orionEvent( ApplicationEvent::Quit );
+				sendEvent<ApplicationEvent>( orionEvent );
+				break;
+			}
+			case SDL_VIDEORESIZE :
+			{
+				ApplicationEvent orionEvent( ApplicationEvent::Resized );
+				sendEvent<ApplicationEvent>( orionEvent );
+				break;
+			}
+			case SDL_MOUSEMOTION:
+			{
+			//	printf("Mouse moved by %d,%d to (%d,%d)\n",event.motion.xrel, event.motion.yrel,event.motion.x, event.motion.y);
+			//	InputMotionEvent orionEvent( event.motion.xrel , event.motion.yrel );
+			//	sendEvent<InputMotionEvent>( orionEvent );
+				break;
+			}
+			case SDL_MOUSEBUTTONUP:
+			case SDL_MOUSEBUTTONDOWN:
+			{
+			//	printf("Mouse button %d pressed at (%d,%d)\n", event.button.button, event.button.x, event.button.y);
+			//	ApplicationEvent orionEvent( ApplicationEvent::Quit );
+			//	sendEvent<ApplicationEvent>( orionEvent );
+				break;
+			}
+			case SDL_KEYUP:
+			case SDL_KEYDOWN:
+			{
+				KeyEvent orionEvent(
+						(event.key.state == SDL_KEYDOWN ? KeyEvent::Down : KeyEvent::Up) ,
+						event.key.keysym.unicode,
+						event.key.keysym.sym,
+						event.key.which
+						);
+				sendEvent<KeyEvent>( orionEvent );
+				break;
+			}
+			default:
+			{
+				break;
+			}
+        }
+    }
 }
 
 bool SDLVideo::apply(VideoMode& mode)
@@ -169,7 +234,7 @@ bool SDLVideo::initialize()
 //	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 //	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 
-	if( SDL_Init( SDL_INIT_VIDEO ) != 0 )
+	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
 		LOG->error("Failed to initialize SDLVideo: %s\n", SDL_GetError());
 		return false;
@@ -177,11 +242,8 @@ bool SDLVideo::initialize()
 
     atexit(SDL_Quit);
 
-	if( !GL_INITIALIZATION )
-	{
-		LOG->error("Failed to initialize GL\n");
-		return false;
-	}
+    // Configure default things:
+    SDL_EnableUNICODE( 1 ); // translate key inputs into unicode.
 
 	rendertarget = new SDLRenderTarget( mode );
 

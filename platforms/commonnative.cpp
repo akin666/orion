@@ -144,12 +144,6 @@ std::string timeToString( const Time& time )
 	return "";
 }
 
-// Platform tick queries
-// (for query joystick, mouse, keyboard, if you have to)
-void platformQuery()
-{
-}
-
 } // orion
 
 #endif // USE_COMMON_NATIVE

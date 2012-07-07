@@ -13,12 +13,18 @@ namespace orion {
 
 Scheduler::Scheduler()
 : current( 0 ),
-  nextRender( 1 )
+  nextRender( 1 ),
+  video( NULL )
 {
 }
 
 Scheduler::~Scheduler()
 {
+}
+
+void Scheduler::set( Video *video )
+{
+	this->video = video;
 }
 
 Tick Scheduler::getCurrent() const
@@ -119,7 +125,10 @@ void Scheduler::run()
 		for( ; current < nextRender ; ++current )
 		{
 			// Query platform for input or whatever.
-			platformQuery();
+			if( video != NULL )
+			{
+				video->query();
+			}
 
 			// Fire up TICK based actions
 			actionQueu.run( current );

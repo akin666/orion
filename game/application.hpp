@@ -10,9 +10,14 @@
 
 #include <orion>
 #include <application/applicationinterface.hpp>
+#include "inputcontroller.hpp"
 
 class Application : public orion::ApplicationInterface
 {
+protected:
+	orion::InputController input;
+
+	bool running;
 public:
 	Application();
 	virtual ~Application();

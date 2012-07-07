@@ -23,13 +23,15 @@ public:
 		Maximized,
 		Windowed,
 		Resized,
+		Quit,
 	};
-
-	Type type;
 public:
 	ApplicationEvent();
 	ApplicationEvent( const ApplicationEvent& other );
+	ApplicationEvent( Type type );
 	virtual ~ApplicationEvent();
+
+	Type type;
 };
 
 } // namespace orion

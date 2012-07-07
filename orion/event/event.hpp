@@ -24,8 +24,8 @@ void sendEvent( const CType& event )
 	EventTask<CType> *handler = getGlobal< EventTask<CType> >();
 	if( handler == NULL )
 	{
-		handler = createGlobal< EventTask<CType> >();
-		createGlobal< Scheduler >()->add( handler );
+		// no need to create the task, if no one is listening.
+		return;
 	}
 	handler->send( event );
 }

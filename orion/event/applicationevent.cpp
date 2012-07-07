@@ -18,6 +18,11 @@ ApplicationEvent::ApplicationEvent( const ApplicationEvent& other )
 {
 }
 
+ApplicationEvent::ApplicationEvent( Type type  )
+: type( type )
+{
+}
+
 ApplicationEvent::~ApplicationEvent()
 {
 }

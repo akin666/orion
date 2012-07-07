@@ -40,35 +40,6 @@ int main(int argc, char *argv[])
     while( app.stillRunning() )
     {
     	app.run();
-/*
-    	PROFILER_START( "keys." );
-        // message processing loop
-        SDL_Event event;
-        while (SDL_PollEvent(&event))
-        {
-            // check for messages
-            switch (event.type)
-            {
-                // exit if the window is closed
-            case SDL_QUIT:
-//                done = true;
-                break;
-
-                // check for keypresses
-            case SDL_KEYDOWN:
-                {
-                    // exit if ESCAPE is pressed
-//                    if (event.key.keysym.sym == SDLK_ESCAPE)
-//                        done = true;
-                    break;
-                }
-            } // end switch
-        } // end of message processing
-
-        // DRAWING STARTS HERE
-
-        PROFILER_END( "keys." );
-        */
     }
 
     return 0;
