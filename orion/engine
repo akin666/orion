@@ -89,6 +89,9 @@ public:
 		// Scheduler!
 		Global<Scheduler>::set( &scheduler );
 		
+		// StateMachine.
+		Global<StateStack>::set( &scheduler );
+		
 		// MEMORYMANAGER
 		if( !allocation.initialize() )
 		{

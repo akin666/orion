@@ -20,14 +20,18 @@ protected:
 
 	State *last;
 	State *current;
+
+	void destroy( State *state );
 public:
 	StateStack();
 	virtual ~StateStack();
 
 	void runStateStack();
 
-	void push( State& state );
-	void pop( State& state );
+	// Ownership of the state is released to StateStack!
+	void push( State *state );
+	void pop();
+	void replace( State *state );
 };
 
 } // namespace orion

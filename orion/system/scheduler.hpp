@@ -50,6 +50,7 @@ public:
 
 	void set( Video *video );
 
+	void setCurrent( Tick tick );
 	Tick getCurrent() const;
 	void setRenderTick( Tick tick );
 	Tick getRenderTick( ) const;

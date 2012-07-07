@@ -18,8 +18,6 @@ public:
 	State();
 	virtual ~State();
 
-	virtual bool canExit() = 0;
-
 	virtual void activate() = 0;
 	virtual void run() = 0;
 };

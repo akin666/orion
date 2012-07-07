@@ -27,6 +27,11 @@ void Scheduler::set( Video *video )
 	this->video = video;
 }
 
+void Scheduler::setCurrent( Tick tick )
+{
+	current = tick;
+}
+
 Tick Scheduler::getCurrent() const
 {
 	return current;

@@ -8,6 +8,8 @@
 #include "application.hpp"
 #include <video/video.hpp>
 #include <tasks/simplerendertask.hpp>
+#include "menustate.hpp"
+#include <allocator>
 
 using namespace orion;
 
@@ -29,6 +31,9 @@ bool Application::initialize( StringSet& args )
 	RenderTask *renderer = new SimpleRenderTask( video );
 	Global<Scheduler>::get()->add( renderer );
 
+	MenuState *state = Global<Allocator>::get()->create<MenuState>();
+	Global<StateStack>::get()->push( state );
+
 	running = true;
 
 	return true;
@@ -36,7 +41,7 @@ bool Application::initialize( StringSet& args )
 
 bool Application::stillRunning()
 {
-	return true;
+	return running;
 }
 
 bool Application::handle( const ApplicationEvent& event )
