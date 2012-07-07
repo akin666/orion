@@ -5,6 +5,8 @@
 
 #ifdef SDL_PLATFORM
 
+#include <SDL/SDL.h>
+
 #include <profiler/profiler.hpp>
 #include <application.hpp>
 #include <configloader.hpp>
@@ -13,8 +15,6 @@
 #include <openal/openal_audio.hpp>
 
 #include <engine>
-
-#include <SDL/SDL.h>
 
 #warning Compiling with SDL-MAIN
 
