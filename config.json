@@ -1,0 +1,14 @@
+{
+    "video": {
+        "width": 800,
+        "height": 600,
+        "dpi": 96,
+        "red": 8,
+        "green": 8,
+        "blue": 8,
+        "alpha": 8,
+        "stencil": 0,,
+        "depth": 32,
+        "fullscreen": false
+    }
+}

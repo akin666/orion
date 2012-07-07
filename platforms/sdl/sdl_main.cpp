@@ -9,7 +9,7 @@
 
 #include <profiler/profiler.hpp>
 #include <application.hpp>
-#include <configloader.hpp>
+#include <config/jsonconfigloader.hpp>
 
 #include <sdl/sdl_video.hpp>
 #include <openal/openal_audio.hpp>
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 {
 	orion::Engine<
 		Application,
-		orion::ConfigLoader,
+		orion::JSONConfigLoader,
 		orion::SDLVideo ,
 		orion::OpenALAudio ,
 		orion::Log ,

@@ -11,6 +11,11 @@
 
 #include <iostream>
 #include <sys/time.h>
+#include <cstdio>
+
+#ifndef MAX_TEXT_FILE_SIZE
+# define MAX_TEXT_FILE_SIZE 1048576
+#endif
 
 namespace orion {
 
@@ -142,6 +147,68 @@ std::string timeToString( const Time& time )
 {
 	// TODO!
 	return "";
+}
+
+
+// File I/O
+FILE *openFileRead( std::string path )
+{
+	return fopen ( path.c_str() , "rb" );
+}
+
+FILE *openFileWrite( std::string path )
+{
+	return fopen ( path.c_str() , "wb" );
+}
+
+void closeFile( FILE *file )
+{
+	fclose( file );
+}
+
+bool readFile( std::string path , std::string& content )
+{
+	FILE * file = openFileRead( path );
+
+	if( file == NULL )
+	{
+		return false;
+	}
+
+	int64 size;
+	int8 *buffer;
+
+	fseek( file , 0L , SEEK_END);
+	size = ftell( file );
+	rewind( file );
+
+	if( size > MAX_TEXT_FILE_SIZE )
+	{
+		closeFile( file );
+		return false;
+	}
+
+	buffer = new int8[size + 1];
+
+	if( buffer == NULL )
+	{
+		closeFile( file );
+		return false;
+	}
+
+	if( fread( buffer , size, 1 , file ) != 1 )
+	{
+		delete[] buffer;
+		closeFile( file );
+		return false;
+	}
+	closeFile( file );
+
+	content = (char*)buffer;
+
+	delete[] buffer;
+
+	return true;
 }
 
 } // orion

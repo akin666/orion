@@ -17,4 +17,6 @@
 
 #define USE_COMMON_NATIVE
 
+#define DEFAULT_CONFIG_PATH "config.json"
+
 #endif // DEFINES_HPP_

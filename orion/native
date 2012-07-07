@@ -36,6 +36,12 @@ MicroSecond getMicroSecond( const Time& time );
 Time parseTime( std::string str );
 std::string timeToString( const Time& time );
 
+// File I/O
+FILE *openFileRead( std::string path );
+FILE *openFileWrite( std::string path );
+void closeFile( FILE *file );
+bool readFile( std::string path , std::string& content );
+
 } // orion
 
 #endif // NATIVE_H_
