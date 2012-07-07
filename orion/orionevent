@@ -7,5 +7,6 @@
 
 #include <event/applicationevent.hpp>
 #include <event/keyevent.hpp>
+#include <event/motionevent.hpp>
 
 #endif

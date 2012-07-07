@@ -22,7 +22,7 @@ namespace orion {
 #ifdef USE_GLEW
 # define GLEW_STATIC
 # include <GL/glew.h>
-# define GL_INITIALIZATION ( glewInit() == GLEW_OK )
+# define GL_INITIALIZATION ( (glewInit() == GLEW_OK) && GLEW_VERSION_3_0 )
 #else
 #endif
 
