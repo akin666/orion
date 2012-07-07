@@ -166,6 +166,9 @@ bool SDLVideo::initialize()
 	VideoMode mode;
 	mode.read( *CONFIG , "video" );
 
+//	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+//	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+
 	if( SDL_Init( SDL_INIT_VIDEO ) != 0 )
 	{
 		LOG->error("Failed to initialize SDLVideo: %s\n", SDL_GetError());
