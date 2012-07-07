@@ -33,6 +33,10 @@ public:
 	template <class CType>
 	void destroy( CType* data )
 	{
+		if( data == NULL )
+		{
+			return;
+		}
 		delete data;
 	}
 };

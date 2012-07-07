@@ -33,7 +33,7 @@ template <
 class Engine
 {
 protected:
-	ApplicationPolicy app;
+	ApplicationPolicy *app;
 	VideoPolicy video;
 	AudioPolicy audio;
 	LogPolicy log;
@@ -50,6 +50,8 @@ public:
 	
 	~Engine()
 	{
+		delete app;
+		app = NULL;
 	}
 	
 	bool initialize( int argc = 0 , char *argv[] = NULL )
@@ -125,20 +127,24 @@ public:
 		}
 		Global<Audio>::set( &audio );
 		
+		/////
+		//// Setup application!
+		// late instantiation, to make sure that all the essential engine parts are up and running at this point.
 		// APP
-		if( !app.initialize( args ) )
+		app = new ApplicationPolicy;
+		if( !app->initialize( args ) )
 		{
 			LOG->error("Failed to initialize application. Bailing out.");
 			return false;
 		}
-		Global<ApplicationInterface>::set( &app );
+		Global<ApplicationInterface>::set( app );
 		
 		return true;
 	}
 
 	bool stillRunning()
 	{
-		return app.stillRunning();
+		return app->stillRunning();
 	}
 
 	void run()
