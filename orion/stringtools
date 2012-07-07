@@ -37,6 +37,11 @@ T to_ot( const F from )
 	return to;
 }
 
+// specialization need forward declarations.
+template<> std::string to_ot<std::string, std::string>( const std::string from );
+template<> bool to_ot<bool, std::string>( const std::string from );
+template<> std::string to_ot<std::string, bool>( const bool from );
+
 } // stringtools
 } // orion
 
