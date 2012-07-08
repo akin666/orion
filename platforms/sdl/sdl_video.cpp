@@ -168,11 +168,11 @@ void SDLVideo::setCursorVisible(bool val)
 	SDL_ShowCursor( val ? 1 : 0 );
 }
 
-void SDLVideo::setTitle(std::string head)
+void SDLVideo::setTitle(string8 head)
 {
 }
 
-std::string SDLVideo::getTitle()
+string8 SDLVideo::getTitle()
 {
 	return "";
 }

@@ -13,30 +13,30 @@
 namespace orion {
 namespace stringtools {
 
-void toUpper( std::string& str )
+void toUpper( string8& str )
 {
 	std::transform(str.begin(), str.end(), str.begin(), toupper );
 }
 
-void toLower( std::string& str )
+void toLower( string8& str )
 {
 	std::transform(str.begin(), str.end(), str.begin(), tolower);
 }
 
 template<>
-std::string to_ot<std::string, std::string>( const std::string from )
+string8 to_ot<string8, string8>( const string8 from )
 {
 	return from;
 }
 
 template<>
-bool to_ot<bool, std::string>( const std::string from )
+bool to_ot<bool, string8>( const string8 from )
 {
 	return from.size() == 4; // true == 4 false == 5
 }
 
 template<>
-std::string to_ot<std::string, bool>( const bool from )
+string8 to_ot<string8, bool>( const bool from )
 {
 	return from ? "true" : "false";
 }

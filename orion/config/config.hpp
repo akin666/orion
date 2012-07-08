@@ -16,41 +16,41 @@ namespace orion {
 class Config
 {
 protected:
-	typedef std::map<std::string , JsonBox::Value> ChangeSet;
+	typedef std::map<string8 , JsonBox::Value> ChangeSet;
 
 	JsonBox::Value root;
 	ChangeSet changes;
 
-	const JsonBox::Value *getValue( std::string key );
+	const JsonBox::Value *getValue( string8 key );
 
 	// by default we do not recognize the type.
 	template <class CType>
-	bool getValue( std::string key , CType& type )
+	bool getValue( string8 key , CType& type )
 	{
 		return false;
 	}
 
 	template <class CType>
-	void setValue( std::string key , CType& type )
+	void setValue( string8 key , CType& type )
 	{
 	}
 public:
 	Config();
 	virtual ~Config();
 
-	bool loadFromFile( const std::string& path );
-	bool loadFromString( const std::string& data );
+	bool loadFromFile( const string8& path );
+	bool loadFromString( const string8& data );
 	bool loadFromStream( std::istream& input );
 
-	bool saveToFile( const std::string& path );
-	bool saveToString( std::string& data );
+	bool saveToFile( const string8& path );
+	bool saveToString( string8& data );
 	bool saveToStream( std::ostream& output );
 
 	// commit changeset to the jsonbox.
 	void commit();
 
 	template <class CType>
-	CType get( std::string key , CType def )
+	CType get( string8 key , CType def )
 	{
 		CType val;
 		if( !getValue( key , val ) )
@@ -61,7 +61,7 @@ public:
 	}
 
 	template <class CType>
-	void set( std::string key , CType def )
+	void set( string8 key , CType def )
 	{
 		setValue( key , def );
 	}
@@ -70,17 +70,17 @@ public:
 
 // specializations
 // getters
-template <> bool Config::getValue<float32>( std::string key , float32& type );
-template <> bool Config::getValue<float64>( std::string key , float64& type );
-template <> bool Config::getValue<std::string>( std::string key , std::string& type );
-template <> bool Config::getValue<int32>( std::string key , int32& type );
-template <> bool Config::getValue<bool>( std::string key , bool& type );
+template <> bool Config::getValue<float32>( string8 key , float32& type );
+template <> bool Config::getValue<float64>( string8 key , float64& type );
+template <> bool Config::getValue<string8>( string8 key , string8& type );
+template <> bool Config::getValue<int32>( string8 key , int32& type );
+template <> bool Config::getValue<bool>( string8 key , bool& type );
 // setters
-template <> void Config::setValue<float32>( std::string key , float32& type );
-template <> void Config::setValue<float64>( std::string key , float64& type );
-template <> void Config::setValue<std::string>( std::string key , std::string& type );
-template <> void Config::setValue<int32>( std::string key , int32& type );
-template <> void Config::setValue<bool>( std::string key , bool& type );
+template <> void Config::setValue<float32>( string8 key , float32& type );
+template <> void Config::setValue<float64>( string8 key , float64& type );
+template <> void Config::setValue<string8>( string8 key , string8& type );
+template <> void Config::setValue<int32>( string8 key , int32& type );
+template <> void Config::setValue<bool>( string8 key , bool& type );
 
 
 // CONFIG->get<float>("speed" , 123.0f );

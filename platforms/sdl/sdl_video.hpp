@@ -35,8 +35,8 @@ public:
 	virtual bool isCursorVisible();
 	virtual void setCursorVisible( bool val );
 
-	virtual void setTitle( std::string head );
-	virtual std::string getTitle();
+	virtual void setTitle( string8 head );
+	virtual string8 getTitle();
 
 	virtual void query();
 

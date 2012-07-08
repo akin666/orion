@@ -19,7 +19,7 @@ public:
 	Date( const Time& other );
 	Date( const Date& other );
 	Date( Year year = 0 , Month month = 0 , Day day = 0 , Hour hour = 0 , Minute minute = 0 , Second second = 0 , MicroSecond ms = 0 );
-	Date( std::string str );
+	Date( string8 str );
 	virtual ~Date();
 
 	bool after( const Date& val );
@@ -52,11 +52,11 @@ public:
 
 	Timezone getTimezoneOffset();
 
-	void parse( std::string string );
+	void parse( string8 string );
 
 	void update();
 
-	std::string toString();
+	string8 toString();
 };
 
 } // namespace orion

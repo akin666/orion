@@ -136,14 +136,14 @@ MicroSecond getMicroSecond( const Time& time )
 	return time.us;
 }
 
-Time parseTime( std::string str )
+Time parseTime( string8 str )
 {
 	// TODO!
 	Time time;
 	return time;
 }
 
-std::string timeToString( const Time& time )
+string8 timeToString( const Time& time )
 {
 	// TODO!
 	return "";
@@ -151,12 +151,12 @@ std::string timeToString( const Time& time )
 
 
 // File I/O
-FILE *openFileRead( std::string path )
+FILE *openFileRead( string8 path )
 {
 	return fopen ( path.c_str() , "rb" );
 }
 
-FILE *openFileWrite( std::string path )
+FILE *openFileWrite( string8 path )
 {
 	return fopen ( path.c_str() , "wb" );
 }
@@ -166,7 +166,7 @@ void closeFile( FILE *file )
 	fclose( file );
 }
 
-bool readFile( std::string path , std::string& content )
+bool readFile( string8 path , string8& content )
 {
 	FILE * file = openFileRead( path );
 

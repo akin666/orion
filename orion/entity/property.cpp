@@ -43,7 +43,7 @@ bool Property::has( EntityID id )
 	return false;
 }
 
-std::string Property::getName()
+string8 Property::getName()
 {
 	return "null";
 }

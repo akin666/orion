@@ -44,6 +44,10 @@ namespace orion {
     typedef uint8		 	UTF8;
     typedef uint32		 	BufferIndex;
 
+	//typedef std::basic_string<UTF8> 	string8; // this just doesnt work, the std::string conversions & candy is too deeply integrated into c++.
+	typedef std::string 	string8;
+	typedef std::basic_string<UNICODE> string32;
+
     // Time
     typedef int32			Year;
     typedef int32			Month;
@@ -66,12 +70,13 @@ namespace orion {
 
     typedef uint64 			EntityID;
     typedef std::vector<EntityID> EntitySet;
-    typedef std::map<std::string, EntityID> EntityNameMap;
-    typedef std::map<std::string, EntitySet> EntitySetMap;
+    typedef std::map<string8, EntityID> EntityNameMap;
+    typedef std::map<string8, EntitySet> EntitySetMap;
 
-    typedef std::vector<std::string> StringSet;
 
-	typedef std::string::size_type StringPos;
+    typedef std::vector<string8> StringSet;
+
+	typedef string8::size_type StringPos;
 
 	enum ColorMode
 	{

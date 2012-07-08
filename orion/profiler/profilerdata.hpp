@@ -17,7 +17,7 @@ namespace orion
 class ProfilerData
 {
 protected:
-	std::string name;
+	string8 name;
 
 	PreciseTime max;
 	PreciseTime min;
@@ -31,13 +31,13 @@ protected:
 public:
 	ProfilerData( );
 	ProfilerData( const ProfilerData& b );
-	ProfilerData( std::string name );
+	ProfilerData( string8 name );
 	virtual ~ProfilerData();
 
 	void start();
 	void end();
 
-	std::string getName();
+	string8 getName();
 	PreciseTime getMax();
 	PreciseTime getMin();
 	PreciseTime getLast();

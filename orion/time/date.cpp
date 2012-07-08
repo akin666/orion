@@ -36,7 +36,7 @@ Date::Date(Year year, Month month, Day day, Hour hour, Minute minute, Second sec
 {
 }
 
-Date::Date(std::string str)
+Date::Date(string8 str)
 {
 	(*this) = ::orion::parseTime( str );
 }
@@ -173,7 +173,7 @@ Timezone Date::getTimezoneOffset()
 	return ::orion::getTimezone();
 }
 
-void Date::parse(std::string string)
+void Date::parse(string8 string)
 {
 	(*this) = ::orion::parseTime( string );
 }
@@ -183,7 +183,7 @@ void Date::update()
 	::orion::getTime( *this );
 }
 
-std::string Date::toString()
+string8 Date::toString()
 {
 	return ::orion::timeToString( *this );
 }

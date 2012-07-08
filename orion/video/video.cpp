@@ -36,11 +36,11 @@ void Video::setCursorVisible( bool val )
 {
 }
 
-void Video::setTitle( std::string head )
+void Video::setTitle( string8 head )
 {
 }
 
-std::string Video::getTitle()
+string8 Video::getTitle()
 {
 	return "";
 }

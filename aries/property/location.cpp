@@ -19,7 +19,7 @@ Location::~Location()
 }
 
 template <>
-std::string TProperty<Location>::getName()
+string8 TProperty<Location>::getName()
 {
 	return "location";
 }

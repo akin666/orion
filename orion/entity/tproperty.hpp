@@ -80,7 +80,7 @@ public:
 	}
 
 	// Specialize
-	virtual std::string getName()
+	virtual string8 getName()
 	{
 		return "";
 	}

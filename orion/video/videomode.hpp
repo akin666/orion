@@ -59,8 +59,8 @@ public:
 	bool getFullscreen() const;
 	void setFullscreen(bool val);
 
-	bool read( Config& config , std::string path );
-	bool write( Config& config , std::string path );
+	bool read( Config& config , string8 path );
+	bool write( Config& config , string8 path );
 };
 
 typedef std::vector<VideoMode> VideoModeSet;

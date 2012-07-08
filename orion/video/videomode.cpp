@@ -138,7 +138,7 @@ void VideoMode::setFullscreen(bool val)
 	}
 }
 
-bool VideoMode::read( Config& config , std::string path )
+bool VideoMode::read( Config& config , string8 path )
 {
 	glm::ivec2 dim;
 	dim.x = config.get<int32>(	path + ".width" , 640 );
@@ -157,7 +157,7 @@ bool VideoMode::read( Config& config , std::string path )
 	return true;
 }
 
-bool VideoMode::write( Config& config , std::string path )
+bool VideoMode::write( Config& config , string8 path )
 {
 	config.set<int32>(		path + ".width", 		getDimensions().x );
 	config.set<int32>(		path + ".height",		getDimensions().y );

@@ -17,9 +17,9 @@ public:
 	Log();
 	virtual ~Log();
 
-	virtual void printMessage( std::string message );
-	virtual void printError( std::string message );
-	virtual void printWarning( std::string message );
+	virtual void printMessage( string8 message );
+	virtual void printError( string8 message );
+	virtual void printWarning( string8 message );
 
 	void message( const char* format , ... );
 	void error( const char* format , ... );

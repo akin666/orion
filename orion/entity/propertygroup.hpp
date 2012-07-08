@@ -15,7 +15,7 @@ namespace orion {
 
 class PropertyGroup {
 protected:
-	typedef std::map< std::string , Property* > PropertyMap;
+	typedef std::map< string8 , Property* > PropertyMap;
 	PropertyMap properties;
 public:
 	PropertyGroup();

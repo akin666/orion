@@ -28,19 +28,19 @@ void Profiler::clear()
 	data.clear();
 }
 
-ProfilerData& Profiler::start( std::string str )
+ProfilerData& Profiler::start( string8 str )
 {
 	ProfilerData& tmp = access( str );
 	tmp.start();
 	return tmp;
 }
 
-void Profiler::end( std::string str )
+void Profiler::end( string8 str )
 {
 	access( str ).end();
 }
 
-ProfilerData& Profiler::access( std::string str )
+ProfilerData& Profiler::access( string8 str )
 {
 	ProfilerMap::iterator iter = data.find( str );
 

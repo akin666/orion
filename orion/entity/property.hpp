@@ -26,7 +26,7 @@ public:
 
 	virtual bool has( EntityID id );
 
-	virtual std::string getName();
+	virtual string8 getName();
 	virtual bool parse( EntityID id , rapidxml::xml_node<> *node );
 };
 

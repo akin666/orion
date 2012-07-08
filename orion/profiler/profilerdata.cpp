@@ -39,7 +39,7 @@ ProfilerData::ProfilerData( const ProfilerData& b )
 	}
 }
 
-ProfilerData::ProfilerData( std::string name )
+ProfilerData::ProfilerData( string8 name )
 : name( name ),
   max( 0 ),
   min( std::numeric_limits<PreciseTime>::max() ),
@@ -87,7 +87,7 @@ void ProfilerData::end()
 	state = PROFILER_IDLE;
 }
 
-std::string ProfilerData::getName()
+string8 ProfilerData::getName()
 {
 	return name;
 }

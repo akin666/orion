@@ -17,7 +17,7 @@ namespace orion
 class Profiler
 {
 protected:
-	typedef std::map< std::string , ProfilerData* > ProfilerMap;
+	typedef std::map< string8 , ProfilerData* > ProfilerMap;
 
 	ProfilerMap data;
 public:
@@ -26,10 +26,10 @@ public:
 
 	void clear();
 
-	ProfilerData& start( std::string str );
-	void end( std::string str );
+	ProfilerData& start( string8 str );
+	void end( string8 str );
 
-	ProfilerData& access( std::string str );
+	ProfilerData& access( string8 str );
 
 	void print();
 };
