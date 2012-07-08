@@ -17,15 +17,48 @@ Config::~Config()
 {
 }
 
-bool Config::loadFromFile( std::string path )
+bool Config::loadFromFile( const std::string& path )
 {
 	root.loadFromFile( path );
 	return true;
 }
 
-bool Config::loadFromString( std::string data )
+bool Config::loadFromString( const std::string& data )
 {
 	root.loadFromString( data );
+	return true;
+}
+
+bool Config::loadFromStream( std::istream& input )
+{
+	root.loadFromStream( input );
+	return true;
+}
+
+
+bool Config::saveToFile( const std::string& path )
+{
+	commit();
+	root.writeToFile( path );
+	return true;
+}
+
+bool Config::saveToString( std::string& data )
+{
+	commit();
+
+	std::ostringstream stream;
+	root.writeToStream( stream );
+	data = stream.str();
+
+	return true;
+}
+
+bool Config::saveToStream( std::ostream& output )
+{
+	commit();
+
+	root.writeToStream( output );
 	return true;
 }
 
@@ -77,6 +110,13 @@ const JsonBox::Value *Config::getValue( std::string key )
 
 	// Did not find the value in changeset, so taking a look at original data.
 	return findPath( key , root );
+}
+
+
+// commit changeset to the jsonbox.
+void Config::commit()
+{
+	// TODO.. probably the most hackish thing ever.
 }
 
 // Getters

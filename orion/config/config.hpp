@@ -38,8 +38,16 @@ public:
 	Config();
 	virtual ~Config();
 
-	bool loadFromFile( std::string path );
-	bool loadFromString( std::string data );
+	bool loadFromFile( const std::string& path );
+	bool loadFromString( const std::string& data );
+	bool loadFromStream( std::istream& input );
+
+	bool saveToFile( const std::string& path );
+	bool saveToString( std::string& data );
+	bool saveToStream( std::ostream& output );
+
+	// commit changeset to the jsonbox.
+	void commit();
 
 	template <class CType>
 	CType get( std::string key , CType def )
