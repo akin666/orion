@@ -8,6 +8,8 @@
 #ifndef SIMULATIONTASK_H_
 #define SIMULATIONTASK_H_
 
+#include <profiler/profilerdata.hpp>
+
 namespace orion {
 
 class SimulationTask {
@@ -16,6 +18,8 @@ public:
 	virtual ~SimulationTask();
 
 	virtual void run() = 0;
+
+	ProfilerData profiler;
 };
 
 } // namespace orion

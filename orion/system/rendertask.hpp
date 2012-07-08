@@ -8,6 +8,8 @@
 #ifndef RENDERTASK_HPP_
 #define RENDERTASK_HPP_
 
+#include <profiler/profilerdata.hpp>
+
 namespace orion {
 
 class RenderTask {
@@ -16,6 +18,8 @@ public:
 	virtual ~RenderTask();
 
 	virtual void run() = 0;
+
+	ProfilerData profiler;
 };
 
 } // namespace orion

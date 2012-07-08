@@ -8,6 +8,8 @@
 #ifndef LOGICTASK_H_
 #define LOGICTASK_H_
 
+#include <profiler/profilerdata.hpp>
+
 namespace orion {
 
 class LogicTask {
@@ -16,6 +18,8 @@ public:
 	virtual ~LogicTask();
 
 	virtual void run() = 0;
+
+	ProfilerData profiler;
 };
 
 } // namespace orion

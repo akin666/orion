@@ -22,6 +22,7 @@
 #include <orion>
 #include "actionqueue.hpp"
 #include <video/video.hpp>
+#include <profiler/profilerdata.hpp>
 
 namespace orion {
 
@@ -44,6 +45,13 @@ protected:
 	ActionQueue actionQueu;
 
 	Video *video;
+
+	// Profilers:
+	ProfilerData frame;
+	ProfilerData state;
+	ProfilerData tick;
+	ProfilerData query;
+	ProfilerData actionque;
 public:
 	Scheduler();
 	virtual ~Scheduler();

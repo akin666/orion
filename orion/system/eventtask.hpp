@@ -12,6 +12,8 @@
 #include <thread>
 #include <event/eventlistener.hpp>
 
+#include <profiler/profilerdata.hpp>
+
 namespace orion {
 
 class EventTaskInterface
@@ -21,6 +23,8 @@ public:
 	virtual ~EventTaskInterface();
 
 	virtual void run() = 0;
+
+	ProfilerData profiler;
 };
 
 template <class CType>

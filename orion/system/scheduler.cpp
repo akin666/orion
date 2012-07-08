@@ -125,40 +125,53 @@ void Scheduler::run()
 	// Tick simulation.
 	// Catch the real-time.
 	try
-	{
-		runStateStack();
+	{ // frame
+		ProfilerRAII frameProfiler( frame );
+		{ // state
+			ProfilerRAII stateProfiler( state );
+			runStateStack();
+		}
 		for( ; current < nextRender ; ++current )
-		{
+		{ // tick
+			ProfilerRAII tickProfiler( tick );
+
 			// Query platform for input or whatever.
 			if( video != NULL )
-			{
+			{ // Query
+				ProfilerRAII queryProfiler( query );
 				video->query();
 			}
 
-			// Fire up TICK based actions
-			actionQueu.run( current );
+			{ // actionque
+				ProfilerRAII queryProfiler( actionque );
+				// Fire up TICK based actions
+				actionQueu.run( current );
+			}
 
 			// Resolve events for this TICK (this means joystick key etc. events are handled just before logic)
 			for( EventSet::iterator iter = eventTasks.begin() ; iter != eventTasks.end() ; ++iter )
 			{
+				ProfilerRAII profiler( (*iter)->profiler );
 				(*iter)->run();
 			}
 
 			// Logical tasks are run.
 			for( LogicSet::iterator iter = logicTasks.begin() ; iter != logicTasks.end() ; ++iter )
 			{
+				ProfilerRAII profiler( (*iter)->profiler );
 				(*iter)->run();
 			}
 
 			// Simulation tasks are run.
 			for( SimulationSet::iterator iter = simulationTasks.begin() ; iter != simulationTasks.end() ; ++iter )
 			{
+				ProfilerRAII profiler( (*iter)->profiler );
 				(*iter)->run();
 			}
-		}
-		// Render
+		} // tick
 		for( RenderSet::iterator iter = renderTasks.begin() ; iter != renderTasks.end() ; ++iter )
 		{
+			ProfilerRAII profiler( (*iter)->profiler );
 			(*iter)->run();
 		}
 	}
