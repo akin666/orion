@@ -71,6 +71,8 @@ namespace orion {
 
     typedef std::vector<std::string> StringSet;
 
+	typedef std::string::size_type StringPos;
+
 	enum ColorMode
 	{
 		RGB = 1,

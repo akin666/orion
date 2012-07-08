@@ -17,67 +17,115 @@ Config::~Config()
 {
 }
 
-
-Config::Node::Node()
+bool Config::loadFromFile( std::string path )
 {
+	root.loadFromFile( path );
+	return true;
 }
 
-Config::Node::Node( const Node& o )
-: childs( o.childs ),
-  value( o.value )
+bool Config::loadFromString( std::string data )
 {
+	root.loadFromString( data );
+	return true;
 }
 
-std::string *Config::Node::get( const std::string& key , StrPos begin )
+const JsonBox::Value *findPath( std::string& key , const JsonBox::Value& root , StringPos begin = 0 )
 {
-//	typedef std::map<std::string , Node> ChildSet;
-//	ChildSet childs;
-//	std::string value;
-	// find first '.'
-	StrPos pos = key.find_first_of( '.' , begin );
-
-	// dot no found?!
-	if( pos == std::string::npos )
+	// Only Objects are allowed.
+	if( !root.isObject() )
 	{
-		ChildSet::iterator iter = childs.find( key.substr( begin ) );
+		return NULL;
+	}
+	const JsonBox::Object& object = root.getObject();
 
-		if( iter != childs.end() )
+	// find the point.
+	StringPos end = key.find_first_of( '.' , begin );
+
+	// Not point? we possibly at the last part
+	if( end == std::string::npos )
+	{
+		std::map<std::string, JsonBox::Value>::const_iterator iter = object.find( key.substr( begin ) );
+		if( iter == object.end() )
 		{
-			return &(iter->second.value);
+			return NULL;
 		}
 
+		return &(iter->second);
+	}
+
+	// found a point.. seek that from the object.
+	std::map<std::string, JsonBox::Value>::const_iterator iter = object.find( key.substr( begin , end ) );
+	if( iter == object.end() )
+	{
 		return NULL;
 	}
 
-	ChildSet::iterator iter = childs.find( key.substr( begin , pos - 1 ) );
+	return findPath( key , iter->second , end + 1 );
+}
 
-	if( iter != childs.end() )
+const JsonBox::Value *Config::getValue( std::string key )
+{
+	// JsonBox::Value root, has all the data.
+	// key is dot splitted.
+
+	return findPath( key , root );
+}
+
+template <> bool Config::getValue<float32>( std::string key , float32& type )
+{
+	const JsonBox::Value *value = getValue( key );
+	if( value != NULL && value->isDouble() )
 	{
-		return iter->second.get( key , pos + 1 );
+		type = (float32)value->getDouble();
+		return true;
 	}
-
-	return NULL;
+	return false;
 }
 
-void Config::Node::set( const std::string& key , const std::string& val , StrPos begin )
+template <> bool Config::getValue<float64>( std::string key , float64& type )
 {
+	const JsonBox::Value *value = getValue( key );
+	if( value != NULL && value->isDouble() )
+	{
+		type = (float64)value->getDouble();
+		return true;
+	}
+	return false;
 }
 
-std::string *Config::getString( const std::string& key )
+template <> bool Config::getValue<std::string>( std::string key , std::string& type )
 {
-	// Strip the path, and seek.. from root..
-	return root.get( key );
+	const JsonBox::Value *value = getValue( key );
+	if( value != NULL && value->isString() )
+	{
+		type = value->getString();
+		return true;
+	}
+	return false;
 }
 
-void Config::setString( const std::string& key , const std::string& val )
+template <> bool Config::getValue<int32>( std::string key , int32& type )
 {
-	return root.set( key , val );
+	const JsonBox::Value *value = getValue( key );
+	if( value != NULL && value->isInteger() )
+	{
+		type = value->getInt();
+		return true;
+	}
+	return false;
 }
 
-bool Config::has( std::string key )
+template <> bool Config::getValue<bool>( std::string key , bool& type )
 {
-	return getString( key ) != NULL;
+	const JsonBox::Value *value = getValue( key );
+	if( value != NULL && value->isBoolean() )
+	{
+		type = value->getBoolean();
+		return true;
+	}
+	return false;
 }
+
 
 
 } // namespace orion

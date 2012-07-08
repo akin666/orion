@@ -9,69 +9,49 @@
 #define CONFIG_HPP_
 
 #include <orion>
-#include <stringtools>
+#include <JsonBox.h>
 
 namespace orion {
 
 class Config
 {
 protected:
-	typedef std::string::size_type StrPos;
+	JsonBox::Value root;
 
-	class Node
+	const JsonBox::Value *getValue( std::string key );
+
+	// by default we do not recognize the type.
+	template <class CType>
+	bool getValue( std::string key , CType& type )
 	{
-	protected:
-		typedef std::map<std::string , Node> ChildSet;
-		ChildSet childs;
-		std::string value;
-	public:
-		Node();
-		Node( const Node& o );
-
-		std::string *get( const std::string& key , StrPos begin = 0 );
-		void set( const std::string& key , const std::string& val , StrPos begin = 0 );
-	};
-
-	Node root;
-
-	std::string *getString( const std::string& key );
-	void setString( const std::string& key , const std::string& val );
+		return false;
+	}
 public:
 	Config();
 	virtual ~Config();
 
-	bool has( std::string key );
-
-	template <class CType>
-	void set( std::string key , CType val )
-	{
-		setString( key , stringtools::to_ot<std::string , CType >( val ) );
-	}
-
-	template <class CType>
-	CType get( std::string key )
-	{
-		std::string *ptr = getString( key );
-		if( ptr == NULL )
-		{
-			CType tt;
-			return tt;
-		}
-		return stringtools::to_ot<CType , std::string>( *ptr );
-	}
+	bool loadFromFile( std::string path );
+	bool loadFromString( std::string data );
 
 	template <class CType>
 	CType get( std::string key , CType def )
 	{
-		std::string *ptr = getString( key );
-		if( ptr == NULL )
+		CType val;
+		if( !getValue( key , val ) )
 		{
-			set( key , def );
 			return def;
 		}
-		return stringtools::to_ot<CType , std::string>( *ptr );
+		return val;
 	}
 };
+
+
+// specializations
+template <> bool Config::getValue<float32>( std::string key , float32& type );
+template <> bool Config::getValue<float64>( std::string key , float64& type );
+template <> bool Config::getValue<std::string>( std::string key , std::string& type );
+template <> bool Config::getValue<int32>( std::string key , int32& type );
+template <> bool Config::getValue<bool>( std::string key , bool& type );
 
 // CONFIG->get<float>("speed");
 // CONFIG->get<float>("speed" , 123.0f );

@@ -141,24 +141,25 @@ void VideoMode::setFullscreen(bool val)
 bool VideoMode::read( Config& config , std::string path )
 {
 	glm::ivec2 dim;
-	dim.x = config.get<int32>(	path + ".width" );
-	dim.y = config.get<int32>(	path + ".height" );
+	dim.x = config.get<int32>(	path + ".width" , 640 );
+	dim.y = config.get<int32>(	path + ".height" , 480 );
 	setDimensions( dim );
 
-	setDpi( config.get<float32>(	path + ".dpi" ) );
-	setRed( config.get<int32>(		path + ".red" ) );
-	setGreen( config.get<int32>(	path + ".green" ) );
-	setBlue( config.get<int32>(		path + ".blue" ) );
-	setAlpha( config.get<int32>(	path + ".alpha" ) );
-	setStencil( config.get<int32>(	path + ".stencil" ) );
-	setDepth( config.get<int32>(	path + ".depth" ) );
-	setFullscreen( config.get<bool>(path + ".fullscreen" ) );
+	setDpi( config.get<float32>(	path + ".dpi" , 96 ) );
+	setRed( config.get<int32>(		path + ".red" , 8 ) );
+	setGreen( config.get<int32>(	path + ".green" , 8 ) );
+	setBlue( config.get<int32>(		path + ".blue" , 8 ) );
+	setAlpha( config.get<int32>(	path + ".alpha" , 8 ) );
+	setStencil( config.get<int32>(	path + ".stencil" , 0 ) );
+	setDepth( config.get<int32>(	path + ".depth" , 32 ) );
+	setFullscreen( config.get<bool>(path + ".fullscreen" , false ) );
 
 	return true;
 }
 
 bool VideoMode::write( Config& config , std::string path )
 {
+	/*
 	config.set<int32>(		path + ".width", 		getDimensions().x );
 	config.set<int32>(		path + ".height",		getDimensions().y );
 	config.set<float32>(	path + ".dpi", 			getDpi() );
@@ -169,7 +170,7 @@ bool VideoMode::write( Config& config , std::string path )
 	config.set<int32>(		path + ".stencil", 		getStencil() );
 	config.set<int32>(		path + ".depth", 		getDepth() );
 	config.set<bool>(		path + ".fullscreen", 	getFullscreen() );
-
+*/
 	return true;
 }
 
