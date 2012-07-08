@@ -159,7 +159,6 @@ bool VideoMode::read( Config& config , std::string path )
 
 bool VideoMode::write( Config& config , std::string path )
 {
-	/*
 	config.set<int32>(		path + ".width", 		getDimensions().x );
 	config.set<int32>(		path + ".height",		getDimensions().y );
 	config.set<float32>(	path + ".dpi", 			getDpi() );
@@ -170,7 +169,7 @@ bool VideoMode::write( Config& config , std::string path )
 	config.set<int32>(		path + ".stencil", 		getStencil() );
 	config.set<int32>(		path + ".depth", 		getDepth() );
 	config.set<bool>(		path + ".fullscreen", 	getFullscreen() );
-*/
+
 	return true;
 }
 

@@ -68,9 +68,18 @@ const JsonBox::Value *Config::getValue( std::string key )
 	// JsonBox::Value root, has all the data.
 	// key is dot splitted.
 
+	// First take a look at changeset.
+	ChangeSet::iterator iter = changes.find( key );
+	if( iter != changes.end() )
+	{
+		return &(iter->second);
+	}
+
+	// Did not find the value in changeset, so taking a look at original data.
 	return findPath( key , root );
 }
 
+// Getters
 template <> bool Config::getValue<float32>( std::string key , float32& type )
 {
 	const JsonBox::Value *value = getValue( key );
@@ -126,6 +135,32 @@ template <> bool Config::getValue<bool>( std::string key , bool& type )
 	return false;
 }
 
+
+// Setters
+template <> void Config::setValue<float32>( std::string key , float32& type )
+{
+	changes[ key ] = JsonBox::Value( (double)type );
+}
+
+template <> void Config::setValue<float64>( std::string key , float64& type )
+{
+	changes[ key ] = JsonBox::Value( (double)type );
+}
+
+template <> void Config::setValue<std::string>( std::string key , std::string& type )
+{
+	changes[ key ] = JsonBox::Value( type );
+}
+
+template <> void Config::setValue<int32>( std::string key , int32& type )
+{
+	changes[ key ] = JsonBox::Value( type );
+}
+
+template <> void Config::setValue<bool>( std::string key , bool& type )
+{
+	changes[ key ] = JsonBox::Value( type );
+}
 
 
 } // namespace orion
