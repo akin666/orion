@@ -113,10 +113,131 @@ const JsonBox::Value *Config::getValue( string8 key )
 }
 
 
-// commit changeset to the jsonbox.
+class ConfigChangeNode
+{
+public:
+	typedef std::map<string8 , ConfigChangeNode*> NodeMap;
+	ConfigChangeNode()
+	: value( NULL )
+	{
+	}
+
+	~ConfigChangeNode()
+	{
+		for( NodeMap::iterator iter = childs.begin() ; iter != childs.end() ; ++iter )
+		{
+			delete (iter->second);
+		}
+		childs.clear();
+		delete value;
+		value = NULL;
+	}
+
+	NodeMap childs;
+	JsonBox::Value *value;
+};
+
+void pushToTree( const string8& path , const JsonBox::Value& value , ConfigChangeNode& root , StringPos begin = 0 )
+{
+	StringPos end = path.find_first_of( '.' , begin );
+
+	string8 name;
+
+	if( end == string8::npos )
+	{
+		name = path.substr( begin );
+	}
+	else
+	{
+		name = path.substr( begin , end );
+	}
+
+	// Get or Generate node.
+	ConfigChangeNode::NodeMap::iterator iter = root.childs.find( name );
+	ConfigChangeNode* node = NULL;
+	if( iter == root.childs.end() )
+	{
+		// no such child.
+		node = new ConfigChangeNode;
+		root.childs[name] = node;
+	}
+	else
+	{
+		// such child
+		node = iter->second;
+	}
+
+	// no points. so this is the end node.
+	if( end == string8::npos )
+	{
+		if( node != NULL )
+		{
+			if( node->value == NULL )
+			{
+				node->value = new JsonBox::Value;
+			}
+
+			*(node->value) = value;
+		}
+		return;
+	}
+
+	// middle node..
+	pushToTree( path , value , *node , end + 1 );
+}
+
+void generateTree( JsonBox::Object& object , ConfigChangeNode& root )
+{
+	for( ConfigChangeNode::NodeMap::iterator iter = root.childs.begin() ; iter != root.childs.end() ; ++iter )
+	{
+		if( iter->second->value != NULL )
+		{
+			// Leaf value!
+			object[ iter->first ] = *(iter->second->value);
+		}
+		else
+		{
+			// Node!
+			JsonBox::Object object2;
+			generateTree( object2 , *iter->second );
+			object[ iter->first ] = JsonBox::Value( object2 );
+		}
+	}
+}
+
+void Config::generateChangeTree( JsonBox::Value& changeTree , const ChangeSet& changes )
+{
+	ConfigChangeNode nodeRoot;
+	for( ChangeSet::const_iterator iter = changes.begin() ; iter != changes.end() ; ++iter )
+	{
+		pushToTree( iter->first , iter->second , nodeRoot );
+	}
+
+
+	JsonBox::Object object;
+	// Now we have node tree.. now generate the ChangeTree..
+	generateTree( object , nodeRoot );
+
+	changeTree.setObject( object );
+}
+
+// commit changeset to the root(jsonbox).
 void Config::commit()
 {
-	// TODO.. probably the most hackish thing ever.
+	// This is pretty WTF thing..
+	if( changes.size() <= 0 )
+	{
+		return;
+	}
+
+	JsonBox::Value changeTree;
+	generateChangeTree( changeTree , changes );
+	changes.clear();
+
+	// OK, now we have 2 trees.. the original and the ChangeTree..
+	// Merge them..
+
+	// TODO!
 }
 
 // Getters

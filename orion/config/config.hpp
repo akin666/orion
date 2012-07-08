@@ -16,11 +16,14 @@ namespace orion {
 class Config
 {
 protected:
+	// changesets
 	typedef std::map<string8 , JsonBox::Value> ChangeSet;
-
-	JsonBox::Value root;
 	ChangeSet changes;
 
+	void generateChangeTree( JsonBox::Value& changeTree , const ChangeSet& changes );
+
+	// Datas
+	JsonBox::Value root;
 	const JsonBox::Value *getValue( string8 key );
 
 	// by default we do not recognize the type.
