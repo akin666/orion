@@ -45,6 +45,7 @@ protected:
 	StringSet args;
 public:
 	Engine()
+	: app( NULL )
 	{
 	}
 	

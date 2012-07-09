@@ -9,22 +9,16 @@
 #define CONFIG_HPP_
 
 #include <orion>
-#include <JsonBox.h>
+#include <json>
 
 namespace orion {
 
 class Config
 {
 protected:
-	// changesets
-	typedef std::map<string8 , JsonBox::Value> ChangeSet;
-	ChangeSet changes;
+	Json::Value root;
 
-	void generateChangeTree( JsonBox::Value& changeTree , const ChangeSet& changes );
-
-	// Datas
-	JsonBox::Value root;
-	const JsonBox::Value *getValue( string8 key );
+	Json::Value *getValue( string8 key );
 
 	// by default we do not recognize the type.
 	template <class CType>
@@ -41,16 +35,11 @@ public:
 	Config();
 	virtual ~Config();
 
-	bool loadFromFile( const string8& path );
 	bool loadFromString( const string8& data );
 	bool loadFromStream( std::istream& input );
 
-	bool saveToFile( const string8& path );
-	bool saveToString( string8& data );
+	bool saveToString( string8& data , bool styled = true );
 	bool saveToStream( std::ostream& output );
-
-	// commit changeset to the jsonbox.
-	void commit();
 
 	template <class CType>
 	CType get( string8 key , CType def )
@@ -68,6 +57,8 @@ public:
 	{
 		setValue( key , def );
 	}
+
+	void has( string8 key );
 };
 
 
@@ -77,12 +68,14 @@ template <> bool Config::getValue<float32>( string8 key , float32& type );
 template <> bool Config::getValue<float64>( string8 key , float64& type );
 template <> bool Config::getValue<string8>( string8 key , string8& type );
 template <> bool Config::getValue<int32>( string8 key , int32& type );
+template <> bool Config::getValue<uint32>( string8 key , uint32& type );
 template <> bool Config::getValue<bool>( string8 key , bool& type );
 // setters
 template <> void Config::setValue<float32>( string8 key , float32& type );
 template <> void Config::setValue<float64>( string8 key , float64& type );
 template <> void Config::setValue<string8>( string8 key , string8& type );
 template <> void Config::setValue<int32>( string8 key , int32& type );
+template <> void Config::setValue<uint32>( string8 key , uint32& type );
 template <> void Config::setValue<bool>( string8 key , bool& type );
 
 

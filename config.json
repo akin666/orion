@@ -7,7 +7,7 @@
         "green": 8,
         "blue": 8,
         "alpha": 8,
-        "stencil": 0,,
+        "stencil": 0,
         "depth": 32,
         "fullscreen": false
     }

@@ -1,0 +1,7 @@
+
+#ifndef HH_JSON_H
+#define HH_JSON_H
+
+#include "jsoncpp/json.h"
+
+#endif
