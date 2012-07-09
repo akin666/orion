@@ -58,7 +58,7 @@ public:
 		setValue( key , def );
 	}
 
-	void has( string8 key );
+	bool has( string8 key );
 };
 
 
@@ -81,6 +81,7 @@ template <> void Config::setValue<bool>( string8 key , bool& type );
 
 // CONFIG->get<float>("speed" , 123.0f );
 // CONFIG->set<float>("speed" , 321.0f);
+// CONFIG->has<float>("speed");
 #define CONFIG createGlobal<Config>()
 
 } // namespace orion

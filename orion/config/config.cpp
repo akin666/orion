@@ -118,6 +118,11 @@ Json::Value *Config::getValue( string8 key )
 	return findPath( key , root );
 }
 
+bool Config::has( string8 key )
+{
+	return findPath( key , root ) != NULL;
+}
+
 // Getters
 template <> bool Config::getValue<float32>( string8 key , float32& type )
 {
