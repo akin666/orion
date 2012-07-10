@@ -22,7 +22,8 @@ public:
 	EventTaskInterface();
 	virtual ~EventTaskInterface();
 
-	virtual void run() = 0;
+	// return true, if an event was processed.
+	virtual bool run() = 0;
 
 	ProfilerData profiler;
 };
@@ -83,7 +84,7 @@ public:
 		set->push_back( event );
 	}
 
-	virtual void run()
+	virtual bool run()
 	{
 		// Lock the currently performing mutex
 		EventSet *process = NULL;
@@ -124,8 +125,12 @@ public:
 				}
 			}
 		}
+
+		bool ret = process->size() > 0;
 		// empty events.
 		process->clear();
+
+		return ret;
 	}
 };
 

@@ -149,10 +149,17 @@ void Scheduler::run()
 			}
 
 			// Resolve events for this TICK (this means joystick key etc. events are handled just before logic)
-			for( EventSet::iterator iter = eventTasks.begin() ; iter != eventTasks.end() ; ++iter )
+			// extra deep event loop, for processing _all_ the events, even the ones created from the events themselves.
 			{
-				ProfilerRAII profiler( (*iter)->profiler );
-				(*iter)->run();
+				bool retry = false;
+				do {
+					retry = false;
+					for( EventSet::iterator iter = eventTasks.begin() ; iter != eventTasks.end() ; ++iter )
+					{
+						ProfilerRAII profiler( (*iter)->profiler );
+						retry = (*iter)->run() || retry;
+					}
+				} while( retry );
 			}
 
 			// Logical tasks are run.
