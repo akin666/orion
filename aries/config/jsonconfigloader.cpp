@@ -7,7 +7,6 @@
 
 #include "jsonconfigloader.hpp"
 
-#include <JsonBox.h>
 #include <native>
 
 #ifndef DEFAULT_CONFIG_PATH
