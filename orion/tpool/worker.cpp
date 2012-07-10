@@ -9,7 +9,8 @@ namespace orion
 
 Worker::Worker()
 : queu( NULL ),
-  thread(NULL)
+  thread(NULL),
+  going( false )
 {
 }
 

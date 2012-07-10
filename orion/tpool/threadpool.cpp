@@ -12,7 +12,8 @@ unsigned int ThreadPool::getHardwareThreadCount()
 }
 
 ThreadPool::ThreadPool()
-: workers(NULL)
+: workers(NULL),
+  worker_count( 2 )
 {
 }
 
