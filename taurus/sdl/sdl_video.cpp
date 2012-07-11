@@ -9,7 +9,7 @@
 #ifdef SDL_PLATFORM
 #include <config/config.hpp>
 #include <stdgl>
-#include <graphics/graphicslib.hpp>
+#include <graphicslib/graphicslib.hpp>
 
 #include <orionevent>
 

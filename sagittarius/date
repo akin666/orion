@@ -5,8 +5,8 @@
  *      Author: akin
  */
 
-#ifndef DATE_HPP_
-#define DATE_HPP_
+#ifndef HH_DATE_HPP_
+#define HH_DATE_HPP_
 
 #include <orion>
 
@@ -60,4 +60,4 @@ public:
 };
 
 } // namespace orion
-#endif // TIME_HPP_
+#endif // HH_DATE_HPP_

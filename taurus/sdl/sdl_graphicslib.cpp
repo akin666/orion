@@ -8,7 +8,7 @@
 #include "sdl_detect.hpp"
 #ifdef SDL_PLATFORM
 
-#include <graphics/graphicslib.hpp>
+#include <graphicslib/graphicslib.hpp>
 #include <stdgl>
 
 namespace orion {
