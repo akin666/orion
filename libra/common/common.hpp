@@ -10,15 +10,15 @@
 
 #include <defines.hpp>	// From the game itself.
 
-#include <os>
+#include <os>			// Operating system
 #include "stdtypes.h"	// takes care of orion standard types.
-#include <iostream>
-#include <vector>
-#include <map>
-#include <list>
-#include <string>
-#include <glm/glm>
-#include <rapidxml/rapidxml.hpp>
+#include <iostream>		// C++ base
+#include <vector>		// Vector container
+#include <map>			// Map container
+#include <list>			// List container
+#include <string>		// string8, string32
+#include <glm/glm>		// Math libraries
+#include <stdexcept>	// Exceptions
 
 #define DELTA 0.0001f
 #define PI 3.141593f
@@ -72,7 +72,6 @@ namespace orion {
     typedef std::vector<EntityID> EntitySet;
     typedef std::map<string8, EntityID> EntityNameMap;
     typedef std::map<string8, EntitySet> EntitySetMap;
-
 
     typedef std::vector<string8> StringSet;
 
