@@ -3,6 +3,7 @@
  *
  *  Created on: 16.6.2012
  *      Author: akin
+ *
  */
 
 #ifndef LOCATION_HPP_
