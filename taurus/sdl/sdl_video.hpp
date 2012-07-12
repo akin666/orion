@@ -30,7 +30,7 @@ public:
 	SDLVideo();
 	virtual ~SDLVideo();
 
-	virtual void listModes( VideoModeSet& set );
+	virtual void listModes( graphics::RenderTargetSettingSet& set );
 
 	virtual bool isCursorVisible();
 	virtual void setCursorVisible( bool val );
@@ -40,11 +40,11 @@ public:
 
 	virtual void query();
 
-	virtual bool apply( VideoMode& mode );
+	virtual bool apply( graphics::RenderTargetSetting& mode );
 	virtual bool initialize();
 	virtual void flip();
 	virtual void finish();
-	virtual RenderTarget& getRenderTarget();
+	virtual graphics::RenderTarget& getRenderTarget();
 };
 
 } // namespace orion

@@ -9,13 +9,15 @@
 #define GRAPHICSCONTEXT_HPP_
 
 namespace orion {
+namespace graphics {
 
-class GraphicsContext
+class Context
 {
 public:
-	GraphicsContext();
-	virtual ~GraphicsContext();
+	Context();
+	virtual ~Context();
 };
 
+} // graphics
 } // namespace orion
 #endif // GRAPHICSCONTEXT_HPP_

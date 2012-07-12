@@ -8,12 +8,13 @@
 #include "rendertarget.hpp"
 
 namespace orion {
+namespace graphics {
 
 RenderTarget::RenderTarget()
 {
 }
 
-RenderTarget::RenderTarget( const VideoMode& mode )
+RenderTarget::RenderTarget( const RenderTargetSetting& mode )
 : mode( mode )
 {
 }
@@ -22,7 +23,7 @@ RenderTarget::~RenderTarget()
 {
 }
 
-VideoMode& RenderTarget::getVideoMode()
+RenderTargetSetting& RenderTarget::getVideoMode()
 {
 	return mode;
 }
@@ -31,4 +32,5 @@ void RenderTarget::bind()
 {
 }
 
+} // namespace graphics
 } // namespace orion

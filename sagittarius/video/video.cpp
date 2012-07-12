@@ -18,12 +18,12 @@ Video::~Video()
 {
 }
 
-const VideoMode& Video::getMode() const
+const graphics::RenderTargetSetting& Video::getMode() const
 {
 	return current;
 }
 
-void Video::listModes( VideoModeSet& set )
+void Video::listModes( graphics::RenderTargetSettingSet& set )
 {
 }
 

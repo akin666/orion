@@ -1,36 +1,36 @@
 /*
- * videomode.hpp
+ * rendertargetsetting.hpp
  *
- *  Created on: 6.7.2012
+ *  Created on: 12.7.2012
  *      Author: akin
  */
 
-#ifndef VIDEOMODE_HPP_
-#define VIDEOMODE_HPP_
+#ifndef RENDERTARGETSETTING_HPP_
+#define RENDERTARGETSETTING_HPP_
 
 #include <orion>
 #include <config/config.hpp>
 
-namespace orion
-{
+namespace orion {
+namespace graphics {
 
-class VideoMode
+class RenderTargetSetting
 {
 protected:
-	glm::ivec2 dimensions;
-	float32 dpi;
-	int32 red;
-	int32 green;
-	int32 blue;
-	int32 alpha;
-	int32 stencil;
-	int32 depth;
+        glm::ivec2 dimensions;
+        float32 dpi;
+        int32 red;
+        int32 green;
+        int32 blue;
+        int32 alpha;
+        int32 stencil;
+        int32 depth;
 
-	int32 flags;
+        int32 flags;
 public:
-	VideoMode();
-	VideoMode( const VideoMode& other );
-	virtual ~VideoMode();
+	RenderTargetSetting();
+	RenderTargetSetting( const RenderTargetSetting& other );
+	virtual ~RenderTargetSetting();
 
 	int32 getAlpha() const;
 	void setAlpha(int32 alpha);
@@ -63,7 +63,8 @@ public:
 	bool write( Config& config , string8 path );
 };
 
-typedef std::vector<VideoMode> VideoModeSet;
+typedef std::vector<RenderTargetSetting> RenderTargetSettingSet;
 
-} // namespace orion
-#endif // VIDEOMODE_HPP_
+} // namespace graphics 
+} // namespace orion 
+#endif // RENDERTARGETSETTING_HPP_ 

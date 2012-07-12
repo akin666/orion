@@ -8,13 +8,15 @@
 #include "graphicscontext.hpp"
 
 namespace orion {
+namespace graphics {
 
-GraphicsContext::GraphicsContext()
+Context::Context()
 {
 }
 
-GraphicsContext::~GraphicsContext()
+Context::~Context()
 {
 }
 
+} // namespace graphics
 } // namespace orion

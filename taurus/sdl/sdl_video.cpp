@@ -19,13 +19,13 @@ namespace orion {
 // SDLRenderTarget
 /////
 
-class SDLRenderTarget : public RenderTarget
+class SDLRenderTarget : public graphics::RenderTarget
 {
 protected:
 	SDL_Surface* screen;
 public:
 	SDLRenderTarget();
-	SDLRenderTarget( const VideoMode& mode );
+	SDLRenderTarget( const graphics::RenderTargetSetting& mode );
 	virtual ~SDLRenderTarget();
 
 	bool initialize();
@@ -41,8 +41,8 @@ SDLRenderTarget::SDLRenderTarget()
 {
 }
 
-SDLRenderTarget::SDLRenderTarget( const VideoMode& mode )
-: RenderTarget( mode ),
+SDLRenderTarget::SDLRenderTarget( const graphics::RenderTargetSetting& mode )
+: graphics::RenderTarget( mode ),
   screen( NULL )
 {
 }
@@ -154,7 +154,7 @@ bool SDLVideo::isInitialized()
 	return (flags & SDLVIDEOF_INITIALIZED) != 0;
 }
 
-void SDLVideo::listModes(VideoModeSet& set)
+void SDLVideo::listModes(graphics::RenderTargetSettingSet& set)
 {
 }
 
@@ -242,7 +242,7 @@ void SDLVideo::query()
     }
 }
 
-bool SDLVideo::apply(VideoMode& mode)
+bool SDLVideo::apply(graphics::RenderTargetSetting& mode)
 {
 	if( isInitialized() )
 	{
@@ -259,7 +259,7 @@ bool SDLVideo::initialize()
 		return false;
 	}
 
-	VideoMode mode;
+	graphics::RenderTargetSetting mode;
 	mode.read( *CONFIG , "video" );
 
 //	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -291,7 +291,7 @@ void SDLVideo::finish()
 	Graphics::finish();
 }
 
-RenderTarget& SDLVideo::getRenderTarget()
+graphics::RenderTarget& SDLVideo::getRenderTarget()
 {
 	return *rendertarget;
 }

@@ -8,23 +8,25 @@
 #ifndef RENDERTARGET_HPP_
 #define RENDERTARGET_HPP_
 
-#include <video/videomode.hpp>
+#include "rendertargetsetting.hpp"
 
 namespace orion {
+namespace graphics {
 
 class RenderTarget
 {
 protected:
-	VideoMode mode;
+	RenderTargetSetting mode;
 public:
 	RenderTarget();
-	RenderTarget( const VideoMode& mode );
+	RenderTarget( const RenderTargetSetting& mode );
 	virtual ~RenderTarget();
 
-	VideoMode& getVideoMode();
+	RenderTargetSetting& getVideoMode();
 
 	virtual void bind();
 };
 
+} // namespace graphics
 } // namespace orion
 #endif // RENDERTARGET_HPP_

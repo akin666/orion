@@ -9,7 +9,6 @@
 #define VIDEO_HPP_
 
 #include <orion>
-#include "videomode.hpp"
 #include <graphics/rendertarget.hpp>
 
 namespace orion
@@ -18,14 +17,14 @@ namespace orion
 class Video
 {
 protected:
-	VideoMode current;
+	graphics::RenderTargetSetting current;
 public:
 	Video();
 	virtual ~Video();
 
-	const VideoMode& getMode() const;
+	const graphics::RenderTargetSetting& getMode() const;
 
-	virtual void listModes( VideoModeSet& set );
+	virtual void listModes( graphics::RenderTargetSettingSet& set );
 
 	virtual bool isCursorVisible();
 	virtual void setCursorVisible( bool val );
@@ -33,11 +32,11 @@ public:
 	virtual void setTitle( string8 head );
 	virtual string8 getTitle();
 
-	virtual bool apply( VideoMode& mode ) = 0;
+	virtual bool apply( graphics::RenderTargetSetting& mode ) = 0;
 	virtual bool initialize() = 0;
 	virtual void flip() = 0;
 	virtual void finish() = 0;
-	virtual RenderTarget& getRenderTarget() = 0;
+	virtual graphics::RenderTarget& getRenderTarget() = 0;
 	virtual void query() = 0;
 };
 
