@@ -103,7 +103,7 @@ Json::Value *findPath( string8& key , Json::Value& root , StringPos begin = 0 )
 	}
 
 	// found a point.. seek that from the object.
-	std::string realKey = key.substr( begin , end );
+	std::string realKey = key.substr( begin , end  - begin );
 	if( !root.isMember( realKey ) )
 	{
 		return NULL;
