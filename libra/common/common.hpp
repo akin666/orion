@@ -89,6 +89,15 @@ namespace orion {
 		RGBA16 = 8,
 		RGBA32 = 9
 	};
+
+	enum ShaderType {
+		ShaderUnknown = 0,   // 0.0
+		ShaderFragment = 1,  // 2.0
+		ShaderVertex = 2,    // 2.0
+		ShaderGeometry = 3,  // 3.2
+		ShaderControl = 4,   // 4.0
+		ShaderEvaluation = 5 // 4.0
+	};
 } // orion
 
 #endif // COMMON_HPP_

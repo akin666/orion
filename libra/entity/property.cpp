@@ -53,4 +53,9 @@ bool Property::parse( EntityID id , rapidxml::xml_node<> *node )
 	return false;
 }
 
+bool Property::parse( EntityID id , Json::Value& node )
+{
+	return false;
+}
+
 } // namespace orion

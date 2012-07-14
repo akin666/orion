@@ -8,14 +8,24 @@
 #ifndef GRAPHICSTEXTURE_HPP_
 #define GRAPHICSTEXTURE_HPP_
 
+#include <orion>
+
 namespace orion {
 namespace graphics {
 
 class Texture
 {
+protected:
+	uint id;
 public:
 	Texture();
 	virtual ~Texture();
+
+	bool initialize();
+	bool initialized() const;
+	void release();
+
+	uint getID() const;
 };
 
 } // namespace graphics 

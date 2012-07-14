@@ -9,6 +9,8 @@
 #define PROPERTY_HPP_
 
 #include <orion>
+#include <rapidxml/rapidxml.hpp>
+#include <json>
 
 namespace orion {
 
@@ -28,6 +30,7 @@ public:
 
 	virtual string8 getName();
 	virtual bool parse( EntityID id , rapidxml::xml_node<> *node );
+	virtual bool parse( EntityID id , Json::Value& node );
 };
 
 typedef std::vector< Property* > PropertySet;

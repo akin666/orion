@@ -92,6 +92,16 @@ namespace orion {
 #define GL_TEST_START() GL_TEST_ERROR("begin")
 #define GL_TEST_END() GL_TEST_ERROR("end")
 
+// raii tester. C++!
+#ifndef GL_TEST_RAII
+# ifndef _RELEASE
+   class GLTestRAII { public: GLTestRAII() { GL_TEST_START() } ~GLTestRAII() { GL_TEST_END() } };
+#  define GL_TEST_RAII GLTestRAII glRAIITester
+# else
+#  define GL_TEST_RAII
+# endif
+#endif
+
 } // orion
 
 #endif // _STDGL_H_ 
