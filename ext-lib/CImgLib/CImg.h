@@ -85,7 +85,7 @@
 //                       '2' for Microsoft Windows.
 //                       (auto-detection is performed if 'cimg_OS' is not set by the user).
 #ifndef cimg_OS
-#if defined(unix)        || defined(__unix)      || defined(__unix__) \
+# if defined(unix)        || defined(__unix)      || defined(__unix__) \
  || defined(linux)       || defined(__linux)     || defined(__linux__) \
  || defined(sun)         || defined(__sun) \
  || defined(BSD)         || defined(__OpenBSD__) || defined(__NetBSD__) \
@@ -93,16 +93,19 @@
  || defined(sgi)         || defined(__sgi) \
  || defined(__MACOSX__)  || defined(__APPLE__) \
  || defined(__CYGWIN__)
-#define cimg_OS 1
-#elif defined(_MSC_VER) || defined(WIN32)  || defined(_WIN32) || defined(__WIN32__) \
+#  define cimg_OS 1
+#  warning detected '1' for an unknown OS (will try to minize library dependencies).
+# elif defined(_MSC_VER) || defined(WIN32)  || defined(_WIN32) || defined(__WIN32__) \
    || defined(WIN64)    || defined(_WIN64) || defined(__WIN64__)
-#define cimg_OS 2
-#else
-#define cimg_OS 0
-#endif
+#  define cimg_OS 2
+#  warning detected '2' for Microsoft Windows.
+# else
+#  define cimg_OS 0
+#  warning detected '0' for an unknown OS (will try to minize library dependencies).
+# endif
 #elif !(cimg_OS==0 || cimg_OS==1 || cimg_OS==2)
-#error CImg Library : Invalid configuration variable 'cimg_OS'.
-#error (correct values are '0 = unknown OS', '1 = Unix-like OS', '2 = Microsoft Windows').
+# error CImg Library : Invalid configuration variable 'cimg_OS'.
+# error (correct values are '0 = unknown OS', '1 = Unix-like OS', '2 = Microsoft Windows').
 #endif
 
 // Disable silly warnings on some Microsoft VC++ compilers.
