@@ -12,7 +12,6 @@
 #include <orion>
 #include <video/video.hpp>
 #include <audio/audio.hpp>
-#include <resource/resourcemanager.hpp>
 #include <allocator>
 #include <system/scheduler.hpp>
 #include <config/config.hpp>
@@ -27,7 +26,6 @@ template <
 			class VideoPolicy ,			// interface: video/video.hpp
 			class AudioPolicy ,			// interface: audio/audio.hpp
 			class LogPolicy ,			// interface: log/log.hpp
-			class ResourceLoader ,		// interface: resource/resourcemanager.hpp
 			class AllocationManager 	// interface: allocator
 			>
 class Engine
@@ -37,7 +35,6 @@ protected:
 	VideoPolicy video;
 	AudioPolicy audio;
 	LogPolicy log;
-	ResourceLoader resource;
 	AllocationManager allocation;
 	Scheduler scheduler;
 	Config config;
@@ -102,14 +99,6 @@ public:
 			return false;
 		}
 		Global<Allocator>::set( &allocation );
-		
-		// RESOURCEMANAGER
-		if( !resource.initialize() )
-		{
-			LOG->error("Failed to initialize resource manager. Bailing out.");
-			return false;
-		}
-		Global<ResourceManager>::set( &resource );
 		
 		// VIDEO
 		if( !video.initialize() )

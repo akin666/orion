@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
 		orion::SDLVideo ,
 		orion::OpenALAudio ,
 		orion::Log ,
-		orion::ResourceManager ,
 		orion::Allocator
 		>
 		app;
