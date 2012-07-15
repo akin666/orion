@@ -1,0 +1,7 @@
+
+#ifndef HH_SIMG_H
+#define HH_SIMG_H
+
+#include "softimage/softimagebuffer.hpp"
+
+#endif // HH_SIMG_H

@@ -10,15 +10,15 @@
 
 #include <resource/resource.hpp>
 #include <graphics/graphicstexture.hpp>
-#include <cimg>
+#include <simg>
 
 namespace orion {
 
 class TextureResource : public Resource
 {
 protected:
-	graphics::Texture gfxTexture;
-	cimg_library::CImg<uchar> cimgTexture;
+	graphics::Texture texture;
+	simg::Buffer image;
 public:
 	TextureResource();
 	virtual ~TextureResource();
