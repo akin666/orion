@@ -1,0 +1,138 @@
+
+#ifndef TMAP_H_
+#define TMAP_H_
+
+#include <iostream>
+#include <map>
+#include <iterator>
+#include <uthread>
+
+namespace orion {
+
+template <class KClass , class VClass>
+class TMap
+{
+protected:
+	std::mutex mutex;
+	typedef std::map< KClass , VClass > DataMap;
+	DataMap storage;
+public:
+	TMap()
+	{
+	}
+	
+	TMap( const std::map< KClass , VClass >& other )
+	: storage( other.storage )
+	{
+	}
+	
+	TMap( const TMap<KClass , VClass>& other )
+	: storage( other.storage )
+	{
+	}
+	
+	~TMap()
+	{
+	}
+	
+	bool has( const KClass& key )
+	{
+    	std::lock_guard<std::mutex> lock( mutex );
+		typename DataMap::iterator iter = storage.find( key );
+		return iter != storage.end();
+	}
+	
+    VClass & operator[]( const KClass & key ) 
+    {
+    	std::lock_guard<std::mutex> lock( mutex );
+    	return storage[key]; 
+    }
+    
+    VClass pop( const KClass & key ) 
+    {
+    	std::lock_guard<std::mutex> lock( mutex ); 
+		typename DataMap::iterator iter = storage.find( key );
+		
+		if( iter == storage.end() )
+		{
+			// empty ctor.. jeez..
+			VClass empty;
+			return empty;
+		}
+		VClass ret = iter->second();
+		storage.erase( iter );
+		
+    	return ret; 
+    }
+    
+    void push( const KClass& key , const VClass& value )
+    {
+    	std::lock_guard<std::mutex> lock( mutex );
+    	storage[ key ] = value;
+    }
+};
+
+// Pointer specialization
+template <class KClass , class VClass>
+class TMap <KClass , VClass*>
+{
+protected:
+	std::mutex mutex;
+	typedef std::map< KClass , VClass* > DataMap;
+	DataMap storage;
+public:
+	TMap()
+	{
+	}
+	
+	TMap( const std::map< KClass , VClass* >& other )
+	: storage( other.storage )
+	{
+	}
+	
+	TMap( const TMap<KClass , VClass*>& other )
+	: storage( other.storage )
+	{
+	}
+	
+	~TMap()
+	{
+	}
+	
+	bool has( const KClass& key )
+	{
+    	std::lock_guard<std::mutex> lock( mutex );
+		typename DataMap::iterator iter = storage.find( key );
+		return iter != storage.end();
+	}
+	
+    VClass *& operator[]( const KClass & key ) 
+    {
+    	std::lock_guard<std::mutex> lock( mutex );
+    	return storage[key]; 
+    }
+    
+    VClass *pop( const KClass & key ) 
+    {
+    	std::lock_guard<std::mutex> lock( mutex ); 
+		typename DataMap::iterator iter = storage.find( key );
+		
+		if( iter == storage.end() )
+		{
+			return NULL;
+		}
+		VClass ret = iter->second();
+		storage.erase( iter );
+		
+    	return ret; 
+    }
+    
+    void push( const KClass& key , const VClass *& value )
+    {
+    	std::lock_guard<std::mutex> lock( mutex );
+    	storage[ key ] = value;
+    }
+};
+
+} // namespace orion 
+#endif // TQUE_H_ 

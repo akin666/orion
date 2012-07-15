@@ -13,7 +13,7 @@
 namespace orion {
 
 const EntityID Entity::null = 0;
-EntityID Entity::current = FIRST_ENTITY;
+std::atomic<EntityID> Entity::current( FIRST_ENTITY );
 
 EntityID Entity::create()
 {

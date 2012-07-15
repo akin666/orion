@@ -10,11 +10,14 @@
 
 #include <resource/resourcemanager.hpp>
 #include "textureresource.hpp"
+#include <tmap>
 
 namespace orion {
 
 class TextureResourceManager : ResourceManager<TextureResource>
 {
+protected:
+	TMap< string8 , TextureResource* > resources;
 public:
 	TextureResourceManager();
 	virtual ~TextureResourceManager();

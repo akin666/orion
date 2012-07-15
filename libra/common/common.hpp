@@ -19,6 +19,7 @@
 #include <string>		// string8, string32
 #include <glm/glm>		// Math libraries
 #include <stdexcept>	// Exceptions
+#include <atomic>		// atomic things.
 
 #define DELTA 0.0001f
 #define PI 3.141593f

@@ -15,7 +15,7 @@ namespace orion {
 class Entity
 {
 protected:
-	static EntityID current;
+	static std::atomic<EntityID> current;
 public:
 	static const EntityID null;
 
