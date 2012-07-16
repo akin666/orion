@@ -16,9 +16,11 @@ namespace simg
 class Buffer
 {
 protected:
-	void *data;
+	void *buffer;
+	void *realbuffer;
 	orion::ColorMode mode;
 	glm::ivec2 resolution;
+	uint8 bytespp;
 public:
 	Buffer();
 	virtual ~Buffer();
@@ -36,7 +38,7 @@ public:
 	void release();
 
 	bool drawRect( const glm::ivec2& position , const Buffer& other );
-	bool drawRect( const glm::ivec2& position , const glm::ivec2& rect , void *pixeldata );
+	bool drawRect( const glm::ivec2& position , const glm::ivec2& rect , void *pixelbuffer );
 	bool drawRect( const glm::ivec2& min , const glm::ivec2& max , const void *pixel );
 	bool drawLine( const glm::ivec2& p1 , const glm::ivec2& p2 , const void *pixel );
 };

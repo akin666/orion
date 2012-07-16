@@ -80,16 +80,16 @@ namespace orion {
 
 	enum ColorMode
 	{
-		RGB = 1,
-		RGBA = 2,
-		ARGB = 3,
+		RGB8 = 1,
+		RGBA8 = 2,
+		ARGB8 = 3,
 		ALPHA = 4,
 		LUMINANCE = 5,
 		INTENSITY = 6,
 		RGBA12 = 7,
 		RGBA16 = 8,
 		RGBA32 = 9,
-		RGBA8 = 10,
+		RGBA32F = 10,
 		DEPTH8 = 11,
 		DEPTH16 = 12,
 		DEPTH24 = 13,
@@ -104,6 +104,10 @@ namespace orion {
 		ShaderControl = 4,   // 4.0
 		ShaderEvaluation = 5 // 4.0
 	};
+
+	// Utility functions
+	uint8 getByteSize( ColorMode mode );
+	uint8 getNumberOfElements( ColorMode mode );
 } // orion
 
 #endif // COMMON_HPP_

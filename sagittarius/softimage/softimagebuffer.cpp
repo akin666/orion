@@ -11,18 +11,21 @@ namespace simg
 {
 
 Buffer::Buffer()
-: data( NULL ),
-  mode( orion::RGBA8 )
+: buffer( NULL ),
+  realbuffer( NULL ),
+  mode( orion::RGBA8 ),
+  bytespp( 0 )
 {
 }
 
 Buffer::~Buffer()
 {
+	release();
 }
 
 void Buffer::setMode(orion::ColorMode mode)
 {
-	if( data == NULL )
+	if( buffer == NULL )
 	{
 		return;
 	}
@@ -31,7 +34,7 @@ void Buffer::setMode(orion::ColorMode mode)
 
 void Buffer::setResolution(const glm::ivec2& resolution)
 {
-	if( data == NULL )
+	if( buffer == NULL )
 	{
 		return;
 	}
@@ -50,26 +53,43 @@ glm::ivec2 Buffer::getResolution() const
 
 void* Buffer::access() const
 {
-	return data;
+	return buffer;
 }
 
 bool Buffer::initialize()
 {
-	if( data != NULL )
+	if( buffer != NULL )
 	{
 		return false;
 	}
-	// TODO
+	bytespp = getByteSize( mode );
+
+	int total = bytespp * resolution.x * resolution.y;
+
+	if( total < 1 )
+	{
+		return false;
+	}
+
+	int rtotal = total + 3;
+	realbuffer = new int8[ rtotal ];
+
+	// 4 byte alignment.
+	buffer = realbuffer + (((int)realbuffer)%4);
+
 	return true;
 }
 
 bool Buffer::initialized() const
 {
-	return data != NULL;
+	return buffer != NULL;
 }
 
 void Buffer::release()
 {
+	delete[] realbuffer;
+	buffer = realbuffer = NULL;
+	bytespp = 0;
 }
 
 bool Buffer::drawRect(const glm::ivec2& position, const Buffer& other)
@@ -78,7 +98,7 @@ bool Buffer::drawRect(const glm::ivec2& position, const Buffer& other)
 	return false;
 }
 
-bool Buffer::drawRect(const glm::ivec2& position, const glm::ivec2& rect, void* pixeldata)
+bool Buffer::drawRect(const glm::ivec2& position, const glm::ivec2& rect, void* pixelbuffer)
 {
 	// TODO
 	return false;
