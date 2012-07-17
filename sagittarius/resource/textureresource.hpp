@@ -29,6 +29,9 @@ public:
 	virtual void unrealize();
 	// clear CImg data
 	virtual void unbuffer();
+
+	graphics::Texture& accessTexture();
+	simg::Buffer& accessBuffer();
 };
 
 } // namespace orion 

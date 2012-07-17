@@ -7,7 +7,6 @@
 
 #include "softimagebuffer.hpp"
 #include <string.h>
-#include <orion>
 
 namespace simg
 {

@@ -16,7 +16,7 @@ uint8 getByteSize( ColorMode mode )
 		case RGB8 		: return 3;
 		case RGBA8 		: return 4;
 		case ARGB8 		: return 4;
-		case ALPHA 		: return 1;
+		case ALPHA8 	: return 1;
 		case LUMINANCE 	: return 1;
 		case INTENSITY 	: return 1;
 		case RGBA12 	: return 6;
@@ -39,7 +39,7 @@ uint8 getNumberOfElements( ColorMode mode )
 		case RGB8 		: return 3;
 		case RGBA8 		: return 4;
 		case ARGB8 		: return 4;
-		case ALPHA 		: return 1;
+		case ALPHA8		: return 1;
 		case LUMINANCE 	: return 1;
 		case INTENSITY 	: return 1;
 		case RGBA12 	: return 4;

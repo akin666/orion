@@ -83,7 +83,7 @@ namespace orion {
 		RGB8 = 1,
 		RGBA8 = 2,
 		ARGB8 = 3,
-		ALPHA = 4,
+		ALPHA8 = 4,
 		LUMINANCE = 5,
 		INTENSITY = 6,
 		RGBA12 = 7,
@@ -93,7 +93,7 @@ namespace orion {
 		DEPTH8 = 11,
 		DEPTH16 = 12,
 		DEPTH24 = 13,
-		DEPTH32 = 14
+		DEPTH32 = 14,
 	};
 
 	enum ShaderType {

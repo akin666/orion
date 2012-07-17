@@ -31,4 +31,14 @@ void TextureResource::unbuffer()
 {
 }
 
+graphics::Texture& TextureResource::accessTexture()
+{
+	return texture;
+}
+
+simg::Buffer& TextureResource::accessBuffer()
+{
+	return image;
+}
+
 } // namespace orion 

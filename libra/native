@@ -12,6 +12,7 @@
 #define NATIVE_H_
 
 #include <orion>
+#include <simg>
 
 namespace orion {
 
@@ -20,7 +21,11 @@ void message( const char *message );
 void warning( const char *message );
 void alert( const char *message );
 
-// Time
+// Time, TODO!
+// Refactore, internal clocks should use UTC for everything, the time that user sees, eg. timezoned clock
+// is something totally different, and should be provided by another functions..
+// (so! 2 Time functionalities, Precise UTC Time thing, and Formattable slow, not microsecond precise Date/Time thing)
+void getUTCTime( Time& time );
 void getTime( Time& time );
 Time getTime( Year year, Month month, Day day, Hour hour, Minute minute, Second second, MicroSecond ms );
 Timezone getTimezone( );
@@ -41,6 +46,10 @@ FILE *openFileRead( std::string path );
 FILE *openFileWrite( std::string path );
 void closeFile( FILE *file );
 bool readFile( std::string path , std::string& content );
+
+// Image loading functionality _always_ happens through softimage
+bool loadImageFile( std::string path , simg::Buffer& softimage );
+bool saveImageFile( std::string path , simg::Buffer& softimage );
 
 } // orion
 
