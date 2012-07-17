@@ -18,6 +18,7 @@ class Buffer
 protected:
 	void *buffer;
 	void *realbuffer;
+	int totalSize;
 	orion::ColorMode mode;
 	glm::ivec2 resolution;
 	uint8 bytespp;

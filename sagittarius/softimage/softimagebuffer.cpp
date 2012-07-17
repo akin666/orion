@@ -6,6 +6,7 @@
  */
 
 #include "softimagebuffer.hpp"
+#include <string.h>
 
 namespace simg
 {
@@ -64,14 +65,14 @@ bool Buffer::initialize()
 	}
 	bytespp = getByteSize( mode );
 
-	int total = bytespp * resolution.x * resolution.y;
+	totalSize = bytespp * resolution.x * resolution.y;
 
-	if( total < 1 )
+	if( totalSize < 1 )
 	{
 		return false;
 	}
 
-	int rtotal = total + 3;
+	int rtotal = totalSize + 3;
 	realbuffer = new int8[ rtotal ];
 
 	// 4 byte alignment.
@@ -94,7 +95,36 @@ void Buffer::release()
 
 bool Buffer::drawRect(const glm::ivec2& position, const Buffer& other)
 {
-	// TODO
+	// All variables ok?
+	if( other.mode != mode || buffer == NULL )
+	{
+		return false;
+	}
+	// outside the buffer area.
+	glm::ivec2 position2( position + other.resolution );
+	if( position.x >= resolution.x || position.y >= resolution.y || position2.x <= 0 || position2.y <= 0 )
+	{
+		return true;
+	}
+
+	// 1
+	glm::ivec2 dstOffset( position.x > 0 ?  position.x : 0 , position.y > 0 ?  position.y : 0 );
+	glm::ivec2 srcOffset( position.x < 0 ? -position.x : 0 , position.y < 0 ? -position.y : 0 );
+	glm::ivec2 area( resolution.x < position2.x ? resolution.x - position.x : position2.x - position.x , resolution.y < position2.y ? resolution.y - position.y : position2.y - position.y );
+
+	// Simple memcpy case.
+	if( position.x == 0 && resolution.y == other.resolution.y )
+	{
+		// calculate offsets
+		int cpsize = area.y * area.x * bytespp;
+		int srcoff = srcOffset.y * bytespp;
+		int dstoff = dstOffset.y * bytespp;
+
+		// memcpy!
+		::memcpy( buffer + dstoff , other.buffer + srcoff , cpsize );
+		return true;
+	}
+
 	return false;
 }
 
