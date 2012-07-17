@@ -16,14 +16,16 @@ namespace simg
 class Buffer
 {
 protected:
-	void *buffer;
-	void *realbuffer;
+	void *buffer;		// does not have ownership
+	void *realbuffer; 	// ownership
 	int totalSize;
 	orion::ColorMode mode;
 	glm::ivec2 resolution;
 	uint8 bytespp;
 public:
 	Buffer();
+	// Wrap Buffer around existing buffer, does not transfer ownership.
+	Buffer( const glm::ivec2& resolution , orion::ColorMode mode , void *pixelbuffer );
 	virtual ~Buffer();
 
 	void setMode( orion::ColorMode mode );

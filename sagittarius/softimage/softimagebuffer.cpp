@@ -7,6 +7,7 @@
 
 #include "softimagebuffer.hpp"
 #include <string.h>
+#include <orion>
 
 namespace simg
 {
@@ -14,9 +15,21 @@ namespace simg
 Buffer::Buffer()
 : buffer( NULL ),
   realbuffer( NULL ),
+  totalSize( 0 ),
   mode( orion::RGBA8 ),
   bytespp( 0 )
 {
+}
+
+Buffer::Buffer( const glm::ivec2& resolution , orion::ColorMode mode , void *pixelbuffer )
+: buffer( pixelbuffer ),
+  realbuffer( NULL ),
+  totalSize( 0 ),
+  mode( mode ),
+  resolution( resolution ),
+  bytespp( getByteSize( mode ) )
+{
+	totalSize = bytespp * resolution.x * resolution.y;
 }
 
 Buffer::~Buffer()
@@ -78,6 +91,9 @@ bool Buffer::initialize()
 	// 4 byte alignment.
 	buffer = realbuffer + (((int)realbuffer)%4);
 
+	// reset the buffer to 0s
+	::memset( buffer , 0x0 , totalSize );
+
 	return true;
 }
 
@@ -125,19 +141,63 @@ bool Buffer::drawRect(const glm::ivec2& position, const Buffer& other)
 		return true;
 	}
 
-	return false;
+	// scanline at a time copying
+	int cpsize = area.x * bytespp;
+	int dstjmp = resolution.x * bytespp;
+	int srcjmp = other.resolution.x * bytespp;
+
+	void *src = (((srcOffset.y * other.resolution.x) + srcOffset.x) * bytespp) + other.buffer;
+	void *dst = (((dstOffset.y * resolution.x) + dstOffset.x) * bytespp) + buffer;
+	for( int i = 0 ; i < area.y ; ++i )
+	{
+		// memcpy!
+		::memcpy( dst , src , cpsize );
+		dst+=dstjmp;
+		src+=srcjmp;
+	}
+
+	return true;
 }
 
 bool Buffer::drawRect(const glm::ivec2& position, const glm::ivec2& rect, void* pixelbuffer)
 {
-	// TODO
-	return false;
+	Buffer buf( rect , mode , pixelbuffer );
+	return drawRect( position, buf );
 }
 
 bool Buffer::drawRect(const glm::ivec2& min, const glm::ivec2& max, const void* pixel)
 {
-	// TODO
-	return false;
+	glm::ivec2 rmin( min.x < max.x ? min.x : max.x , min.y < max.y ? min.y : max.y );
+	glm::ivec2 rmax( min.x > max.x ? min.x : max.x , min.y > max.y ? min.y : max.y );
+
+	// normalize to real coordinates..
+	rmin.x = rmin.x < 0 ? 0 : rmin.x;
+	rmin.y = rmin.y < 0 ? 0 : rmin.y;
+	rmax.x = rmax.x > resolution.x ? resolution.x : rmax.x;
+	rmax.y = rmax.y > resolution.y ? resolution.y : rmax.y;
+
+	glm::ivec2 area( rmax.x - rmin.x , rmax.y - rmin.y );
+
+	// copy one line..
+	void *dst = buffer + (((rmin.y * resolution.x) + rmin.x ) * bytespp);
+	void *origin = dst;
+	for( int i = 0 ; i < rmax.x ; ++i )
+	{
+		::memcpy( dst , pixel , bytespp );
+		dst += bytespp;
+	}
+
+	int jmpsize = resolution.x * bytespp;
+	int cpsize = area.x * bytespp;
+	dst = origin + jmpsize;
+	// copy the line, n-1 times..
+	for( int i = 1 ; i < area.y ; ++i )
+	{
+		::memcpy( dst , origin , cpsize );
+		dst += jmpsize;
+	}
+
+	return true;
 }
 
 bool Buffer::drawLine(const glm::ivec2& p1, const glm::ivec2& p2, const void* pixel)
