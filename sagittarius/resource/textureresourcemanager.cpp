@@ -18,20 +18,20 @@ TextureResourceManager::~TextureResourceManager()
 {
 }
 
-bool TextureResourceManager::has( const string8& ident )
+bool TextureResourceManager::has( const ResourceID& ident )
 {
 	return false;
 }
 
-void TextureResourceManager::load( const string8& ident , const string8& path )
+void TextureResourceManager::load( const ResourceID& ident , const string8& path )
 {
 }
 
-void TextureResourceManager::unload( const string8& ident )
+void TextureResourceManager::unload( const ResourceID& ident )
 {
 }
 
-TextureResource& TextureResourceManager::get( const string8& ident )
+TextureResource& TextureResourceManager::get( const ResourceID& ident )
 {
 	TextureResource tt;
 	return tt;

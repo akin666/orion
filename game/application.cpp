@@ -11,6 +11,9 @@
 #include "menustate.hpp"
 #include <allocator>
 
+#include <resource/resourcemanager.hpp>
+#include <resource/textureresource.hpp>
+
 using namespace orion;
 
 Application::Application()
@@ -33,6 +36,8 @@ bool Application::initialize( StringSet& args )
 
 	MenuState *state = Global<Allocator>::get()->create<MenuState>();
 	Global<StateStack>::get()->push( state );
+
+	loadResource<TextureResource>( "logo" , "data/logo.png" );
 
 	running = true;
 

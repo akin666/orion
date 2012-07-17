@@ -27,10 +27,10 @@ public:
 	{
 	}
 
-	virtual bool has( const string8& ident ) = 0;
-	virtual void load( const string8& ident , const string8& path ) = 0;
-	virtual void unload( const string8& ident ) = 0;
-	virtual ResType& get( const string8& ident ) = 0;
+	virtual bool has( const ResourceID& ident ) = 0;
+	virtual void load( const ResourceID& ident , const string8& path ) = 0;
+	virtual void unload( const ResourceID& ident ) = 0;
+	virtual ResType& get( const ResourceID& ident ) = 0;
 
 	// Realize all resourcemanagers resources
 	virtual void realize() = 0;

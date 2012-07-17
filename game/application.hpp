@@ -11,11 +11,14 @@
 #include <orion>
 #include <application/applicationinterface.hpp>
 #include "inputcontroller.hpp"
+#include <resource/textureresourcemanager.hpp>
 
 class Application : public orion::ApplicationInterface
 {
 protected:
 	orion::InputController input;
+
+	orion::TextureResourceManager tresmanager;
 
 	bool running;
 public:

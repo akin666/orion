@@ -17,15 +17,15 @@ namespace orion {
 class TextureResourceManager : ResourceManager<TextureResource>
 {
 protected:
-	TMap< string8 , TextureResource* > resources;
+	TMap< ResourceID , TextureResource* > resources;
 public:
 	TextureResourceManager();
 	virtual ~TextureResourceManager();
 
-	virtual bool has( const string8& ident );
-	virtual void load( const string8& ident , const string8& path );
-	virtual void unload( const string8& ident );
-	virtual TextureResource& get( const string8& ident );
+	virtual bool has( const ResourceID& ident );
+	virtual void load( const ResourceID& ident , const string8& path );
+	virtual void unload( const ResourceID& ident );
+	virtual TextureResource& get( const ResourceID& ident );
 
 	virtual void realize();
 	virtual void unrealize();

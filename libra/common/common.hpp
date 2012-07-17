@@ -78,6 +78,8 @@ namespace orion {
 
 	typedef string8::size_type StringPos;
 
+	typedef string8			ResourceID;
+
 	enum ColorMode
 	{
 		RGB8 = 1,

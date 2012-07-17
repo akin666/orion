@@ -10,6 +10,7 @@
 
 #include <orion>
 #include <json>
+#include <cassert>
 
 namespace orion {
 
@@ -48,6 +49,19 @@ public:
 		if( !getValue( key , val ) )
 		{
 			return def;
+		}
+		return val;
+	}
+
+	template <class CType>
+	CType require( string8 key )
+	{
+		CType val;
+		if( !getValue( key , val ) )
+		{
+			LOG->error("%s @%i Config! Required key was not found! %s" , __FUNCTION__ , __LINE__ , key.c_str() );
+			assert( false );
+			return val; // For release build, though this is still BAD!.
 		}
 		return val;
 	}
