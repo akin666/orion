@@ -38,12 +38,14 @@ class Resource
 {
 protected:
 	uint32 state;
+	std::string id;
+	std::string path;
 
 	void setLoading( bool val );
 	void setRealized( bool val );
 	void setBuffered( bool val );
 public:
-	Resource();
+	Resource( const ResourceID& id , string8 path );
 	virtual ~Resource();
 
 	virtual bool realize() = 0;
@@ -53,6 +55,13 @@ public:
 	bool hasRealized();
 	bool hasBuffered();
 	bool hasLoading();
+
+	void startedLoading();
+	void loadingSuccess();
+	void loadingError();
+
+	ResourceID getID() const;
+	string8 getPath() const;
 };
 
 } // namespace orion

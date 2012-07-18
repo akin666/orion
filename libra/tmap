@@ -59,7 +59,7 @@ public:
 			VClass empty;
 			return empty;
 		}
-		VClass ret = iter->second();
+		VClass ret = iter->second;
 		storage.erase( iter );
 		
     	return ret; 
@@ -121,7 +121,7 @@ public:
 		{
 			return NULL;
 		}
-		VClass ret = iter->second();
+		VClass *ret = iter->second;
 		storage.erase( iter );
 		
     	return ret; 

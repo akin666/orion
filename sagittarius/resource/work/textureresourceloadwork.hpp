@@ -9,15 +9,27 @@
 #define TEXTURERESOURCELOADWORK_HPP_
 
 #include <work>
+#include <uthread>
+#include <resource/textureresource.hpp>
 
 namespace orion
 {
 
 class TextureResourceLoadWork : public Work
 {
+protected:
+	typedef std::list<TextureResource*> LoadSet;
+	LoadSet loadSet;
+
+	std::mutex mutex;
+	uint state;
+
+	TextureResource *popNext();
 public:
 	TextureResourceLoadWork();
 	virtual ~TextureResourceLoadWork();
+
+	void add( TextureResource *res );
 
 	virtual bool begin();
 	virtual void run();

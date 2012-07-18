@@ -6,6 +6,8 @@
  */
 
 #include "resource.hpp"
+#include <event/event.hpp>
+#include <event/loadingevent.hpp>
 
 #define RESOURCE_STATE_NONE 	0x0000
 #define RESOURCE_STATE_BUFFERED	0x0001
@@ -15,8 +17,10 @@
 namespace orion
 {
 
-Resource::Resource()
-: state( RESOURCE_STATE_NONE )
+Resource::Resource( const ResourceID& id , string8 path )
+: state( RESOURCE_STATE_NONE ),
+  id( id ),
+  path( path )
 {
 }
 
@@ -52,6 +56,31 @@ bool Resource::hasLoading()
 bool Resource::hasRealized()
 {
 	return (state & RESOURCE_STATE_REALIZED) != 0;
+}
+
+ResourceID Resource::getID() const
+{
+	return id;
+}
+
+string8 Resource::getPath() const
+{
+	return path;
+}
+
+void Resource::startedLoading()
+{
+	sendEvent<LoadingEvent>( LoadingEvent( id , LoadingEvent::Started ) );
+}
+
+void Resource::loadingSuccess()
+{
+	sendEvent<LoadingEvent>( LoadingEvent( id , LoadingEvent::Finished ) );
+}
+
+void Resource::loadingError()
+{
+	sendEvent<LoadingEvent>( LoadingEvent( id , LoadingEvent::Error ) );
 }
 
 } // namespace orion

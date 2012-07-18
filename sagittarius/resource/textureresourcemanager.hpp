@@ -8,6 +8,7 @@
 #ifndef TEXTURERESOURCEMANAGER_HPP_
 #define TEXTURERESOURCEMANAGER_HPP_
 
+#include <uthread>
 #include <resource/resourcemanager.hpp>
 #include "textureresource.hpp"
 #include <tmap>
@@ -20,6 +21,7 @@ class TextureResourceManager : ResourceManager<TextureResource>
 protected:
 	TMap< ResourceID , TextureResource* > resources;
 	TextureResourceLoadWork work;
+	std::mutex mutex;
 public:
 	TextureResourceManager();
 	virtual ~TextureResourceManager();

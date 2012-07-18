@@ -10,7 +10,8 @@
 namespace orion
 {
 
-TextureResource::TextureResource()
+TextureResource::TextureResource( const ResourceID& ident , string8 path )
+: Resource( ident , path )
 {
 }
 

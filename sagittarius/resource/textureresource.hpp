@@ -20,7 +20,7 @@ protected:
 	graphics::Texture texture;
 	simg::Buffer image;
 public:
-	TextureResource();
+	TextureResource( const ResourceID& ident , string8 path );
 	virtual ~TextureResource();
 
 	// send CImg -> graphics

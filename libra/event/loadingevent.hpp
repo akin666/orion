@@ -20,7 +20,6 @@ public:
 		Loading = 0x02,
 		Error	= 0x04,
 		Finished = 0x10,
-		NotFound = 0x20,
 	};
 protected:
 	Type type;
