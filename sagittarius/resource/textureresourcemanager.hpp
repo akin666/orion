@@ -11,6 +11,7 @@
 #include <resource/resourcemanager.hpp>
 #include "textureresource.hpp"
 #include <tmap>
+#include "work/textureresourceloadwork.hpp"
 
 namespace orion {
 
@@ -18,6 +19,7 @@ class TextureResourceManager : ResourceManager<TextureResource>
 {
 protected:
 	TMap< ResourceID , TextureResource* > resources;
+	TextureResourceLoadWork work;
 public:
 	TextureResourceManager();
 	virtual ~TextureResourceManager();

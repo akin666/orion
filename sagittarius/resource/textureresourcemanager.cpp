@@ -6,6 +6,7 @@
  */
 
 #include "textureresourcemanager.hpp"
+#include <threadpool>
 
 namespace orion
 {
@@ -25,6 +26,10 @@ bool TextureResourceManager::has( const ResourceID& ident )
 
 void TextureResourceManager::load( const ResourceID& ident , const string8& path )
 {
+	// Command work to load the resource.
+	// If already running, no need to re-add to work que.
+	// If no running, then needs to be added to work que.
+	queWork( work );
 }
 
 void TextureResourceManager::unload( const ResourceID& ident )
