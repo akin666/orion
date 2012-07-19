@@ -110,6 +110,12 @@ namespace orion {
 	// Utility functions
 	uint8 getByteSize( ColorMode mode );
 	uint8 getNumberOfElements( ColorMode mode );
+
+	// UNICODE <==> UTF8 String conversion operations:
+	// THROWS EXCEPTIONS!
+	void convertText( string8& input, string32& add );
+	void convertText( string32& input, string8& add );
+
 } // orion
 
 #endif // COMMON_HPP_

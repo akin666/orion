@@ -6,6 +6,7 @@
  */
 
 #include "common.hpp"
+#include <utf8>
 
 namespace orion {
 
@@ -53,6 +54,16 @@ uint8 getNumberOfElements( ColorMode mode )
 		default			: return 0;
 	}
 	return 0;
+}
+
+void convertText( string8& input, string32& add )
+{
+	utf8::unchecked::utf8to32( input.begin() , input.end() , back_inserter(add));
+}
+
+void convertText( string32& input, string8& add )
+{
+	utf8::unchecked::utf32to8( input.begin() , input.end() , back_inserter(add));
 }
 
 } // namespace orion

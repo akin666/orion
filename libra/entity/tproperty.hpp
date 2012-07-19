@@ -44,7 +44,7 @@ protected:
 
 		PType *n = iter->second;
 		data.erase( iter );
-		PType *n = pool.release( n );
+		pool.release( n );
 	}
 public:
 	TProperty()
