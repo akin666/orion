@@ -29,8 +29,8 @@ public:
 	template <class CType>
 	CType *create()
 	{
-		return createGlobal<Pool<CType> >()->create();
-		//return new CType;
+		//return createGlobal<Pool<CType> >()->create();
+		return new CType;
 	}
 
 	template <class CType>
@@ -40,8 +40,8 @@ public:
 		{
 			return;
 		}
-		return createGlobal<Pool<CType> >()->release( data );
-		//delete data;
+		//return createGlobal<Pool<CType> >()->release( data );
+		delete data;
 	}
 };
 

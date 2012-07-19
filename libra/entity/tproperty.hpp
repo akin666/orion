@@ -9,7 +9,7 @@
 #define TPROPERTY_HPP_
 
 #include "property.hpp"
-#include <allocator>
+#include <pool>
 
 namespace orion {
 
@@ -17,6 +17,7 @@ template <class PType>
 class TProperty : public Property
 {
 public:
+	Pool<PType> pool;
 	typedef std::map< EntityID , PType* > Map;
 protected:
 	Map data;
@@ -29,7 +30,7 @@ protected:
 			return;
 		}
 
-		PType *n = Global<Allocator>::get()->create<PType>();
+		PType *n = pool.create();
 		data[ id ] = n;
 	}
 
@@ -43,7 +44,7 @@ protected:
 
 		PType *n = iter->second;
 		data.erase( iter );
-		Global<Allocator>::get()->destroy( n );
+		PType *n = pool.release( n );
 	}
 public:
 	TProperty()
@@ -68,7 +69,7 @@ public:
 			return *(iter->second);
 		}
 
-		PType *n = Global<Allocator>::get()->create<PType>();
+		PType *n = pool.create();
 		data[ id ] = n;
 		return *n;
 	}

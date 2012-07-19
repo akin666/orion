@@ -3,6 +3,13 @@
  *
  *  Created on: 19.7.2012
  *      Author: akin
+ *
+ * To support somesort of constructor and destructor, the items used with this pool
+ * must have functions:
+ *   void onCreate()
+ *   void onRelease();
+ * the create will be called upon object that has just been created, and the release
+ * will be called at the time of release..
  */
 
 #ifndef POOL_HPP_
@@ -21,8 +28,9 @@ protected:
 	PointerSet freelist;
 	PointerSet blocklist;
 	uint blocksize;
+	uint total;
 public:
-	Pool( uint blocksize = 64 )
+	Pool( uint blocksize = 32 )
 	: blocksize( blocksize )
 	{
 	}
@@ -44,13 +52,14 @@ public:
 		{
 			// create more..
 			// first is reserved for use.
-			CType *block = new CType[blocksize];
+			total += blocksize;
+			item = new CType[blocksize];
 			for( int i = 1 ; i < blocksize ; ++i )
 			{
-				freelist.push( &(block[i]) );
+				freelist.push( &(item[i]) );
 			}
-			return block;
 		}
+		item->onCreate();
 		return item;
 	}
 
@@ -61,8 +70,29 @@ public:
 			return;
 		}
 		// In theory the check if item really is in a block, could be usefull.. but.. naah.. too much trouble..
-
+		item->onRelease();
 		freelist.push( item );
+	}
+	
+	// Reserve n empty more items
+	void reserve( uint requested )
+	{
+		CType *item = new CType[requested];
+		total += requested;
+		for( uint i = 0 ; i < requested ; ++i )
+		{
+			freelist.push( &(item[i]) );
+		}
+	}
+	
+	uint sizeFree()
+	{
+		return freelist.size();
+	}
+	
+	uint size()
+	{
+		return total;
 	}
 };
 
