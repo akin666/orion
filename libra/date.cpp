@@ -10,182 +10,134 @@
 
 namespace orion {
 
-void add( Time& s , const Time& s2 )
-{
-	s.us += s2.us;
-}
-
-void subtract( Time& s , const Time& s2 )
-{
-	s.us -= s2.us;
-}
-
 Date::Date()
+: year( 0 ),
+  month( 0 ),
+  day( 0 ),
+  hour( 0 ),
+  minute( 0 ),
+  second( 0 ),
+  weekday( 0 ),
+  dayOfYear( 0 ),
+  timezone( 0 )
 {
 }
 
 Date::Date(const Date & other)
+: year( other.year ),
+  month( other.month ),
+  day( other.day ),
+  hour( other.hour ),
+  minute( other.minute ),
+  second( other.second ),
+  weekday( other.weekday ),
+  dayOfYear( other.dayOfYear ),
+  timezone( other.timezone )
 {
 }
 
-Date::Date(const Time & other)
+Day Date::getWeekday() const
 {
+	return weekday;
 }
 
-Date::Date(Year year, Month month, Day day, Hour hour, Minute minute, Second second, MicroSecond ms)
+void Date::setWeekday(Day weekday)
 {
+	this->weekday = weekday;
 }
 
-Date::Date(string8 str)
+Day Date::getDay() const
 {
-	(*this) = ::orion::parseTime( str );
+	return day;
 }
 
-Date::~Date()
+void Date::setDay(Day day)
 {
+	this->day = day;
 }
 
-bool Date::after(const Date & val)
+Day Date::getDayOfYear() const
 {
-	return (*this) > val;
+	return dayOfYear;
 }
 
-bool Date::before(const Date & val)
+void Date::setDayOfYear(Day dayOfYear)
 {
-	return (*this) < val;
+	this->dayOfYear = dayOfYear;
 }
 
-bool Date::operator ==(const Date & val) const
+Hour Date::getHour() const
 {
-	return (us == val.us);
+	return hour;
 }
 
-bool Date::operator !=(const Date & val) const
+void Date::setHour(Hour hour)
 {
-	return !(operator == ( val ));
+	this->hour = hour;
 }
 
-bool Date::operator <(const Date & val) const
+Minute Date::getMinute() const
 {
-	return us < val.us;
+	return minute;
 }
 
-bool Date::operator >(const Date & val) const
+void Date::setMinute(Minute minute)
 {
-	return us > val.us;
+	this->minute = minute;
 }
 
-bool Date::operator <=(const Date & val) const
+Month Date::getMonth() const
 {
-	return us <= val.us;
+	return month;
 }
 
-bool Date::operator >=(const Date & val) const
+void Date::setMonth(Month month)
 {
-	return us >= val.us;
+	this->month = month;
 }
 
-Date & Date::operator =(const Date & val)
+Second Date::getSecond() const
 {
-	us = val.us;
-
-	return *this;
+	return second;
 }
 
-Date & Date::operator +=(const Date & val)
+void Date::setSecond(Second second)
 {
-	add( *this , val );
-	return *this;
+	this->second = second;
 }
 
-Date & Date::operator -=(const Date & val)
+Timezone Date::getTimezone() const
 {
-	subtract( *this , val );
-	return *this;
+	return timezone;
 }
 
-Date Date::operator -(const Date & val) const
+void Date::setTimezone(Timezone timezone)
 {
-	Date tmp( *this );
-	subtract( tmp , val );
-	return tmp;
+	this->timezone = timezone;
 }
 
-Date Date::operator +(const Date & val) const
+Year Date::getYear() const
 {
-	Date tmp( *this );
-	add( tmp , val );
-	return tmp;
+	return year;
 }
 
-Year Date::getYear()
+void Date::setYear(Year year)
 {
-	return ::orion::getYear( *this );
+	this->year = year;
 }
 
-Day Date::getDayOfYear()
+void Date::parse( string8 string )
 {
-	return ::orion::getDayOfYear( *this );
-}
-
-Day Date::getDayOfMonth()
-{
-	return ::orion::getDayOfMonth( *this );
-}
-
-Hour Date::getHour()
-{
-	return ::orion::getHour( *this );
-}
-
-Minute Date::getMinute()
-{
-	return ::orion::getMinute( *this );
-}
-
-Month Date::getMonth()
-{
-	return ::orion::getMonth( *this );
-}
-
-Second Date::getSecond()
-{
-	return ::orion::getSecond( *this );
-}
-
-MilliSecond Date::getMilliSecond()
-{
-	return ::orion::getMilliSecond( *this );
-}
-
-MicroSecond Date::getMicroSecond()
-{
-	return ::orion::getMicroSecond( *this );
-}
-
-Time& Date::getTime()
-{
-	return *this;
-}
-
-Timezone Date::getTimezoneOffset()
-{
-	return ::orion::getTimezone();
-}
-
-void Date::parse(string8 string)
-{
-	(*this) = ::orion::parseTime( string );
 }
 
 void Date::update()
 {
-	::orion::getTime( *this );
+	getTime( *this );
 }
 
 string8 Date::toString()
 {
-	return ::orion::timeToString( *this );
+	return "";
 }
 
 } // namespace orion

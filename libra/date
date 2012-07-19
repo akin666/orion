@@ -12,48 +12,42 @@
 
 namespace orion {
 
-class Date : public Time
+class Date
 {
+protected:
+	Year year;		// begins from 0
+	Month month;	// [1,12]
+	Day day;		// [1,31]
+	Hour hour;		// [0,23]
+	Minute minute;	// [0,59]
+	Second second;	// [0,61] // +1 from leapseconds.
+	
+	Day weekday;	// [1,7]
+	Day dayOfYear;	// [1,366]
+	Timezone timezone; // TODO
 public:
 	Date();
-	Date( const Time& other );
 	Date( const Date& other );
-	Date( Year year = 0 , Month month = 0 , Day day = 0 , Hour hour = 0 , Minute minute = 0 , Second second = 0 , MicroSecond ms = 0 );
-	Date( string8 str );
-	virtual ~Date();
-
-	bool after( const Date& val );
-	bool before( const Date& val );
-
-	bool operator == ( const Date& val ) const;
-	bool operator != ( const Date& val ) const;
-	bool operator < ( const Date& val ) const;
-	bool operator > ( const Date& val ) const;
-	bool operator <= ( const Date& val ) const;
-	bool operator >= ( const Date& val ) const;
-
-	Date& operator = ( const Date& val );
-	Date& operator += ( const Date& val );
-	Date& operator -= ( const Date& val );
-	Date operator - ( const Date& val ) const;
-	Date operator + ( const Date& val ) const;
-
-	Year getYear();
-	Day getDayOfYear();
-	Day getDayOfMonth();
-	Hour getHour();
-	Minute getMinute();
-	Month getMonth();
-	Second getSecond();
-	MilliSecond getMilliSecond();
-	MicroSecond getMicroSecond();
-
-	Time& getTime();
-
-	Timezone getTimezoneOffset();
+	Day getDay() const;
+	void setDay(Day day);
+	Day getDayOfYear() const;
+	void setDayOfYear(Day dayOfYear);
+	Day getWeekday() const;
+	void setWeekday(Day weekday);
+	Hour getHour() const;
+	void setHour(Hour hour);
+	Minute getMinute() const;
+	void setMinute(Minute minute);
+	Month getMonth() const;
+	void setMonth(Month month);
+	Second getSecond() const;
+	void setSecond(Second second);
+	Timezone getTimezone() const;
+	void setTimezone(Timezone timezone);
+	Year getYear() const;
+	void setYear(Year year);
 
 	void parse( string8 string );
-
 	void update();
 
 	string8 toString();

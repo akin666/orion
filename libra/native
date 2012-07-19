@@ -13,6 +13,7 @@
 
 #include <orion>
 #include <simg>
+#include <date>
 
 namespace orion {
 
@@ -21,25 +22,9 @@ void message( const char *message );
 void warning( const char *message );
 void alert( const char *message );
 
-// Time, TODO!
-// Refactore, internal clocks should use UTC for everything, the time that user sees, eg. timezoned clock
-// is something totally different, and should be provided by another functions..
-// (so! 2 Time functionalities, Precise UTC Time thing, and Formattable slow, not microsecond precise Date/Time thing)
-void getUTCTime( Time& time );
-void getTime( Time& time );
-Time getTime( Year year, Month month, Day day, Hour hour, Minute minute, Second second, MicroSecond ms );
-Timezone getTimezone( );
-Year getYear( const Time& time );
-Day getDayOfYear( const Time& time );
-Day getDayOfMonth( const Time& time );
-Hour getHour( const Time& time );
-Minute getMinute( const Time& time );
-Month getMonth( const Time& time );
-Second getSecond( const Time& time );
-MilliSecond getMilliSecond( const Time& time );
-MicroSecond getMicroSecond( const Time& time );
-Time parseTime( std::string str );
-std::string timeToString( const Time& time );
+// Time
+void getTime( Time& time ); // UTC Time!
+void getTime( Date& date ); // Local Time!
 
 // File I/O
 FILE *openFileRead( std::string path );

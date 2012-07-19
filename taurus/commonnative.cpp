@@ -46,123 +46,33 @@ void alert( const char *message )
 
 
 // Time
-void getUTCTime( Time& time )
-{
-	// TODO!
-	getTime( time );
-}
-
+// Precise UTC Time
 void getTime( Time& time )
 {
+	// TODO!
 	timeval tmp;
 	gettimeofday( &tmp , NULL );
 
 	time.us = tmp.tv_usec + (tmp.tv_sec * S_TO_US);
 }
 
-Time getTime( Year year, Month month, Day day, Hour hour, Minute minute, Second second, MicroSecond ms )
+// Local Time
+void getTime( Date& date )
 {
-	Time time;
-	timeval tmp;
-	gettimeofday( &tmp , NULL );
-
-	time.us = tmp.tv_usec + (tmp.tv_sec * S_TO_US);
-
-	return time;
-}
-
-Timezone getTimezone( )
-{
-	return 0;
-}
-
-Year getYear( const Time& time )
-{
-	// [0,xxx] humans use [0,xxx]
-	time_t rawtime = time.us * US_TO_S;
+	time_t rawtime;
 	struct tm * info;
+	time ( &rawtime );
 	info = localtime ( &rawtime );
 
-	return info->tm_year + 1900;
-}
-
-Day getDayOfYear( const Time& time )
-{
-	// [1,xxx] humans use [1,xxx]
-	time_t rawtime = time.us * US_TO_S;
-	struct tm * info;
-	info = localtime ( &rawtime );
-
-	return info->tm_yday;
-}
-
-Day getDayOfMonth( const Time& time )
-{
-	// [1,xx] humans use [1,xx]
-	time_t rawtime = time.us * US_TO_S;
-	struct tm * info;
-	info = localtime ( &rawtime );
-
-	return info->tm_mday;
-}
-
-Hour getHour( const Time& time )
-{
-	// [0,23] humans use [0,23]
-	time_t rawtime = time.us * US_TO_S;
-	struct tm * info;
-	info = localtime ( &rawtime );
-
-	return info->tm_hour;
-}
-
-Minute getMinute( const Time& time )
-{
-	// [0,59] humans use [0,59]
-	time_t rawtime = time.us * US_TO_S;
-	struct tm * info;
-	info = localtime ( &rawtime );
-
-	return info->tm_min;
-}
-
-Month getMonth( const Time& time )
-{
-	// [0,11] humans use [1,12]
-	time_t rawtime = time.us * US_TO_S;
-	struct tm * info;
-	info = localtime ( &rawtime );
-
-	return info->tm_mon + 1; // 0-11??? jeez dudes, did you drink too much when you designed this api...
-}
-
-Second getSecond( const Time& time )
-{
-	// [0,59] humans use [0,59]
-	return ((Second)(time.us  * US_TO_S)) % 60;
-}
-
-MilliSecond getMilliSecond( const Time& time )
-{
-	return (MilliSecond)(time.us * US_TO_MS);
-}
-
-MicroSecond getMicroSecond( const Time& time )
-{
-	return time.us;
-}
-
-Time parseTime( string8 str )
-{
-	// TODO!
-	Time time;
-	return time;
-}
-
-string8 timeToString( const Time& time )
-{
-	// TODO!
-	return "";
+	date.setYear( info->tm_year + 1900 );
+	date.setMonth( info->tm_mon + 1 );
+	date.setDay( info->tm_mday );
+	date.setHour( info->tm_hour );
+	date.setMinute( info->tm_min );
+	date.setSecond( info->tm_sec );
+	date.setWeekday( info->tm_wday + 1 );
+	date.setDayOfYear( info->tm_yday + 1 );
+	date.setTimezone( 666 );
 }
 
 
