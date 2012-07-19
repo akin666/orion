@@ -1,0 +1,7 @@
+
+#ifndef HH_XML2JSON_H
+#define HH_XML2JSON_H
+
+#include "xml2jsoncpp/xml2jsonparser.hpp"
+
+#endif
