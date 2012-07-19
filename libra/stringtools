@@ -2,25 +2,25 @@
 // 
 // StringTools
 // this is to create all the needed tools for minor
-// string operations, that are missing from std::string
+// string operations, that are missing from string8
 // (i know boost, could provide stuff, but boost is like #include <uglyWorld> )
 // 
 
 #ifndef STRINGTOOLS_H_
 #define STRINGTOOLS_H_
 
-#include <string>
+#include <orion>
 #include <sstream>
 
 namespace orion {
 namespace stringtools {
 
-void toUpper( std::string& str );
-void toLower( std::string& str );
+void toUpper( string8& str );
+void toLower( string8& str );
 
 template <class T>
 bool from_string(T& t,
-		const std::string& s,
+		const string8& s,
 		std::ios_base& (*f)(std::ios_base&))
 {
 	std::istringstream iss(s);
@@ -38,9 +38,9 @@ T to_ot( const F from )
 }
 
 // specialization need forward declarations.
-template<> std::string to_ot<std::string, std::string>( const std::string from );
-template<> bool to_ot<bool, std::string>( const std::string from );
-template<> std::string to_ot<std::string, bool>( const bool from );
+template<> string8 to_ot<string8, string8>( const string8 from );
+template<> bool to_ot<bool, string8>( const string8 from );
+template<> string8 to_ot<string8, bool>( const bool from );
 
 } // stringtools
 } // orion
