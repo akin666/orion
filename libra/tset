@@ -1,0 +1,74 @@
+
+#ifndef TSET_H_
+#define TSET_H_
+
+#include <iostream>
+#include <deque>
+#include <iterator>
+#include <uthread>
+
+namespace orion {
+
+template <class CType>
+class TSet
+{
+protected:
+	std::mutex mutex;
+	typedef std::deque< CType > DataSet;
+	DataSet storage;
+public:
+	TSet()
+	{
+	}
+	
+	TSet( const std::deque< CType >& other )
+	: storage( other.storage )
+	{
+	}
+	
+	TSet( const TSet< CType >& other )
+	: storage( other.storage )
+	{
+	}
+	
+	~TSet()
+	{
+	}
+    
+    unsigned int size() 
+    {
+    	std::lock_guard<std::mutex> lock( mutex ); 
+		return storage.size();
+    }
+    
+    void clear()
+    {
+    	std::lock_guard<std::mutex> lock( mutex );
+    	storage.clear();
+    }
+    
+    CType *pop() 
+    {
+    	std::lock_guard<std::mutex> lock( mutex );
+    	
+    	if( storage.size() < 1 )
+    	{
+    		return NULL;
+    	}
+    	
+    	CType *ret = storage.back();
+    	
+    	storage.pop_back();
+    	
+    	return ret;
+    }
+    
+    void push( CType *val )
+    {
+    	std::lock_guard<std::mutex> lock( mutex );
+    	storage.push_back( val );
+    }
+};
+
+} // namespace orion 
+#endif // TSET_H_ 

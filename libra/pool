@@ -1,0 +1,70 @@
+/*
+ * pool.hpp
+ *
+ *  Created on: 19.7.2012
+ *      Author: akin
+ */
+
+#ifndef POOL_HPP_
+#define POOL_HPP_
+
+#include <TSet>
+
+namespace orion
+{
+
+template <class CType>
+class Pool
+{
+protected:
+	typedef TSet<CType> PointerSet;
+	PointerSet freelist;
+	PointerSet blocklist;
+	uint blocksize;
+public:
+	Pool( uint blocksize = 64 )
+	: blocksize( blocksize )
+	{
+	}
+
+	~Pool()
+	{
+		while( CType *block = blocklist.pop() )
+		{
+			delete[] block;
+		}
+		blocklist.clear();
+		freelist.clear();
+	}
+
+	CType *create()
+	{
+		CType *item = freelist.pop();
+		if( item == NULL )
+		{
+			// create more..
+			// first is reserved for use.
+			CType *block = new CType[blocksize];
+			for( int i = 1 ; i < blocksize ; ++i )
+			{
+				freelist.push( &(block[i]) );
+			}
+			return block;
+		}
+		return item;
+	}
+
+	void release( CType *item )
+	{
+		if( item == NULL )
+		{
+			return;
+		}
+		// In theory the check if item really is in a block, could be usefull.. but.. naah.. too much trouble..
+
+		freelist.push( item );
+	}
+};
+
+} // namespace orion 
+#endif // POOL_HPP_ 
