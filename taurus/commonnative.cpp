@@ -14,6 +14,7 @@
 #include <cstdio>
 
 #include <stb_image.h>
+#include <TGAImage.h>
 
 #ifndef MAX_TEXT_FILE_SIZE
 # define MAX_TEXT_FILE_SIZE 1048576 // 1Megs
