@@ -181,9 +181,7 @@ bool loadImageFile( std::string path , simg::Buffer& softimage )
 	closeFile( file );
 
 	// Load image..
-	int len;
 	glm::ivec2 resolution;
-	int *comp;
 	int req_comp = 4; // req RGBA
 
 	stbi_uc *data = stbi_load_from_memory( (stbi_uc *)buffer , size , &resolution.x, &resolution.y, &req_comp , req_comp );
@@ -233,6 +231,20 @@ bool loadImageFile( std::string path , simg::Buffer& softimage )
 
 bool saveImageFile( std::string path , simg::Buffer& softimage )
 {
+	switch( softimage.getMode() )
+	{
+	case RGBA8 :
+		return imagesaver::RGBA8write( path + ".tga" , softimage.getResolution().x , softimage.getResolution().y , softimage.access() );
+	case RGB8 :
+		return imagesaver::RGB8write( path + ".tga" , softimage.getResolution().x , softimage.getResolution().y , softimage.access() );
+	case ALPHA8 	:
+	case LUMINANCE 	:
+	case INTENSITY 	:
+		return imagesaver::ALPHA8write( path + ".tga" , softimage.getResolution().x , softimage.getResolution().y , softimage.access() );
+	default :
+		break;
+	}
+	return false;
 }
 
 } // orion

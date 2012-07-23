@@ -17,7 +17,9 @@
 
 namespace imagesaver {
 
-bool writeTGAImageRGBA8( std::string filename , int width , int height , void *pixels );
+bool RGBA8write( std::string filename , int width , int height , void *pixels );
+bool RGB8write( std::string filename , int width , int height , void *pixels );
+bool ALPHA8write( std::string filename , int width , int height , void *pixels );
 
 } // imagesaver
 
