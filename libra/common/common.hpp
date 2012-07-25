@@ -20,6 +20,7 @@
 #include <glm/glm>		// Math libraries
 #include <stdexcept>	// Exceptions
 #include <atomic>		// atomic things.
+#include "random.hpp"
 
 #define DELTA 0.0001f
 #define PI 3.141593f
@@ -116,6 +117,7 @@ namespace orion {
 	void convertText( string8& input, string32& add );
 	void convertText( string32& input, string8& add );
 
+	void initCommon();
 } // orion
 
 #endif // COMMON_HPP_

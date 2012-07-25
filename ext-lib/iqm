@@ -1,0 +1,11 @@
+
+#ifndef HH_IQM_H
+#define HH_IQM_H
+
+// Inter-Quake Model (IQM) Format
+// https://github.com/lsalzman/iqm
+// http://lee.fov120.com/iqm/
+
+#include "iqmanim/iqm.h"
+
+#endif

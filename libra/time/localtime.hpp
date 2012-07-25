@@ -1,18 +1,18 @@
 /*
- * Date.hpp
+ * localtime
  *
  *  Created on: 17.6.2012
  *      Author: akin
  */
 
-#ifndef HH_DATE_HPP_
-#define HH_DATE_HPP_
+#ifndef HH_LOCALTIME_HPP_
+#define HH_LOCALTIME_HPP_
 
 #include <orion>
 
 namespace orion {
 
-class Date
+class LocalTime
 {
 protected:
 	Year year;		// begins from 0
@@ -26,8 +26,8 @@ protected:
 	Day dayOfYear;	// [1,366]
 	Timezone timezone; // TODO
 public:
-	Date();
-	Date( const Date& other );
+	LocalTime();
+	LocalTime( const LocalTime& other );
 	Day getDay() const;
 	void setDay(Day day);
 	Day getDayOfYear() const;
@@ -54,4 +54,4 @@ public:
 };
 
 } // namespace orion
-#endif // HH_DATE_HPP_
+#endif // HH_LOCALTIME_HPP_

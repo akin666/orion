@@ -8,7 +8,7 @@
 #ifndef TIME_HPP_
 #define TIME_HPP_
 
-#include "common.hpp"
+#include <common/common.hpp>
 
 namespace orion {
 

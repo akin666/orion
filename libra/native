@@ -13,7 +13,6 @@
 
 #include <orion>
 #include <simg>
-#include <date>
 
 namespace orion {
 
@@ -24,7 +23,7 @@ void alert( const char *message );
 
 // Time
 void getTime( Time& time ); // UTC Time!
-void getTime( Date& date ); // Local Time!
+void getTime( LocalTime& time ); // Local Time!
 
 // File I/O
 FILE *openFileRead( std::string path );

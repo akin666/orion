@@ -58,22 +58,22 @@ void getTime( Time& time )
 }
 
 // Local Time
-void getTime( Date& date )
+void getTime( LocalTime& time )
 {
 	time_t rawtime;
 	struct tm * info;
-	time ( &rawtime );
+	::time ( &rawtime );
 	info = localtime ( &rawtime );
 
-	date.setYear( info->tm_year + 1900 );
-	date.setMonth( info->tm_mon + 1 );
-	date.setDay( info->tm_mday );
-	date.setHour( info->tm_hour );
-	date.setMinute( info->tm_min );
-	date.setSecond( info->tm_sec );
-	date.setWeekday( info->tm_wday + 1 );
-	date.setDayOfYear( info->tm_yday + 1 );
-	date.setTimezone( 666 );
+	time.setYear( info->tm_year + 1900 );
+	time.setMonth( info->tm_mon + 1 );
+	time.setDay( info->tm_mday );
+	time.setHour( info->tm_hour );
+	time.setMinute( info->tm_min );
+	time.setSecond( info->tm_sec );
+	time.setWeekday( info->tm_wday + 1 );
+	time.setDayOfYear( info->tm_yday + 1 );
+	time.setTimezone( 666 );
 }
 
 

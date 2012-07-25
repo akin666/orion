@@ -1,16 +1,16 @@
 /*
- * Date.cpp
+ * kocaltime.cpp
  *
  *  Created on: 17.6.2012
  *      Author: akin
  */
 
-#include "date"
+#include "localtime.hpp"
 #include <native>
 
 namespace orion {
 
-Date::Date()
+LocalTime::LocalTime()
 : year( 0 ),
   month( 0 ),
   day( 0 ),
@@ -23,7 +23,7 @@ Date::Date()
 {
 }
 
-Date::Date(const Date & other)
+LocalTime::LocalTime(const LocalTime & other)
 : year( other.year ),
   month( other.month ),
   day( other.day ),
@@ -36,106 +36,106 @@ Date::Date(const Date & other)
 {
 }
 
-Day Date::getWeekday() const
+Day LocalTime::getWeekday() const
 {
 	return weekday;
 }
 
-void Date::setWeekday(Day weekday)
+void LocalTime::setWeekday(Day weekday)
 {
 	this->weekday = weekday;
 }
 
-Day Date::getDay() const
+Day LocalTime::getDay() const
 {
 	return day;
 }
 
-void Date::setDay(Day day)
+void LocalTime::setDay(Day day)
 {
 	this->day = day;
 }
 
-Day Date::getDayOfYear() const
+Day LocalTime::getDayOfYear() const
 {
 	return dayOfYear;
 }
 
-void Date::setDayOfYear(Day dayOfYear)
+void LocalTime::setDayOfYear(Day dayOfYear)
 {
 	this->dayOfYear = dayOfYear;
 }
 
-Hour Date::getHour() const
+Hour LocalTime::getHour() const
 {
 	return hour;
 }
 
-void Date::setHour(Hour hour)
+void LocalTime::setHour(Hour hour)
 {
 	this->hour = hour;
 }
 
-Minute Date::getMinute() const
+Minute LocalTime::getMinute() const
 {
 	return minute;
 }
 
-void Date::setMinute(Minute minute)
+void LocalTime::setMinute(Minute minute)
 {
 	this->minute = minute;
 }
 
-Month Date::getMonth() const
+Month LocalTime::getMonth() const
 {
 	return month;
 }
 
-void Date::setMonth(Month month)
+void LocalTime::setMonth(Month month)
 {
 	this->month = month;
 }
 
-Second Date::getSecond() const
+Second LocalTime::getSecond() const
 {
 	return second;
 }
 
-void Date::setSecond(Second second)
+void LocalTime::setSecond(Second second)
 {
 	this->second = second;
 }
 
-Timezone Date::getTimezone() const
+Timezone LocalTime::getTimezone() const
 {
 	return timezone;
 }
 
-void Date::setTimezone(Timezone timezone)
+void LocalTime::setTimezone(Timezone timezone)
 {
 	this->timezone = timezone;
 }
 
-Year Date::getYear() const
+Year LocalTime::getYear() const
 {
 	return year;
 }
 
-void Date::setYear(Year year)
+void LocalTime::setYear(Year year)
 {
 	this->year = year;
 }
 
-void Date::parse( string8 string )
+void LocalTime::parse( string8 string )
 {
 }
 
-void Date::update()
+void LocalTime::update()
 {
 	getTime( *this );
 }
 
-string8 Date::toString()
+string8 LocalTime::toString()
 {
 	return "";
 }

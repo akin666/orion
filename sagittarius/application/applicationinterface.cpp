@@ -13,6 +13,7 @@ namespace orion {
 
 ApplicationInterface::ApplicationInterface()
 {
+	initCommon();
 	attachListener<ApplicationEvent>( this );
 }
 
