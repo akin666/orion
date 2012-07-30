@@ -3,7 +3,7 @@
 #include <tpool/threadpool.hpp>
 #include <global>
 
-#define queWork( work ) { if( orion::getGlobal<orion::ThreadPool>() != NULL ) \
+#define queuWork( work ) { if( orion::getGlobal<orion::ThreadPool>() != NULL ) \
 						{ \
 							orion::getGlobal<orion::ThreadPool>()->schedule( &work ); \
 						} \

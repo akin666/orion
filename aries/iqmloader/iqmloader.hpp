@@ -8,6 +8,8 @@
 #ifndef IQMLOADER_HPP_
 #define IQMLOADER_HPP_
 
+#include <orion>
+
 namespace orion
 {
 
@@ -16,6 +18,8 @@ class IQMLoader
 public:
 	IQMLoader();
 	virtual ~IQMLoader();
+
+	void load( std::string path );
 };
 
 } // namespace orion 

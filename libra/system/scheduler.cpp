@@ -8,6 +8,7 @@
 #include "scheduler.hpp"
 #include <exception/exceptionhandler.hpp>
 #include <native>
+#include <video/video.hpp>
 
 namespace orion {
 
@@ -181,6 +182,10 @@ void Scheduler::run()
 			ProfilerRAII profiler( (*iter)->profiler );
 			(*iter)->run();
 		}
+
+		// Video should flip at the end of frame _always_
+		// Audio should flip at the end of frame _always_
+		Global<Video>::get()->flip();
 	}
 	catch( std::exception& e )
 	{

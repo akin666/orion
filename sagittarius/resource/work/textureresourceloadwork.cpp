@@ -28,29 +28,21 @@ void TextureResourceLoadWork::add( TextureResource *res )
 {
 	std::lock_guard<std::mutex> lock(mutex);
 
-	loadSet.push_back( res );
+	loadSet.push( res );
 
 	// Command work to load the resource.
 	// If already running, no need to re-add to work que.
 	// If no running, then needs to be added to work que.
 	if( state == TEXLOADWORK_NONE )
 	{
-		queWork( (*this) );
+		queuWork( (*this) );
 	}
-}
-
-TextureResource *TextureResourceLoadWork::popNext()
-{
-	TextureResource *res = loadSet.back();
-	loadSet.pop_back();
-	return res;
 }
 
 bool TextureResourceLoadWork::begin()
 {
 	std::lock_guard<std::mutex> lock(mutex);
 	state = TEXLOADWORK_RUNNING;
-
 	return true;
 }
 
@@ -61,7 +53,7 @@ void TextureResourceLoadWork::run()
 	{
 		{
 			std::lock_guard<std::mutex> lock(mutex);
-			packet = popNext();
+			packet = loadSet.pop();
 			if( packet == NULL  )
 			{
 				state = TEXLOADWORK_NONE;
@@ -73,7 +65,9 @@ void TextureResourceLoadWork::run()
 		{
 			// ERROR!
 			packet->loadingError();
+			continue;
 		}
+		packet->loadingSuccess();
 	}
 }
 

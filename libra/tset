@@ -14,14 +14,14 @@ class TSet
 {
 protected:
 	std::mutex mutex;
-	typedef std::deque< CType > DataSet;
+	typedef std::deque< CType *> DataSet;
 	DataSet storage;
 public:
 	TSet()
 	{
 	}
 	
-	TSet( const std::deque< CType >& other )
+	TSet( const std::deque< CType *>& other )
 	: storage( other.storage )
 	{
 	}

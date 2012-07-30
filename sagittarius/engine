@@ -16,6 +16,7 @@
 #include <system/scheduler.hpp>
 #include <config/config.hpp>
 #include <loader>
+#include <threadpool>
 
 namespace orion
 {
@@ -38,6 +39,7 @@ protected:
 	AllocationManager allocation;
 	Scheduler scheduler;
 	Config config;
+	ThreadPool tpool;
 	
 	StringSet args;
 public:
@@ -99,6 +101,23 @@ public:
 			return false;
 		}
 		Global<Allocator>::set( &allocation );
+		
+		// ThreadPool
+		try
+		{
+			int tcount = ThreadPool::getHardwareThreadCount();
+			if( tcount <= 0 ) 
+			{
+				tcount = 1;
+			}
+			tpool.initialize( tcount );
+			Global<ThreadPool>::set( &tpool );
+			}
+		catch( ... )
+		{
+			LOG->error("Failed to initialize ThreadPools. Bailing out.");
+			return false;
+		}
 		
 		// VIDEO
 		if( !video.initialize() )

@@ -11,6 +11,7 @@
 #include <work>
 #include <uthread>
 #include <resource/textureresource.hpp>
+#include <tset>
 
 namespace orion
 {
@@ -18,7 +19,7 @@ namespace orion
 class TextureResourceLoadWork : public Work
 {
 protected:
-	typedef std::list<TextureResource*> LoadSet;
+	typedef TSet<TextureResource> LoadSet;
 	LoadSet loadSet;
 
 	std::mutex mutex;
