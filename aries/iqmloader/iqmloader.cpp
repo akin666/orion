@@ -10,6 +10,8 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <cstring>
+#include <buffertool.hpp>
 
 namespace orion
 {
@@ -22,12 +24,12 @@ IQMLoader::~IQMLoader()
 {
 }
 
-bool loadMeshData( uint8 *buffer , const iqmheader& header )
+bool loadMeshData( BufferTool& buffer , const iqmheader& header )
 {
 	return true;
 }
 
-bool loadAnimationData( uint8 *buffer , const iqmheader& header )
+bool loadAnimationData( BufferTool& buffer , const iqmheader& header )
 {
 	return true;
 }
@@ -50,21 +52,24 @@ bool IQMLoader::load( const std::string& path )
     std::vector<uint8> buffer;
     buffer.resize( readSize );
     stream.read( (char*)&buffer[0] , readSize );
+
     if( stream.gcount() != readSize )
     {
     	return false;
     }
     stream.close();
 
-    return load( &buffer[0] , readSize );
+    uint8 *ptr = &buffer[0];
+    return load( ptr , readSize );
 }
 
 bool IQMLoader::load( const uint8 *buffer , uint32 maxlen )
 {
+	BufferTool buffertool( buffer , maxlen );
+
 	// Read header.
 	iqmheader header;
-	stream.read( (char*)&header, sizeof(iqmheader) );
-	if( stream.gcount() != sizeof(iqmheader) )
+	if( !buffertool.read( &header ) )
 	{
 		return false;
 	}
@@ -78,24 +83,20 @@ bool IQMLoader::load( const uint8 *buffer , uint32 maxlen )
 		return false;
 	}
 
-	int readSize = header.filesize - sizeof(header);
-	std::vector<uint8> buffer;
-	buffer.resize( readSize );
-	stream.read( (char*)&buffer[0] , readSize );
-	if( stream.gcount() != readSize )
-	{
-		return false;
-	}
-	stream.close();
-
 	// Now we have a buffer.. and the header..
 	if( header.num_meshes > 0 )
 	{
-		if( !loadMeshData( &buffer[0] , header ) ) return false;
+		if( !loadMeshData( buffertool , header ) )
+		{
+			return false;
+		}
 	}
 	if( header.num_anims > 0 )
 	{
-		if( !loadAnimationData( &buffer[0] , header ) ) return false;
+		if( !loadAnimationData( buffertool , header ) )
+		{
+			return false;
+		}
 	}
 	return true;
 }
