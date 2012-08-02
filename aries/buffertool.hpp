@@ -46,6 +46,28 @@ public:
 		return true;
 	}
 
+	template <class CType>
+	bool readAt( CType *target , uint at , int count = 1 )
+	{
+		int size = sizeof( CType ) * count;
+		if( at + size > length )
+		{
+			return false;
+		}
+		// Warning.. but..
+		// To make it no warning, would need to cast to INT or LONG, depending on platform.
+		// To create such structure and macros, for multiplatform compatibility,
+		// would be engineering and 'complicators gloves' pissing contest,
+		// It gives out a warning, DEAL WITH IT.
+		std::memcpy( (void*)target , (const void*)(data + at) , sizeof(size) );
+		return true;
+	}
+
+	const uint8 *access( uint offset )
+	{
+		return data + offset;
+	}
+
 	void seek( uint to )
 	{
 		at = to;
