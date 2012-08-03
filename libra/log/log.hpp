@@ -15,11 +15,11 @@ namespace orion {
 class Log {
 public:
 	Log();
-	virtual ~Log();
+	~Log();
 
-	virtual void printMessage( string8 message );
-	virtual void printError( string8 message );
-	virtual void printWarning( string8 message );
+	void printMessage( string8 message );
+	void printError( string8 message );
+	void printWarning( string8 message );
 
 	void message( const char* format , ... );
 	void error( const char* format , ... );
