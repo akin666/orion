@@ -9,7 +9,7 @@
 #define SIMPLERENDERTASK_HPP_
 
 #include <system/rendertask.hpp>
-#include <video.hpp>
+#include <video>
 
 namespace orion
 {

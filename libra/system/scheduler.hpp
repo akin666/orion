@@ -21,7 +21,7 @@
 #include <state/statestack.hpp>
 #include <orion>
 #include "actionqueue.hpp"
-#include <video.hpp>
+#include <video>
 #include <profiler/profilerdata.hpp>
 
 namespace orion {

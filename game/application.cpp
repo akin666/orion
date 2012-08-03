@@ -6,7 +6,7 @@
  */
 
 #include "application.hpp"
-#include <video.hpp>
+#include <video>
 #include <tasks/simplerendertask.hpp>
 #include "menustate.hpp"
 #include <allocator>

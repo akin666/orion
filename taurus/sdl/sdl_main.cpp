@@ -11,7 +11,7 @@
 #include <application.hpp>
 #include <config/jsonconfigloader.hpp>
 
-#include <video.hpp>
+#include <video>
 #include <openal/openal_audio.hpp>
 
 #include <engine>
