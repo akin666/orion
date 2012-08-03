@@ -1,0 +1,48 @@
+/*
+ * video.hpp
+ *
+ *  Created on: 6.7.2012
+ *      Author: akin
+ */
+
+#ifndef VIDEO_HPP_
+#define VIDEO_HPP_
+
+#include <orion>
+#include <graphics/rendertarget.hpp>
+
+namespace orion
+{
+
+class Video
+{
+protected:
+	uint32 flags;
+	graphics::RenderTargetSetting current;
+
+	void setInitialized( bool val );
+	bool isInitialized();
+public:
+	Video();
+	~Video();
+
+	const graphics::RenderTargetSetting& getMode() const;
+
+	void listModes( graphics::RenderTargetSettingSet& set );
+
+	bool isCursorVisible();
+	void setCursorVisible( bool val );
+
+	void setTitle( string8 head );
+	string8 getTitle();
+
+	bool apply( graphics::RenderTargetSetting& mode );
+	bool initialize();
+	void flip();
+	void finish();
+	graphics::RenderTarget& getRenderTarget();
+	void query();
+};
+
+} // namespace orion
+#endif // VIDEO_HPP_
