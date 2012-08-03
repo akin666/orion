@@ -10,7 +10,7 @@
 #define _ENGINE_HPP_
 
 #include <orion>
-#include <video/video.hpp>
+#include <video.hpp>
 #include <audio/audio.hpp>
 #include <allocator>
 #include <system/scheduler.hpp>

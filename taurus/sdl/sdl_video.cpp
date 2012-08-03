@@ -5,8 +5,10 @@
  *      Author: akin
  */
 
-#include "sdl_video.hpp"
-#ifdef SDL_PLATFORM
+#include <orion>
+#if defined( USE_SDL ) and ( defined(OS_WINDOWS) or defined(OS_LINUX) or defined(OS_MAC) )
+
+#include <video.hpp>
 #include <config/config.hpp>
 #include <stdgl>
 #include <graphicslib/graphicslib.hpp>
@@ -34,7 +36,6 @@ public:
 
 	void flip();
 };
-
 
 SDLRenderTarget::SDLRenderTarget()
 : screen( NULL )
@@ -122,62 +123,71 @@ void SDLRenderTarget::flip()
 // SDLVideo
 /////
 
-#define SDLVIDEOF_NONE			0x0000
-#define SDLVIDEOF_INITIALIZED	0x0001
+// Globals!
+SDLRenderTarget *sdl_rendertarget = NULL;
 
-SDLVideo::SDLVideo()
-: flags(SDLVIDEOF_NONE),
-  rendertarget( NULL )
+#define VIDEO_NONE			0x0000
+#define VIDEO_INITIALIZED	0x0001
+
+Video::Video()
+: flags( VIDEO_NONE )
 {
+	sdl_rendertarget = NULL;
 }
 
-SDLVideo::~SDLVideo()
+Video::~Video()
 {
-	delete rendertarget;
-	rendertarget = NULL;
+	delete sdl_rendertarget;
+	sdl_rendertarget = NULL;
+	flags = VIDEO_NONE;
 }
 
-void SDLVideo::setInitialized( bool val )
+const graphics::RenderTargetSetting& Video::getMode() const
+{
+	return current;
+}
+
+void Video::setInitialized( bool val )
 {
 	if( val )
 	{
-		flags |= SDLVIDEOF_INITIALIZED;
+		flags |= VIDEO_INITIALIZED;
 	}
 	else
 	{
-		flags &= ~SDLVIDEOF_INITIALIZED;
+		flags &= ~VIDEO_INITIALIZED;
 	}
 }
 
-bool SDLVideo::isInitialized()
+bool Video::isInitialized()
 {
-	return (flags & SDLVIDEOF_INITIALIZED) != 0;
+	return (flags & VIDEO_INITIALIZED) != 0;
 }
 
-void SDLVideo::listModes(graphics::RenderTargetSettingSet& set)
+void Video::listModes(graphics::RenderTargetSettingSet& set)
 {
 }
 
-bool SDLVideo::isCursorVisible()
+bool Video::isCursorVisible()
 {
 	return SDL_ShowCursor( -1 ) == 1;
 }
 
-void SDLVideo::setCursorVisible(bool val)
+void Video::setCursorVisible(bool val)
 {
 	SDL_ShowCursor( val ? 1 : 0 );
 }
 
-void SDLVideo::setTitle(string8 head)
+void Video::setTitle(string8 head)
 {
 }
 
-string8 SDLVideo::getTitle()
+string8 Video::getTitle()
 {
 	return "";
 }
 
-void SDLVideo::query()
+void Video::query()
 {
     SDL_Event event;
     while( SDL_PollEvent(&event) )
@@ -242,7 +252,7 @@ void SDLVideo::query()
     }
 }
 
-bool SDLVideo::apply(graphics::RenderTargetSetting& mode)
+bool Video::apply(graphics::RenderTargetSetting& mode)
 {
 	if( isInitialized() )
 	{
@@ -252,7 +262,7 @@ bool SDLVideo::apply(graphics::RenderTargetSetting& mode)
 	return mode.write( *CONFIG , "video" );
 }
 
-bool SDLVideo::initialize()
+bool Video::initialize()
 {
 	if( isInitialized() )
 	{
@@ -276,24 +286,24 @@ bool SDLVideo::initialize()
     // Configure default things:
     SDL_EnableUNICODE( 1 ); // translate key inputs into unicode.
 
-	rendertarget = new SDLRenderTarget( mode );
+    sdl_rendertarget = new SDLRenderTarget( mode );
 
-	return rendertarget->initialize();
+	return sdl_rendertarget->initialize();
 }
 
-void SDLVideo::flip()
+void Video::flip()
 {
-	rendertarget->flip();
+	sdl_rendertarget->flip();
 }
 
-void SDLVideo::finish()
+void Video::finish()
 {
 	Graphics::finish();
 }
 
-graphics::RenderTarget& SDLVideo::getRenderTarget()
+graphics::RenderTarget& Video::getRenderTarget()
 {
-	return *rendertarget;
+	return *sdl_rendertarget;
 }
 
 } // namespace orion
