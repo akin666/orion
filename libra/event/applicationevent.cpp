@@ -23,8 +23,4 @@ ApplicationEvent::ApplicationEvent( Type type  )
 {
 }
 
-ApplicationEvent::~ApplicationEvent()
-{
-}
-
 } // namespace orion

@@ -29,7 +29,6 @@ public:
 	ApplicationEvent();
 	ApplicationEvent( const ApplicationEvent& other );
 	ApplicationEvent( Type type );
-	virtual ~ApplicationEvent();
 
 	Type type;
 };

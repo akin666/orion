@@ -15,7 +15,6 @@ class Timer
 {
 public:
 	Timer();
-	virtual ~Timer();
 };
 
 } // namespace orion 

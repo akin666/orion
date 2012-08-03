@@ -21,10 +21,6 @@ LoadingEvent::LoadingEvent( const LoadingEvent& other )
 {
 }
 
-LoadingEvent::~LoadingEvent()
-{
-}
-
 LoadingEvent::Type LoadingEvent::getType() const
 {
 	return type;

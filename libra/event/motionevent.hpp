@@ -19,7 +19,6 @@ public:
 	MotionEvent();
 	MotionEvent( const MotionEvent& other );
 	MotionEvent( glm::vec2 delta , glm::vec2 position , uint32 device = 0 );
-	virtual ~MotionEvent();
 
 	glm::vec2 delta;
 	glm::vec2 position;

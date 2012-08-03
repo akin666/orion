@@ -29,8 +29,4 @@ MotionEvent::MotionEvent( glm::vec2 delta , glm::vec2 position , uint32 device )
 {
 }
 
-MotionEvent::~MotionEvent()
-{
-}
-
 } // namespace orion

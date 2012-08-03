@@ -48,8 +48,4 @@ KeyEvent::KeyEvent( Action action , Type type , UNICODE value , uint32 code , gl
 {
 }
 
-KeyEvent::~KeyEvent()
-{
-}
-
 } // namespace orion

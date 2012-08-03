@@ -14,8 +14,4 @@ Timer::Timer()
 {
 }
 
-Timer::~Timer()
-{
-}
-
 } // namespace orion 

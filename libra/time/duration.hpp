@@ -21,7 +21,6 @@ protected:
 	string8 name;
 public:
 	Duration();
-	virtual ~Duration();
 
 	void setName( const string8& name );
 	string8 getName() const;

@@ -9,14 +9,6 @@
 
 namespace orion {
 
-Config::Config()
-{
-}
-
-Config::~Config()
-{
-}
-
 bool Config::loadFromString( const string8& data )
 {
 	Json::Reader reader;

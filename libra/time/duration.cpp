@@ -16,10 +16,6 @@ Duration::Duration()
 {
 }
 
-Duration::~Duration()
-{
-}
-
 void Duration::setName( const string8& name )
 {
 	this->name = name;

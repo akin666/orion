@@ -34,7 +34,6 @@ public:
 	KeyEvent( const KeyEvent& other );
 	KeyEvent( Action action , Type type, UNICODE value , uint32 code , uint32 device = 0 );
 	KeyEvent( Action action , Type type, UNICODE value , uint32 code , glm::vec2 position , uint32 device = 0 );
-	virtual ~KeyEvent();
 
 	Action action;
 	Type type;

@@ -27,7 +27,6 @@ protected:
 public:
 	LoadingEvent( ResourceID ident , Type type );
 	LoadingEvent( const LoadingEvent& other );
-	virtual ~LoadingEvent();
 
 	Type getType() const;
 	ResourceID getID() const;

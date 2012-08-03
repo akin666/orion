@@ -33,9 +33,6 @@ protected:
 	{
 	}
 public:
-	Config();
-	virtual ~Config();
-
 	bool loadFromString( const string8& data );
 	bool loadFromStream( std::istream& input );
 
