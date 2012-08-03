@@ -8,13 +8,12 @@
 #ifndef JSONCONFIGLOADER_HPP_
 #define JSONCONFIGLOADER_HPP_
 
-#include <loader>
 #include <config/config.hpp>
 
 namespace orion
 {
 
-class JSONConfigLoader : public Loader<Config>
+class JSONConfigLoader
 {
 public:
 	JSONConfigLoader();

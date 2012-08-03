@@ -15,7 +15,6 @@
 #include <allocator>
 #include <system/scheduler.hpp>
 #include <config/config.hpp>
-#include <loader>
 #include <threadpool>
 
 namespace orion

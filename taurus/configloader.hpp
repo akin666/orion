@@ -8,13 +8,12 @@
 #ifndef CONFIGLOADER_HPP_
 #define CONFIGLOADER_HPP_
 
-#include <loader>
 #include <config/config.hpp>
 
 namespace orion
 {
 
-class ConfigLoader : public Loader<Config>
+class ConfigLoader
 {
 public:
 	ConfigLoader();
