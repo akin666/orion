@@ -6,7 +6,7 @@
  */
 
 #include "graphicstextureunit.hpp"
-#include <graphicslib/graphicslib.hpp>
+#include <graphicslib>
 
 namespace orion {
 namespace graphics {

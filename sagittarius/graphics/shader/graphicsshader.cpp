@@ -6,7 +6,7 @@
  */
 
 #include "graphicsshader.hpp"
-#include <graphicslib/graphicslib.hpp>
+#include <graphicslib>
 
 #define GGNOTINITIALIZED Graphics::NotInitialized
 

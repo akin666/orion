@@ -5,13 +5,13 @@
  *      Author: akin
  */
 
-#include <orion>
-#if defined( USE_SDL ) and ( defined(OS_WINDOWS) or defined(OS_LINUX) or defined(OS_MAC) )
+#include "sdl_detect.hpp"
+#ifdef SDL_PLATFORM
 
 #include <video>
 #include <config/config.hpp>
 #include <stdgl>
-#include <graphicslib/graphicslib.hpp>
+#include <graphicslib>
 
 #include <orionevent>
 

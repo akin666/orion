@@ -6,7 +6,7 @@
  */
 
 #include "graphicsattribute.hpp"
-#include <graphicslib/graphicslib.hpp>
+#include <graphicslib>
 
 #define GGNOTINITIALIZED Graphics::NotInitializedI
 

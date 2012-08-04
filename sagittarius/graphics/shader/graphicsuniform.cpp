@@ -6,7 +6,7 @@
  */
 
 #include "graphicsuniform.hpp"
-#include <graphicslib/graphicslib.hpp>
+#include <graphicslib>
 #include <glm/transform>
 
 #define GGNOTINITIALIZED Graphics::NotInitializedI

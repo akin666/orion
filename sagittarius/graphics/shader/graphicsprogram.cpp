@@ -7,7 +7,7 @@
 
 #include "graphicsprogram.hpp"
 
-#include <graphicslib/graphicslib.hpp>
+#include <graphicslib>
 #include "graphicsattribute.hpp"
 #include "graphicsuniform.hpp"
 #include "graphicsshader.hpp"
