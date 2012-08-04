@@ -1,19 +1,19 @@
 /*
- * audiocontext.cpp
+ * soundcontext.cpp
  *
  *  Created on: 17.6.2012
  *      Author: akin
  */
 
-#include "audiocontext.hpp"
+#include "soundcontext.hpp"
 
 namespace orion {
 
-AudioContext::AudioContext()
+SoundContext::SoundContext()
 {
 }
 
-AudioContext::~AudioContext()
+SoundContext::~SoundContext()
 {
 }
 

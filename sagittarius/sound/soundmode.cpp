@@ -1,20 +1,20 @@
 /*
- * audiomode.cpp
+ * soundmode.cpp
  *
  *  Created on: 7.7.2012
  *      Author: akin
  */
 
-#include "audiomode.hpp"
+#include "soundmode.hpp"
 
 namespace orion
 {
 
-AudioMode::AudioMode()
+SoundMode::SoundMode()
 {
 }
 
-AudioMode::~AudioMode()
+SoundMode::~SoundMode()
 {
 }
 
