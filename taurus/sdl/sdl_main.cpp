@@ -12,7 +12,7 @@
 #include <config/jsonconfigloader.hpp>
 
 #include <video>
-#include <openal/openal_audio.hpp>
+#include <audio>
 
 #include <engine>
 
@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 		Application,
 		orion::JSONConfigLoader,
 		orion::Video ,
-		orion::OpenALAudio ,
+		orion::Audio ,
 		orion::Log ,
 		orion::Allocator
 		>

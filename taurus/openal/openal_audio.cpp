@@ -5,31 +5,41 @@
  *      Author: akin
  */
 
-#include "openal_audio.hpp"
+#include <orion>
+#if defined( USE_OPENAL ) and ( defined(OS_WINDOWS) or defined(OS_LINUX) or defined(OS_MAC) )
+
+#include <audio>
 
 namespace orion
 {
 
-OpenALAudio::OpenALAudio()
+Audio::Audio()
 {
 }
 
-OpenALAudio::~OpenALAudio()
+Audio::~Audio()
 {
 }
 
-void OpenALAudio::listModes( AudioModeSet& set )
+const SoundMode& Audio::getMode() const
+{
+	return current;
+}
+
+void Audio::listModes( SoundModeSet& set )
 {
 }
 
-bool OpenALAudio::apply( AudioMode& mode )
+bool Audio::apply( const SoundMode& mode )
 {
 	return true;
 }
 
-bool OpenALAudio::initialize()
+bool Audio::initialize()
 {
 	return true;
 }
 
 } // namespace orion
+
+#endif
