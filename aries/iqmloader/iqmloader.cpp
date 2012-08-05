@@ -16,11 +16,6 @@
 namespace orion
 {
 
-class Matrix3x4 {
-public:
-	float v[3*4];
-};
-
 class Vert2 {
 public:
 	float x,y;
@@ -66,33 +61,11 @@ bool loadMeshData( BufferTool& buffer , const iqmheader& header )
 	std::vector<Vert2> texCoords;
 	std::vector<Vert4uc> blendIndexes;
 	std::vector<Vert4uc> blendWeights;
-	std::vector<Vert3> bitangents;
-	std::vector<Matrix3x4> frames;
-	std::vector<uint32> textures;
 
 	std::vector<iqmtriangle> triangles;
 	std::vector<iqmmesh> meshes;
 	std::vector<iqmjoint> joints;
 	std::vector<iqmtriangle> adjacencyTriangles;
-
-	// [x,y,z],..
-	positions.resize( vertexCount );
-	normals.resize( vertexCount );
-	tangents.resize( vertexCount );
-	texCoords.resize( vertexCount );
-	blendIndexes.resize( vertexCount );
-	blendWeights.resize( vertexCount );
-	bitangents.resize( vertexCount );
-	frames.resize( jointCount );
-	textures.resize( meshCount );
-
-	triangles.resize( triangleCount );
-	meshes.resize( meshCount );
-	joints.resize( jointCount );
-	if( adjacencyOffset != 0 )
-	{
-		adjacencyTriangles.resize( triangleCount );
-	}
 
 	std::memset( &textures[0] , 0, meshCount * sizeof(uint32) );
 
@@ -100,6 +73,13 @@ bool loadMeshData( BufferTool& buffer , const iqmheader& header )
 	VertexArraySet vertexArrays;
 	vertexArrays.resize( header.num_vertexarrays );
 	buffer.readAt( &vertexArrays[0] , header.ofs_vertexarrays , header.num_vertexarrays );
+
+	positions.resize( vertexCount );
+	normals.resize( vertexCount );
+	tangents.resize( vertexCount );
+	texCoords.resize( vertexCount );
+	blendIndexes.resize( vertexCount );
+	blendWeights.resize( vertexCount );
 
 	for( VertexArraySet::iterator iter = vertexArrays.begin() ; iter != vertexArrays.end() ; ++iter )
 	{
@@ -152,20 +132,111 @@ bool loadMeshData( BufferTool& buffer , const iqmheader& header )
 		}
 	}
 
+	triangles.resize( triangleCount );
+	meshes.resize( meshCount );
+	joints.resize( jointCount );
+
 	buffer.readAt( &triangles[0] , header.ofs_triangles , triangleCount );
 	buffer.readAt( &meshes[0] , header.ofs_meshes , meshCount );
-	buffer.readAt( &joints[0] , header.ofs_triangles , jointCount );
+	buffer.readAt( &joints[0] , header.ofs_joints , jointCount );
+
 	if( adjacencyOffset != 0 )
 	{
+		adjacencyTriangles.resize( triangleCount );
 		buffer.readAt( &adjacencyTriangles[0] , adjacencyOffset , triangleCount );
 	}
 
+//    baseframe = new Matrix3x4[hdr.num_joints];
+//    inversebaseframe = new Matrix3x4[hdr.num_joints];
+//    for(int i = 0; i < (int)hdr.num_joints; i++)
+//    {
+//        iqmjoint &j = joints[i];
+//        baseframe[i] = Matrix3x4(Quat(j.rotate).normalize(), Vec3(j.translate), Vec3(j.scale));
+//        inversebaseframe[i].invert(baseframe[i]);
+//        if(j.parent >= 0)
+//        {
+//            baseframe[i] = baseframe[j.parent] * baseframe[i];
+//            inversebaseframe[i] *= inversebaseframe[j.parent];
+//        }
+//    }
+
+//    for(int i = 0; i < (int)hdr.num_meshes; i++)
+//    {
+//        iqmmesh &m = meshes[i];
+//        printf("%s: loaded mesh: %s\n", filename, &str[m.name]);
+//        textures[i] = loadtexture(&str[m.material], 0);
+//        if(textures[i]) printf("%s: loaded material: %s\n", filename, &str[m.material]);
+//    }
 
 	return true;
 }
 
 bool loadAnimationData( BufferTool& buffer , const iqmheader& header )
 {
+//    if((int)hdr.num_poses != numjoints) return false;
+//
+//    if(animdata)
+//    {
+//        delete[] animdata;
+//        delete[] frames;
+//        animdata = NULL;
+//        anims = NULL;
+//        frames = 0;
+//        numframes = 0;
+//        numanims = 0;
+//    }
+//
+//    lilswap((uint *)&buf[hdr.ofs_poses], hdr.num_poses*sizeof(iqmpose)/sizeof(uint));
+//    lilswap((uint *)&buf[hdr.ofs_anims], hdr.num_anims*sizeof(iqmanim)/sizeof(uint));
+//    lilswap((ushort *)&buf[hdr.ofs_frames], hdr.num_frames*hdr.num_framechannels);
+//    if(hdr.ofs_bounds) lilswap((uint *)&buf[hdr.ofs_bounds], hdr.num_frames*sizeof(iqmbounds)/sizeof(uint));
+//
+//    animdata = buf;
+//    numanims = hdr.num_anims;
+//    numframes = hdr.num_frames;
+//
+//    const char *str = hdr.ofs_text ? (char *)&buf[hdr.ofs_text] : "";
+//    anims = (iqmanim *)&buf[hdr.ofs_anims];
+//    poses = (iqmpose *)&buf[hdr.ofs_poses];
+//    frames = new Matrix3x4[hdr.num_frames * hdr.num_poses];
+//    ushort *framedata = (ushort *)&buf[hdr.ofs_frames];
+//    if(hdr.ofs_bounds) bounds = (iqmbounds *)&buf[hdr.ofs_bounds];
+//
+//    for(int i = 0; i < (int)hdr.num_frames; i++)
+//    {
+//        for(int j = 0; j < (int)hdr.num_poses; j++)
+//        {
+//            iqmpose &p = poses[j];
+//            Quat rotate;
+//            Vec3 translate, scale;
+//            translate.x = p.channeloffset[0]; if(p.mask&0x01) translate.x += *framedata++ * p.channelscale[0];
+//            translate.y = p.channeloffset[1]; if(p.mask&0x02) translate.y += *framedata++ * p.channelscale[1];
+//            translate.z = p.channeloffset[2]; if(p.mask&0x04) translate.z += *framedata++ * p.channelscale[2];
+//            rotate.x = p.channeloffset[3]; if(p.mask&0x08) rotate.x += *framedata++ * p.channelscale[3];
+//            rotate.y = p.channeloffset[4]; if(p.mask&0x10) rotate.y += *framedata++ * p.channelscale[4];
+//            rotate.z = p.channeloffset[5]; if(p.mask&0x20) rotate.z += *framedata++ * p.channelscale[5];
+//            rotate.w = p.channeloffset[6]; if(p.mask&0x40) rotate.w += *framedata++ * p.channelscale[6];
+//            scale.x = p.channeloffset[7]; if(p.mask&0x80) scale.x += *framedata++ * p.channelscale[7];
+//            scale.y = p.channeloffset[8]; if(p.mask&0x100) scale.y += *framedata++ * p.channelscale[8];
+//            scale.z = p.channeloffset[9]; if(p.mask&0x200) scale.z += *framedata++ * p.channelscale[9];
+//            // Concatenate each pose with the inverse base pose to avoid doing this at animation time.
+//            // If the joint has a parent, then it needs to be pre-concatenated with its parent's base pose.
+//            // Thus it all negates at animation time like so:
+//            //   (parentPose * parentInverseBasePose) * (parentBasePose * childPose * childInverseBasePose) =>
+//            //   parentPose * (parentInverseBasePose * parentBasePose) * childPose * childInverseBasePose =>
+//            //   parentPose * childPose * childInverseBasePose
+//            Matrix3x4 m(rotate.normalize(), translate, scale);
+//            if(p.parent >= 0) frames[i*hdr.num_poses + j] = baseframe[p.parent] * m * inversebaseframe[j];
+//            else frames[i*hdr.num_poses + j] = m * inversebaseframe[j];
+//        }
+//    }
+//
+//    for(int i = 0; i < (int)hdr.num_anims; i++)
+//    {
+//        iqmanim &a = anims[i];
+//        printf("%s: loaded anim: %s\n", filename, &str[a.name]);
+//    }
+
 	return true;
 }
 
