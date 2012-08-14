@@ -67,7 +67,7 @@ bool loadMeshData( BufferTool& buffer , const iqmheader& header )
 	std::vector<iqmjoint> joints;
 	std::vector<iqmtriangle> adjacencyTriangles;
 
-	std::memset( &textures[0] , 0, meshCount * sizeof(uint32) );
+//	std::memset( &textures[0] , 0, meshCount * sizeof(uint32) );
 
 	typedef std::vector<iqmvertexarray> VertexArraySet;
 	VertexArraySet vertexArrays;
@@ -168,26 +168,24 @@ bool loadMeshData( BufferTool& buffer , const iqmheader& header )
 //        if(textures[i]) printf("%s: loaded material: %s\n", filename, &str[m.material]);
 //    }
 
-	return true;
-}
+    if( header.num_poses != jointCount)
+    {
+    	return false;
+    }
 
-bool loadAnimationData( BufferTool& buffer , const iqmheader& header )
-{
-//    if((int)hdr.num_poses != numjoints) return false;
-//
-//    if(animdata)
-//    {
-//        delete[] animdata;
-//        delete[] frames;
-//        animdata = NULL;
-//        anims = NULL;
-//        frames = 0;
-//        numframes = 0;
-//        numanims = 0;
-//    }
-//
-//    lilswap((uint *)&buf[hdr.ofs_poses], hdr.num_poses*sizeof(iqmpose)/sizeof(uint));
-//    lilswap((uint *)&buf[hdr.ofs_anims], hdr.num_anims*sizeof(iqmanim)/sizeof(uint));
+    // No animations?
+    if( header.num_anims < 1 )
+    {
+    	return true;
+    }
+
+	std::vector<iqmpose> poses;
+	std::vector<iqmanim> anims;
+	poses.resize( header.num_poses );
+	anims.resize( header.num_anims );
+	buffer.readAt( &poses[0] , header.ofs_poses , header.num_poses );//    lilswap((uint *)&buf[hdr.ofs_poses], hdr.num_poses*sizeof(iqmpose)/sizeof(uint));
+	buffer.readAt( &anims[0] , header.ofs_anims , header.num_anims );//    lilswap((uint *)&buf[hdr.ofs_anims], hdr.num_anims*sizeof(iqmanim)/sizeof(uint));
+
 //    lilswap((ushort *)&buf[hdr.ofs_frames], hdr.num_frames*hdr.num_framechannels);
 //    if(hdr.ofs_bounds) lilswap((uint *)&buf[hdr.ofs_bounds], hdr.num_frames*sizeof(iqmbounds)/sizeof(uint));
 //
@@ -297,13 +295,7 @@ bool IQMLoader::load( const uint8 *buffer , uint32 maxlen )
 			return false;
 		}
 	}
-	if( header.num_anims > 0 )
-	{
-		if( !loadAnimationData( buffertool , header ) )
-		{
-			return false;
-		}
-	}
+
 	return true;
 }
 
