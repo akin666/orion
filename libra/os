@@ -27,7 +27,7 @@
 #endif
 
 #if defined(OS_NOT_DETECTED)
-# if defined(linux) and defined(__ELF__)
+# if defined(__linux)
 #  define OS_LINUX
 #  undef OS_NOT_DETECTED
 # endif
@@ -60,6 +60,19 @@
 # if defined(__IPHONE__)
 #  define OS_IPHONE
 #  undef OS_NOT_DETECTED
+# endif
+#endif
+
+
+#if defined(OS_NOT_DETECTED)
+# if defined(__unix)
+#  warning "Its a unix system, I know this,.."
+# endif
+#endif
+
+#if defined(OS_NOT_DETECTED)
+# if defined(__posix)
+#  warning "pposiix?."
 # endif
 #endif
 

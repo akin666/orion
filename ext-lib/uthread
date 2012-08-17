@@ -2,6 +2,13 @@
 // source:
 // https://gist.github.com/1154023
 
+#ifdef __linux
+
+# include <thread>
+# include <mutex>
+
+#else
+
 #if defined(_GLIBCXX_HAS_GTHREADS) && defined(__GNUG__)
 # include <thread>
 # include <mutex>
@@ -43,3 +50,5 @@ namespace std
 }
 
 #endif // Crippled GCC 
+
+#endif // linux

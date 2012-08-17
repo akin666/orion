@@ -57,8 +57,10 @@ void Graphics::releaseTextureID( int count , uint *id )
 uint Graphics::getMaxTextureUnits()
 {
 	GL_TEST_RAII;
-	int count;
+	int count = 0;
+#ifndef OS_LINUX
 	glGetIntegerv( GL_MAX_TEXTURE_UNITS , &count );
+#endif
 	return count;
 }
 

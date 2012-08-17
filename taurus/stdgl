@@ -19,7 +19,7 @@ namespace orion {
 #else
 #endif
 
-#ifdef USE_GLEW
+#if defined(USE_GLEW) and defined(OS_WINDOWS)
 # define GLEW_STATIC
 # include <GL/glew.h>
 # define GL_INITIALIZATION ( (glewInit() == GLEW_OK) && GLEW_VERSION_3_0 )
@@ -80,11 +80,26 @@ namespace orion {
 	case GL_INVALID_VALUE : { LOG_SYSTEM_ERROR( "%s:%i GL_INVALID_VALUE %s" , __FILE__ , __LINE__ , txt ); break; } \
 	case GL_INVALID_ENUM : { LOG_SYSTEM_ERROR( "%s:%i GL_INVALID_ENUM %s" , __FILE__ , __LINE__ , txt ); break; } \
 	case GL_INVALID_OPERATION : { LOG_SYSTEM_ERROR( "%s:%i GL_INVALID_OPERATION %s" , __FILE__ , __LINE__ , txt ); break; } \
+	case GL_OUT_OF_MEMORY : { LOG_SYSTEM_ERROR( "%s:%i GL_OUT_OF_MEMORY %s" , __FILE__ , __LINE__ , txt ); break; } \
+	default : { LOG_SYSTEM_ERROR( "%s:%i GL WTF! %s" , __FILE__ , __LINE__ , txt ); break; } \
+  } } }
+  /* 
+  
+# define GL_TEST_ERROR(txt) { \
+  int gl_error_var; \
+  while( ( gl_error_var = glGetError() ) != GL_NO_ERROR ) { \
+  switch( gl_error_var ) { \
+	case GL_NO_ERROR : break; \
+	case GL_INVALID_VALUE : { LOG_SYSTEM_ERROR( "%s:%i GL_INVALID_VALUE %s" , __FILE__ , __LINE__ , txt ); break; } \
+	case GL_INVALID_ENUM : { LOG_SYSTEM_ERROR( "%s:%i GL_INVALID_ENUM %s" , __FILE__ , __LINE__ , txt ); break; } \
+	case GL_INVALID_OPERATION : { LOG_SYSTEM_ERROR( "%s:%i GL_INVALID_OPERATION %s" , __FILE__ , __LINE__ , txt ); break; } \
 	case GL_STACK_OVERFLOW : { LOG_SYSTEM_ERROR( "%s:%i GL_STACK_OVERFLOW %s" , __FILE__ , __LINE__ , txt ); break; } \
 	case GL_STACK_UNDERFLOW : { LOG_SYSTEM_ERROR( "%s:%i GL_STACK_UNDERFLOW %s" , __FILE__ , __LINE__ , txt ); break; } \
 	case GL_OUT_OF_MEMORY : { LOG_SYSTEM_ERROR( "%s:%i GL_OUT_OF_MEMORY %s" , __FILE__ , __LINE__ , txt ); break; } \
 	default : { LOG_SYSTEM_ERROR( "%s:%i GL WTF! %s" , __FILE__ , __LINE__ , txt ); break; } \
   } } }
+  
+  */
 #else
 # define GL_TEST_ERROR(txt)
 #endif

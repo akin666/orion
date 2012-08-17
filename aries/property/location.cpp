@@ -6,7 +6,7 @@
  */
 
 #include "location.hpp"
-#include <entity/TProperty.hpp>
+#include <entity/tproperty.hpp>
 
 namespace orion {
 

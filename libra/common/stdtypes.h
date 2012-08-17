@@ -43,7 +43,9 @@
 	typedef int32 			sint;
 	typedef uint32		 	uint;
 	typedef int64 			slong;
+# ifndef OS_LINUX
 	typedef uint64		 	ulong;
+# endif
     typedef float32			vec;
 #endif
 
