@@ -14,6 +14,10 @@
 
 #include <profiler/profilerdata.hpp>
 
+#ifndef INITIALIZE_EVENTSET_SIZE
+# define INITIALIZE_EVENTSET_SIZE 64
+#endif
+
 namespace orion {
 
 class EventTaskInterface
@@ -36,23 +40,25 @@ protected:
 	typedef EventListener<CType> Listener;
 	typedef std::vector< Listener* > ListenerSet;
 
-	EventSet set1;
-	EventSet set2;
+	std::atomic<uint32> low;
+	std::atomic<uint32> high;
+	std::atomic<uint32> count;
+	std::atomic<uint32> size;
+
+	EventSet set;
+	EventSet tmpSet;
+	EventSet tmpSet2;
 
 	ListenerSet listeners;
-	ListenerSet listenersTmp;
-
-	std::mutex mset1;
-	std::mutex mset2;
 	std::mutex mlistener;
-
-	std::mutex *mset;
-	EventSet *set;
+	std::mutex consuming;
 public:
 	EventTask()
 	{
-		mset = &mset1;
-		set = &set1;
+		low = 0;
+		high = 0;
+		size = INITIALIZE_EVENTSET_SIZE;
+		set.resize( size );
 	}
 	virtual ~EventTask()
 	{
@@ -67,7 +73,6 @@ public:
 	void detach( Listener *listener )
 	{
 		std::lock_guard<std::mutex> lock( mlistener );
-
 		for( typename ListenerSet::iterator iter = listeners.begin() ; iter != listeners.end() ; ++iter )
 		{
 			if( *iter == listener )
@@ -80,57 +85,98 @@ public:
 
 	void send( const CType& event )
 	{
-		std::lock_guard<std::mutex> lock( *mset );
-		set->push_back( event );
+		uint32 spot = high++;
+		count++;
+		set[ spot%size ] = event;
+
+		if( count > size )
+		{
+			LOG->error( "Event overflow! %s:%i" , __FILE__ , __LINE__ );
+		}
 	}
 
-	virtual bool run()
+	void sendDirect( const CType& event )
 	{
-		// Lock the currently performing mutex
-		EventSet *process = NULL;
-		{
-			std::lock_guard<std::mutex> lock( *mset );
-
-			// switch sets
-			if( mset == &mset1 )
-			{
-				mset = &mset2;
-				set = &set2;
-				process = &set1;
-			}
-			else
-			{
-				mset = &mset1;
-				set = &set1;
-				process = &set2;
-			}
-		}
-
+		ListenerSet listenersTmp;
 		{
 			// Copy listener list..
 			std::lock_guard<std::mutex> lock( mlistener );
 			listenersTmp = listeners;
 		}
-		// no need to lock..
-		// go through the process set.
-		for( typename EventSet::iterator message = process->begin() ; message != process->end() ; ++message )
+		for( typename ListenerSet::iterator iter = listenersTmp.begin() ; iter != listenersTmp.end() ; ++iter )
 		{
-			// send the event to listeners..
-			for( typename ListenerSet::iterator iter = listenersTmp.begin() ; iter != listenersTmp.end() ; ++iter )
+			if( (*iter)->handle( &event , 1 ) )
 			{
-				if( (*iter)->handle( *message ) )
-				{
-					// listener handled the event.
-					break;
-				}
+				// listener handled the event.
+				break;
+			}
+		}
+	}
+
+	virtual bool run()
+	{
+		// Lock the currently performing mutex
+		uint32 from;
+		uint32 to;
+		int32 count;
+
+		tmpSet.clear();
+		{
+			std::lock_guard<std::mutex> lock( consuming );
+			from = low;
+			to = high;
+			low = to;
+
+			count = to - from;
+			this->count -= count;
+
+			if( count < 1 )
+			{
+				return false;
+			}
+
+			// Copy the events.
+			// Hopefully copies the whole block, reusing the mem..
+			tmpSet = set;
+		}
+
+		uint32 begin = from % size;
+		uint32 end   = to % size;
+
+		ListenerSet listenersTmp;
+		{
+			// Copy listener list..
+			std::lock_guard<std::mutex> lock( mlistener );
+			listenersTmp = listeners;
+		}
+
+		// because of the ringbuffer, the array is not linear always.
+		// it might be also [ a -> end ] [ begin -> b ]
+		// Need to reorder it..
+		if( begin > end )
+		{
+			tmpSet2 = tmpSet;
+			for( int i = 0 ; i < count ; ++i )
+			{
+				tmpSet[i] = tmpSet2[(begin+i)%size];
+			}
+			begin = 0;
+			end = count;
+		}
+
+		// go through the process set.
+		const CType *const events = &tmpSet[begin];
+		// send the eventbatch to listeners..
+		for( typename ListenerSet::iterator iter = listenersTmp.begin() ; iter != listenersTmp.end() ; ++iter )
+		{
+			if( (*iter)->handle( events , count ) )
+			{
+				// listener handled the batch.
+				break;
 			}
 		}
 
-		bool ret = process->size() > 0;
-		// empty events.
-		process->clear();
-
-		return ret;
+		return true;
 	}
 };
 

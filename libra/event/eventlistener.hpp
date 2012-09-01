@@ -16,7 +16,8 @@ public:
 	EventListener() {}
 	virtual ~EventListener() {}
 
-	virtual bool handle( const EventType& event ) = 0;
+	// Handle a batch of events
+	virtual bool handle( const EventType *const event , const int& count ) { return false; }
 };
 
 } // namespace orion
