@@ -21,9 +21,9 @@ InputController::~InputController()
 	detachListener<KeyEvent>( this );
 }
 
-bool InputController::handle( const KeyEvent& event )
+bool InputController::handle( const KeyEvent *const event , const int& count )
 {
-	LOG->message( "Got %i , %i , %i , %i " , event.action , event.value , event.code , event.device );
+	LOG->message( "Got %i , %i , %i , %i " , event[0].action , event[0].value , event[0].code , event[0].device );
 
 	return true;
 }

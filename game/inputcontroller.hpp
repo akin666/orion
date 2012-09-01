@@ -19,7 +19,7 @@ public:
 	InputController();
 	virtual ~InputController();
 
-	virtual bool handle( const KeyEvent& event );
+	virtual bool handle( const KeyEvent *const event , const int& count );
 };
 
 } /* namespace orion */
