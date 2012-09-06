@@ -76,3 +76,7 @@ void Application::handleException( const std::exception& exeption )
 {
 }
 
+void Application::handleEllipsisException()
+{
+}
+

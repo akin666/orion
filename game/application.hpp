@@ -35,6 +35,7 @@ public:
 	virtual bool handle( const orion::ApplicationEvent& event );
 
 	virtual void handleException( const std::exception& exeption );
+	virtual void handleEllipsisException();
 };
 
 #endif // APPLICATION_HPP_

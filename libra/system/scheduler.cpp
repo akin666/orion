@@ -200,6 +200,11 @@ void Scheduler::run()
 	catch( ... )
 	{
 		// What to do?
+		ExceptionHandler *handler = getGlobal<ExceptionHandler>();
+		if( handler != NULL )
+		{
+			handler->handleEllipsisException();
+		}
 	}
 }
 

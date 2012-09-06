@@ -15,6 +15,7 @@ public:
 	virtual ~ExceptionHandler();
 
 	virtual void handleException( const std::exception& exeption );
+	virtual void handleEllipsisException();
 };
 
 } // namespace orion
