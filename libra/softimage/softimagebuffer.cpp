@@ -21,7 +21,7 @@ Buffer::Buffer()
 }
 
 Buffer::Buffer( const glm::ivec2& resolution , orion::ColorMode mode , void *pixelbuffer )
-: buffer( pixelbuffer ),
+: buffer( (int8*)pixelbuffer ),
   realbuffer( NULL ),
   totalSize( 0 ),
   mode( mode ),
@@ -88,7 +88,7 @@ bool Buffer::initialize()
 	realbuffer = new int8[ rtotal ];
 
 	// 4 byte alignment.
-	buffer = realbuffer + (((int)realbuffer)%4);
+	buffer = realbuffer + (((long)realbuffer)%4);
 
 	// reset the buffer to 0s
 	::memset( buffer , 0x0 , totalSize );
