@@ -21,10 +21,12 @@ using namespace orion;
 Application::Application()
 : running( true )
 {
+	Global<Scheduler>::get()->add( &applicationStates );
 }
 
 Application::~Application()
 {
+	Global<Scheduler>::get()->remove( &applicationStates );
 }
 
 bool Application::initialize( StringSet& args )
@@ -37,7 +39,6 @@ bool Application::initialize( StringSet& args )
 	Global<Scheduler>::get()->add( renderer );
 
 	// init application statestack and send it to scheduler.
-	Global<Scheduler>::get()->push( applicationStates );
 
 	// push the first state into application statestack.
 	applicationStates.push<MenuState>();

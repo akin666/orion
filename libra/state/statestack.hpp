@@ -33,30 +33,25 @@ public:
 
 	// The allocation is managed by the stack, if you want to modify the thing, then use the returned reference.
 	template <class CType>
-	CType& push();
+	CType& push()
+	{
+		if( current != NULL )
+		{
+			states.push_back( current );
+		}
+		CType *tmp = new CType;
+		current = tmp;
+		return *tmp;
+	}
 
 	// The allocation is managed by the stack, if you want to modify the thing, then use the returned reference.
 	template <class CType>
-	CType& replace();
-};
-
-template <class CType>
-CType& StateStack::push<CType>()
-{
-	if( current != NULL )
+	CType& replace()
 	{
-		states.push_back( current );
+		pop();
+		return push<CType>();
 	}
-
-	return *(current = new CType);
-}
-
-template <class CType>
-CType& StateStack::replace<CType>()
-{
-	pop();
-	return push<CType>();
-}
+};
 
 } // namespace orion
 #endif // STATESTACK_HPP_

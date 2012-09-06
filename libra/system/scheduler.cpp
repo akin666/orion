@@ -47,6 +47,11 @@ Tick Scheduler::getRenderTick( ) const
 	return nextRender;
 }
 
+void Scheduler::add( StateStack *task )
+{
+	stateStackTasks.push_back( task );
+}
+
 void Scheduler::add( LogicTask *task )
 {
 	logicTasks.push_back( task );
@@ -70,6 +75,18 @@ void Scheduler::add( RenderTask *task )
 void Scheduler::schedule( Tick time , Action *action )
 {
 	actionQueu.add( time , action );
+}
+
+void Scheduler::remove( StateStack *task )
+{
+	for( StateStackSet::iterator iter = stateStackTasks.begin() ; iter != stateStackTasks.end() ; ++iter )
+	{
+		if( *iter == task )
+		{
+			stateStackTasks.erase( iter );
+			return;
+		}
+	}
 }
 
 void Scheduler::remove( LogicTask *task )
