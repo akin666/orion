@@ -16,8 +16,8 @@ namespace simg
 class Buffer
 {
 protected:
-	void *buffer;		// does not have ownership
-	void *realbuffer; 	// ownership
+	int8 *buffer;		// does not have ownership
+	int8 *realbuffer; 	// ownership
 	int totalSize;
 	orion::ColorMode mode;
 	glm::ivec2 resolution;
