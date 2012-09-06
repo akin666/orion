@@ -12,6 +12,7 @@
 #include <application/applicationinterface.hpp>
 #include "inputcontroller.hpp"
 #include <resource/textureresourcemanager.hpp>
+#include <state/statestack.hpp>
 
 class Application : public orion::ApplicationInterface
 {
@@ -19,6 +20,8 @@ protected:
 	orion::InputController input;
 
 	orion::TextureResourceManager tresmanager;
+
+	orion::StateStack applicationStates;
 
 	bool running;
 public:

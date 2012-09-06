@@ -3,7 +3,7 @@
  *
  *  Created on: 16.6.2012
  *      Author: akin
- *    [state task logic]                    <| full
+ *    [state stack logics]                  <| full
  *      [LogicTask]			<| single		 | -
  *      [SimulationTask]	 | tick			 | game
  *      [EventTask]			<| simulation	 | simulation
@@ -26,14 +26,16 @@
 
 namespace orion {
 
-class Scheduler : public StateStack
+class Scheduler
 {
 protected:
+	typedef std::vector<StateStack*> StateStackSet;
 	typedef std::vector<LogicTask*> LogicSet;
 	typedef std::vector<SimulationTask*> SimulationSet;
 	typedef std::vector<EventTaskInterface*> EventSet;
 	typedef std::vector<RenderTask*> RenderSet;
 
+	StateStackSet stateStackTasks;;
 	LogicSet logicTasks;
 	SimulationSet simulationTasks;
 	EventSet eventTasks;
@@ -63,6 +65,7 @@ public:
 	void setRenderTick( Tick tick );
 	Tick getRenderTick( ) const;
 
+	void add( StateStack *task );
 	void add( LogicTask *task );
 	void add( SimulationTask *task );
 	void add( EventTaskInterface *task );
@@ -70,6 +73,7 @@ public:
 
 	void schedule( Tick time , Action *action );
 
+	void remove( StateStack *task );
 	void remove( LogicTask *task );
 	void remove( SimulationTask *task );
 	void remove( EventTaskInterface *task );

@@ -23,7 +23,6 @@ MenuState::~MenuState()
 void MenuState::activate()
 {
 	scheduler = Global<Scheduler>::get();
-
 	if( scheduler != NULL )
 	{
 		// Reset the Tick time.

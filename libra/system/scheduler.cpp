@@ -129,7 +129,10 @@ void Scheduler::run()
 		ProfilerRAII frameProfiler( frame );
 		{ // state
 			ProfilerRAII stateProfiler( state );
-			runStateStack();
+			for( StateStackSet::iterator iter = stateStackTasks.begin() ; iter != stateStackTasks.end() ; ++iter )
+			{
+				(*iter)->run();
+			}
 		}
 		for( ; current < nextRender ; ++current )
 		{ // tick

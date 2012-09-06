@@ -12,7 +12,8 @@
 
 namespace orion {
 
-class StateStack {
+class StateStack
+{
 protected:
 	typedef std::vector<State*> StateSet;
 
@@ -26,13 +27,36 @@ public:
 	StateStack();
 	virtual ~StateStack();
 
-	void runStateStack();
+	void run();
 
-	// Ownership of the state is released to StateStack!
-	void push( State *state );
 	void pop();
-	void replace( State *state );
+
+	// The allocation is managed by the stack, if you want to modify the thing, then use the returned reference.
+	template <class CType>
+	CType& push();
+
+	// The allocation is managed by the stack, if you want to modify the thing, then use the returned reference.
+	template <class CType>
+	CType& replace();
 };
+
+template <class CType>
+CType& StateStack::push<CType>()
+{
+	if( current != NULL )
+	{
+		states.push_back( current );
+	}
+
+	return *(current = new CType);
+}
+
+template <class CType>
+CType& StateStack::replace<CType>()
+{
+	pop();
+	return push<CType>();
+}
 
 } // namespace orion
 #endif // STATESTACK_HPP_

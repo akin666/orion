@@ -14,6 +14,8 @@
 #include <resource/resourcemanager.hpp>
 #include <resource/textureresource.hpp>
 
+#include <system/scheduler.hpp>
+
 using namespace orion;
 
 Application::Application()
@@ -34,9 +36,13 @@ bool Application::initialize( StringSet& args )
 	RenderTask *renderer = new SimpleRenderTask( video );
 	Global<Scheduler>::get()->add( renderer );
 
-	MenuState *state = Global<Allocator>::get()->create<MenuState>();
-	Global<StateStack>::get()->push( state );
+	// init application statestack and send it to scheduler.
+	Global<Scheduler>::get()->push( applicationStates );
 
+	// push the first state into application statestack.
+	applicationStates.push<MenuState>();
+
+	// request loading of logo resource.
 	loadResource<TextureResource>( "logo" , "data/logo.png" );
 
 	running = true;
