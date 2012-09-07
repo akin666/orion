@@ -68,6 +68,23 @@ public:
 		return data + offset;
 	}
 
+	const uint8 *access()
+	{
+		return data + at;
+	}
+
+	template <class CType>
+	const CType *access( uint offset )
+	{
+		return (CType *)(data + offset);
+	}
+
+	template <class CType>
+	const CType *access()
+	{
+		return (CType *)(data + at);
+	}
+
 	void seek( uint to )
 	{
 		at = to;
