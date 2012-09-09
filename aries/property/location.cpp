@@ -25,13 +25,13 @@ string8 TProperty<Location>::getName()
 }
 
 template <>
-bool TProperty<Location>::parse( EntityID id , rapidxml::xml_node<> *node )
+bool TProperty<Location>::parse( EntityID id , Json::Value& node )
 {
 	if( node == NULL )
 	{
 		return false;
 	}
-
+/*
 	// Parse location data out of this bitch.
 	rapidxml::xml_attribute<> *ax = node->first_attribute( "x" );
 	if( ax != NULL )
@@ -50,6 +50,7 @@ bool TProperty<Location>::parse( EntityID id , rapidxml::xml_node<> *node )
 	{
 		// parse Z
 	}
+/**/
 
 	return true;
 }

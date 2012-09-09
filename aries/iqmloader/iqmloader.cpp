@@ -11,7 +11,7 @@
 #include <fstream>
 #include <cmath>
 #include <cstring>
-#include <buffertool.hpp>
+#include <buffer.hpp>
 
 namespace orion
 {
@@ -45,7 +45,7 @@ IQMLoader::~IQMLoader()
 {
 }
 
-bool loadMeshData( BufferTool& buffer , const iqmheader& header )
+bool loadMeshData( Buffer& buffer , const iqmheader& header )
 {
 	int vertexCount = header.num_vertexes;
 	int jointCount = header.num_joints;
@@ -267,9 +267,9 @@ bool IQMLoader::load( const std::string& path )
     return load( ptr , readSize );
 }
 
-bool IQMLoader::load( const uint8 *buffer , uint32 maxlen )
+bool IQMLoader::load( uint8 *buffer , uint32 maxlen )
 {
-	BufferTool buffertool( buffer , maxlen );
+	Buffer buffertool( buffer , maxlen );
 
 	// Read header.
 	iqmheader header;

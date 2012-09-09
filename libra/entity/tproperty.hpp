@@ -46,6 +46,18 @@ protected:
 		data.erase( iter );
 		pool.release( n );
 	}
+
+	virtual void enableEntity( bool enabled , EntityID id )
+	{
+		typename Map::iterator iter = data.find( id );
+		if( iter == data.end() )
+		{
+			return;
+		}
+
+		PType *n = iter->second;
+		n->enable( enabled );
+	}
 public:
 	TProperty()
 	{
@@ -74,6 +86,17 @@ public:
 		return *n;
 	}
 
+	PType *getNoCreate( EntityID id )
+	{
+		typename Map::iterator iter = data.find( id );
+		if( iter != data.end() )
+		{
+			return (iter->second);
+		}
+
+		return NULL;
+	}
+
 	// direct access..
 	Map& access()
 	{
@@ -87,7 +110,7 @@ public:
 	}
 
 	// Specialize
-	virtual bool parse( EntityID id , rapidxml::xml_node<> *node )
+	virtual bool parse( EntityID id , Json::Value& node )
 	{
 		return false;
 	}

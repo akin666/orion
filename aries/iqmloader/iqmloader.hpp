@@ -20,7 +20,7 @@ public:
 	virtual ~IQMLoader();
 
 	bool load( const std::string& path );
-	bool load( const uint8 *buffer , uint32 maxlen );
+	bool load( uint8 *buffer , uint32 maxlen );
 };
 
 } // namespace orion 

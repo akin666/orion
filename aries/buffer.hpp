@@ -1,32 +1,26 @@
 /*
- * BufferTool.hpp
+ * buffer.hpp
  *
- *  Created on: 31.7.2012
+ *  Created on: 9.9.2012
  *      Author: akin
  */
 
-#ifndef BUFFERTOOL_HPP_
-#define BUFFERTOOL_HPP_
+#ifndef BUFFER_BUFFER_HPP_
+#define BUFFER_BUFFER_HPP_
 
 #include <orion>
 #include <cstring>
 
-namespace orion
-{
+namespace orion {
 
-class BufferTool
+class Buffer
 {
 protected:
 	uint at;
 	uint length;
-	const uint8 *data;
+	uint8 *data;
 public:
-	BufferTool( const uint8 *data , uint length )
-	: at(0),
-	  length( length ),
-	  data( data )
-	{
-	}
+	Buffer( uint8 *data , uint length );
 
 	template <class CType>
 	bool read( CType *target , int count = 1 )
@@ -41,7 +35,7 @@ public:
 		// To create such structure and macros, for multiplatform compatibility,
 		// would be engineering and 'complicators gloves' pissing contest,
 		// It gives out a warning, DEAL WITH IT.
-		std::memcpy( (void*)target , (const void*)(data + at) , sizeof(size) );
+		std::memcpy( (void*)target , (void*)(data + at) , sizeof(size) );
 		at += size;
 		return true;
 	}
@@ -59,52 +53,30 @@ public:
 		// To create such structure and macros, for multiplatform compatibility,
 		// would be engineering and 'complicators gloves' pissing contest,
 		// It gives out a warning, DEAL WITH IT.
-		std::memcpy( (void*)target , (const void*)(data + at) , sizeof(size) );
+		std::memcpy( (void*)target , (void*)(data + at) , sizeof(size) );
 		return true;
 	}
 
-	const uint8 *access( uint offset )
+	template <class CType>
+	CType *access( uint offset )
 	{
-		return data + offset;
-	}
-
-	const uint8 *access()
-	{
-		return data + at;
+		return (CType *)(access(offset));
 	}
 
 	template <class CType>
-	const CType *access( uint offset )
+	CType *access()
 	{
-		return (CType *)(data + offset);
+		return (CType *)(access());
 	}
 
-	template <class CType>
-	const CType *access()
-	{
-		return (CType *)(data + at);
-	}
-
-	void seek( uint to )
-	{
-		at = to;
-	}
-
-	uint tell()
-	{
-		return at;
-	}
-
-	uint max()
-	{
-		return length;
-	}
-
-	uint size()
-	{
-		return length - at;
-	}
+	uint8 *access( uint offset );
+	uint8 *access();
+	void seek( uint to );
+	uint tell() const;
+	uint max() const;
+	uint size() const;
 };
 
-} // namespace orion 
-#endif // BUFFERTOOL_HPP_
+} // orion
+
+#endif // BUFFER_BUFFER_HPP_

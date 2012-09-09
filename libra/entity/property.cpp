@@ -26,6 +26,10 @@ void Property::detachEntity( EntityID id )
 {
 }
 
+void Property::enableEntity( bool enabled , EntityID id )
+{
+}
+
 void Property::attach( EntityID id )
 {
 	PropertyManager::attach( id , this );
@@ -38,6 +42,11 @@ void Property::detach( EntityID id )
 	detachEntity( id );
 }
 
+void Property::enable( bool enabled , EntityID id )
+{
+	enableEntity( enabled , id );
+}
+
 bool Property::has( EntityID id )
 {
 	return false;
@@ -46,11 +55,6 @@ bool Property::has( EntityID id )
 string8 Property::getName()
 {
 	return "null";
-}
-
-bool Property::parse( EntityID id , rapidxml::xml_node<> *node )
-{
-	return false;
 }
 
 bool Property::parse( EntityID id , Json::Value& node )

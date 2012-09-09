@@ -19,17 +19,18 @@ class Property
 protected:
 	virtual void attachEntity( EntityID id );
 	virtual void detachEntity( EntityID id );
+	virtual void enableEntity( bool enabled , EntityID id );
 public:
 	Property();
 	virtual ~Property();
 
 	void attach( EntityID id );
 	void detach( EntityID id );
+	void enable( bool enabled , EntityID id );
 
 	virtual bool has( EntityID id );
 
 	virtual string8 getName();
-	virtual bool parse( EntityID id , rapidxml::xml_node<> *node );
 	virtual bool parse( EntityID id , Json::Value& node );
 };
 

@@ -316,7 +316,7 @@ graphics::Uniform Graphics::getUniform( const graphics::Program& program , const
 		return graphics::Uniform( key );
 	}
 
-	uint id = glGetUniformLocation( program.getID() , (const GLchar*)key.c_str() );
+	sint id = glGetUniformLocation( program.getID() , (const GLchar*)key.c_str() );
 
 	// Not found?
 	if( id == -1 )
@@ -416,7 +416,7 @@ graphics::Attribute Graphics::getAttribute( const graphics::Program& program , c
 		return graphics::Attribute( key );
 	}
 
-	uint id = glGetAttribLocation( program.getID() , (const GLchar*)key.c_str() );
+	sint id = glGetAttribLocation( program.getID() , (const GLchar*)key.c_str() );
 
 	// Not found?
 	if( id == -1 )

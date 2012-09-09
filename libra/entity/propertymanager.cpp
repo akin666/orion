@@ -32,6 +32,10 @@ void PropertyManager::detach( EntityID id , Property* property )
 	}
 }
 
+void PropertyManager::enable( bool enabled , EntityID id )
+{
+}
+
 void PropertyManager::detachAll( EntityID id )
 {
 	PropertySet& pset = data[ id ];

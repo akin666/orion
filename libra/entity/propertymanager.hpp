@@ -21,6 +21,8 @@ public:
 	static void attach( EntityID id , Property* property );
 	static void detach( EntityID id , Property* property );
 
+	static void enable( bool enabled , EntityID id );
+
 	static void detachAll( EntityID id );
 };
 
