@@ -23,6 +23,8 @@ namespace graphics {
 
 		void setCompiled( bool status );
 	public:
+		static const unsigned int null;
+
 		Shader();
 		virtual ~Shader();
 

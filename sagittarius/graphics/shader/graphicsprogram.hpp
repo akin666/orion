@@ -24,6 +24,8 @@ namespace graphics {
 
 		void setLinking( bool val );
 	public:
+		static const unsigned int null;
+
 		Program();
 		virtual ~Program();
 

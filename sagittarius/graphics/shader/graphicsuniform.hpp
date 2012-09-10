@@ -21,6 +21,8 @@ namespace graphics {
 		int id;
 		string8 name;
 	public:
+		const static int null;
+
 		// Creates an Uniform, in 'error' state
 		Uniform();
 		Uniform( string8 name );
@@ -33,7 +35,7 @@ namespace graphics {
 		const Uniform& operator = ( const Uniform& other );
 
 		bool hasError() const;
-		string8 getName() const;
+		const string8& getName() const;
 		int getID() const;
 
 		void set( float v );

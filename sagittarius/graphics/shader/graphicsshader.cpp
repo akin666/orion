@@ -8,6 +8,8 @@
 #include "graphicsshader.hpp"
 #include <graphicslib>
 
+#include <stdgl>
+
 #define GGNOTINITIALIZED Graphics::NotInitialized
 
 #define ORIONGRAPHICS_SHADER_NONE		0x0000
@@ -16,8 +18,10 @@
 namespace orion {
 namespace graphics {
 
+	const unsigned int Shader::null = GL_NULL;
+
 	Shader::Shader( )
-	: id( GGNOTINITIALIZED ),
+	: id( null ),
 	  type( ShaderUnknown ),
 	  state( 0 )
 	{
@@ -55,23 +59,94 @@ namespace graphics {
 
 	bool Shader::initialize()
 	{
-		Graphics::generateShaderID( type , id );
-
+		GL_TEST_RAII;
+		if( id == null )
+		{
+			switch( type )
+			{
+				case ShaderVertex :
+				{
+					id = glCreateShader( GL_VERTEX_SHADER );
+					break;
+				}
+				case ShaderFragment :
+				{
+					id = glCreateShader( GL_FRAGMENT_SHADER );
+					break;
+				}
+		#if defined(GL_GEOMETRY_SHADER)
+				case ShaderGeometry :
+				{
+					id = glCreateShader( GL_GEOMETRY_SHADER );
+					break;
+				}
+		#elif defined(GL_GEOMETRY_SHADER_EXT)
+				case ShaderGeometry :
+				{
+					id = glCreateShader( GL_GEOMETRY_SHADER_EXT );
+					break;
+				}
+		#endif
+		#if defined(GL_TESS_CONTROL_SHADER)
+				case ShaderControl :
+				{
+					id = glCreateShader( GL_TESS_CONTROL_SHADER );
+					break;
+				}
+		#elif defined(GL_TESS_CONTROL_SHADER_EXT)
+				case ShaderControl :
+				{
+					id = glCreateShader( GL_TESS_CONTROL_SHADER_EXT );
+					break;
+				}
+		#endif
+		#if defined(GL_TESS_EVALUATION_SHADER)
+				case ShaderEvaluation :
+				{
+					id = glCreateShader( GL_TESS_EVALUATION_SHADER );
+					break;
+				}
+		#elif defined(GL_TESS_EVALUATION_SHADER_EXT)
+				case ShaderEvaluation :
+				{
+					id = glCreateShader( GL_TESS_EVALUATION_SHADER_EXT );
+					break;
+				}
+		#endif
+				default :
+				{
+					return false;
+				}
+			}
+		}
 		return initialized();
 	}
 
 	bool Shader::initialized() const
 	{
-		return id != GGNOTINITIALIZED;
+		return id != null;
 	}
 
 	void Shader::compile()
 	{
 		setCompiled( false );
-		if( Graphics::compileShader( *this , source ) )
+
+		if( id == null || source.size() < 1 )
 		{
-			setCompiled( true );
+			return;
 		}
+
+		GL_TEST_RAII;
+		const GLchar *dat = source.c_str();
+		GLint size = source.size();
+
+		glShaderSource( id , 1 , (const GLchar**)&dat , &size );
+		glCompileShader( id );
+
+		GLint status;
+		glGetShaderiv( id , GL_COMPILE_STATUS , &status );
+
+		setCompiled( status == GL_TRUE );
 	}
 
 	bool Shader::compiled() const
@@ -83,7 +158,9 @@ namespace graphics {
 	{
 		if( initialized() )
 		{
-			Graphics::releaseShaderID( id );
+			GL_TEST_RAII;
+			glDeleteShader( id );
+			id = null;
 		}
 	}
 
@@ -93,7 +170,14 @@ namespace graphics {
 		{
 			return true;
 		}
-		return Graphics::hasError( *this );
+
+
+		GL_TEST_RAII;
+
+		GLint status;
+		glGetShaderiv( id , GL_COMPILE_STATUS , &status );
+
+		return status != GL_TRUE;
 	}
 
 	string8 Shader::getError() const
@@ -102,7 +186,22 @@ namespace graphics {
 		{
 			return "Shader not initialized.";
 		}
-		return Graphics::getError( *this );
+
+		GL_TEST_RAII;
+
+		GLint loglen = 0;
+		glGetShaderiv( id  , GL_INFO_LOG_LENGTH , &loglen );
+
+		if (loglen > 0)
+		{
+			std::vector<GLchar> msg;
+			msg.resize( loglen );
+
+			glGetShaderInfoLog( id , loglen , NULL , &(msg[0]) );
+
+			return std::string( &(msg[0]) );
+		}
+		return "";
 	}
 
 /*	void Shader::setTypeString( string8 type )

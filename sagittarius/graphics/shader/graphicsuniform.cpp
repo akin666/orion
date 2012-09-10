@@ -6,21 +6,23 @@
  */
 
 #include "graphicsuniform.hpp"
-#include <graphicslib>
 #include <glm/transform>
 
-#define GGNOTINITIALIZED Graphics::NotInitializedI
+#include <graphicslib>
+#include <stdgl>
 
 namespace orion {
 namespace graphics {
 
+	const int Uniform::null = -1;
+
 	Uniform::Uniform()
-	: id( GGNOTINITIALIZED )
+	: id( null )
 	{
 	}
 
 	Uniform::Uniform( string8 name )
-	: id( GGNOTINITIALIZED ),
+	: id( null ),
 	  name( name )
 	{
 	}
@@ -51,10 +53,10 @@ namespace graphics {
 
 	bool Uniform::hasError() const
 	{
-		return id == GGNOTINITIALIZED;
+		return id == null;
 	}
 
-	string8 Uniform::getName() const
+	const string8& Uniform::getName() const
 	{
 		return name;
 	}
@@ -66,60 +68,72 @@ namespace graphics {
 
 	void Uniform::set(float v)
 	{
-		Graphics::set( *this , v );
+		GL_TEST_RAII;
+		glUniform1f( id , v );
 	}
 	void Uniform::set(float v, float v2)
 	{
-		Graphics::set( *this , v , v2 );
+		GL_TEST_RAII;
+		glUniform2f( id , v , v2 );
 	}
 	void Uniform::set(float v, float v2, float v3)
 	{
-		Graphics::set( *this , v , v2 , v3 );
+		GL_TEST_RAII;
+		glUniform3f( id , v , v2 , v3 );
 	}
 	void Uniform::set(float v, float v2, float v3, float v4)
 	{
-		Graphics::set( *this , v , v2 , v3 , v4 );
+		GL_TEST_RAII;
+		glUniform4f( id , v , v2 , v3 , v4 );
 	}
 	void Uniform::setMatrix4( const float *v , int size )
 	{
-		Graphics::setMatrix4( *this , v , size );
+		GL_TEST_RAII;
+		glUniformMatrix4fv( id , size , GL_FALSE , v );
 	}
 	void Uniform::set( const glm::mat4x4& matrix )
 	{
-		Graphics::set( *this , matrix );
+		GL_TEST_RAII;
+		glUniformMatrix4fv( id , 1 , GL_FALSE , &matrix[0][0] );
 	}
 	void Uniform::set( const glm::vec2& vec )
 	{
-		Graphics::set( *this , vec );
+		GL_TEST_RAII;
+		glUniform2f( id , vec.x , vec.y );
 	}
 	void Uniform::set( const glm::vec3& vec )
 	{
-		Graphics::set( *this , vec );
+		GL_TEST_RAII;
+		glUniform3f( id , vec.x , vec.y , vec.z );
 	}
 	void Uniform::set( const glm::vec4& vec )
 	{
-		Graphics::set( *this , vec );
+		GL_TEST_RAII;
+		glUniform4f( id , vec.x , vec.y , vec.z , vec.w );
 	}
 	void Uniform::set( const glm::ivec2& vec )
 	{
-		Graphics::set( *this , vec );
+		GL_TEST_RAII;
+		glUniform2i( id , vec.x , vec.y );
 	}
 	void Uniform::set( const glm::ivec3& vec )
 	{
-		Graphics::set( *this , vec );
+		GL_TEST_RAII;
+		glUniform3i( id , vec.x , vec.y , vec.z );
 	}
 	void Uniform::set( const glm::ivec4& vec )
 	{
-		Graphics::set( *this , vec );
+		GL_TEST_RAII;
+		glUniform4i( id , vec.x , vec.y , vec.z , vec.w );
 	}
 
 	void Uniform::set( const TextureUnit& texture )
 	{
-		Graphics::set( *this , texture );
+		GL_TEST_RAII;
+		glUniform1i( id , texture.getID() );
 	}
 } // namespace graphics
 } // namespace orion
 
-#undef GGNOTINITIALIZED
 
 

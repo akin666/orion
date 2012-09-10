@@ -19,6 +19,8 @@ namespace graphics {
 		int id;
 		string8 name;
 	public:
+		static const int null;
+
 		// Creates an attribute, in 'error' state
 		Attribute();
 		Attribute( string8 name );
@@ -31,7 +33,7 @@ namespace graphics {
 		const Attribute& operator = ( const Attribute& other );
 
 		bool hasError() const;
-		string8 getName() const;
+		const string8& getName() const;
 		int getID() const;
 
 		void enable();

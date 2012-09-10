@@ -8,18 +8,22 @@
 #include "graphicsattribute.hpp"
 #include <graphicslib>
 
+#include <stdgl>
+
 #define GGNOTINITIALIZED Graphics::NotInitializedI
 
 namespace orion {
 namespace graphics {
 
+	const int Attribute::null = -1;
+
 	Attribute::Attribute()
-	: id( GGNOTINITIALIZED )
+	: id( null )
 	{
 	}
 
 	Attribute::Attribute( string8 name )
-	: id( GGNOTINITIALIZED ),
+	: id( null ),
 	  name( name )
 	{
 	}
@@ -50,10 +54,10 @@ namespace graphics {
 
 	bool Attribute::hasError() const
 	{
-		return id == GGNOTINITIALIZED;
+		return id == null;
 	}
 
-	string8 Attribute::getName() const
+	const string8& Attribute::getName() const
 	{
 		return name;
 	}
@@ -65,12 +69,14 @@ namespace graphics {
 
 	void Attribute::enable()
 	{
-		Graphics::enable( *this );
+		GL_TEST_RAII;
+		glEnableVertexAttribArray( id );
 	}
 
 	void Attribute::disable()
 	{
-		Graphics::disable( *this );
+		GL_TEST_RAII;
+		glDisableVertexAttribArray( id );
 	}
 /*
 	void Attribute::setPointer( int data_size , GLenum data_type , GLsizei stride )

@@ -12,7 +12,8 @@
 #include "graphicsuniform.hpp"
 #include "graphicsshader.hpp"
 
-#define GGNOTINITIALIZED Graphics::NotInitialized
+#include <graphicslib>
+#include <stdgl>
 
 #define ORIONGRAPHICS_PROGRAM_NONE		0x0000
 #define ORIONGRAPHICS_PROGRAM_LINKED	0x0001
@@ -20,8 +21,10 @@
 namespace orion {
 namespace graphics {
 
+	const unsigned int Program::null = GL_NULL;
+
 	Program::Program()
-	: id( GGNOTINITIALIZED ),
+	: id( null ),
 	  state( ORIONGRAPHICS_PROGRAM_NONE )
 	{
 	}
@@ -45,7 +48,9 @@ namespace graphics {
 	{
 		if( !initialized() )
 		{
-			Graphics::generateProgramID( 1 , &id );
+			GL_TEST_RAII;
+			id = glCreateProgram();
+
 			setLinking( false );
 
 			return true;
@@ -55,51 +60,91 @@ namespace graphics {
 
 	bool Program::initialized() const
 	{
-		return id != GGNOTINITIALIZED;
+		return id != null;
 	}
 
 	void Program::release()
 	{
 		if( initialized() )
 		{
-			Graphics::releaseProgramID( 1 , &id );
+			GL_TEST_RAII;
+			glDeleteProgram( id );
+			id = null;
 		}
 	}
 
 	Attribute Program::getAttribute( const string8 key ) const
 	{
-		return Graphics::getAttribute( *this , key );
+		GL_TEST_RAII;
+		if( hasError() )
+		{
+			return graphics::Attribute( key );
+		}
+
+		sint aid = glGetAttribLocation( id , (const GLchar*)key.c_str() );
+
+		// Not found?
+		if( aid == graphics::Attribute::null )
+		{
+			return graphics::Attribute( key );
+		}
+
+		return graphics::Attribute( aid , key );
 	}
 
 	Uniform Program::getUniform( const string8 key ) const
 	{
-		return Graphics::getUniform( *this , key );
+		GL_TEST_RAII;
+		if( hasError() )
+		{
+			return graphics::Uniform( key );
+		}
+
+		sint uid = glGetUniformLocation( id , (const GLchar*)key.c_str() );
+
+		// Not found?
+		if( uid == graphics::Uniform::null )
+		{
+			return graphics::Uniform( key );
+		}
+
+		return graphics::Uniform( uid , key );
 	}
 
 	void Program::bind() const
 	{
-		Graphics::bind( *this );
+		GL_TEST_RAII;
+		glUseProgram( id );
 	}
 
 	void Program::bindDefault()
 	{
-		Graphics::bindDefaultProgram();
+		GL_TEST_RAII;
+		glUseProgram( GL_NULL );
 	}
 
 	void Program::attach( const Shader& piece )
 	{
-		Graphics::bind( *this , piece );
+		GL_TEST_RAII;
+	    glAttachShader( id , piece.getID() );
 		setLinking( false );
 	}
 
 	void Program::detach( const Shader& piece )
 	{
-		Graphics::unbind( *this , piece );
+		GL_TEST_RAII;
+		glDetachShader( id , piece.getID() );
 	}
 
 	void Program::link()
 	{
-		if( Graphics::link( *this ) )
+		GL_TEST_RAII;
+	    glLinkProgram( id );
+
+	    GLint tmp;
+	    glGetProgramiv( id , GL_LINK_STATUS , &tmp );
+
+		if( tmp == GL_TRUE )
 		{
 			setLinking( true );
 		}
@@ -115,7 +160,12 @@ namespace graphics {
 		{
 			return true;
 		}
-		return Graphics::hasError( *this );
+
+		GL_TEST_RAII;
+		GLint loglen = 0;
+		glGetProgramiv( id , GL_INFO_LOG_LENGTH , &loglen );
+
+		return loglen > 0;
 	}
 
 	string8 Program::getError() const
@@ -124,7 +174,23 @@ namespace graphics {
 		{
 			return "Program not initialized.";
 		}
-		return Graphics::getError( *this );
+
+
+		GL_TEST_RAII;
+		GLint loglen = 0;
+		glGetProgramiv( id , GL_INFO_LOG_LENGTH , &loglen );
+
+		if (loglen > 0)
+		{
+			std::vector<GLchar> msg;
+			msg.resize( loglen );
+
+			glGetProgramInfoLog( id , loglen , NULL , &(msg[0]) );
+
+			return std::string( &(msg[0]) );
+		}
+
+		return "";
 	}
 
 	bool Program::linked() const
