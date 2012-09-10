@@ -6,11 +6,7 @@
  */
 
 #include "graphicsattribute.hpp"
-#include <graphicslib>
-
 #include <stdgl>
-
-#define GGNOTINITIALIZED Graphics::NotInitializedI
 
 namespace orion {
 namespace graphics {
@@ -112,4 +108,3 @@ namespace graphics {
 } // namespace graphics
 } // namespace orion
 
-#undef GGNOTINITIALIZED

@@ -7,12 +7,9 @@
 
 #include "graphicsprogram.hpp"
 
-#include <graphicslib>
 #include "graphicsattribute.hpp"
 #include "graphicsuniform.hpp"
 #include "graphicsshader.hpp"
-
-#include <graphicslib>
 #include <stdgl>
 
 #define ORIONGRAPHICS_PROGRAM_NONE		0x0000

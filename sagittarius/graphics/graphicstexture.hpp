@@ -18,6 +18,8 @@ class Texture
 protected:
 	uint id;
 public:
+	static const uint null;
+
 	Texture();
 	virtual ~Texture();
 

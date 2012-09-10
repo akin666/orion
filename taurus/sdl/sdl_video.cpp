@@ -11,7 +11,6 @@
 #include <video>
 #include <config/config.hpp>
 #include <stdgl>
-#include <graphicslib>
 
 #include <orionevent>
 
@@ -110,7 +109,8 @@ bool SDLRenderTarget::initialize()
 
 void SDLRenderTarget::bind()
 {
-	Graphics::bindScreen();
+	GL_TEST_RAII;
+	glBindFramebuffer( GL_FRAMEBUFFER , GL_NULL );
 }
 
 void SDLRenderTarget::flip()
@@ -298,7 +298,8 @@ void Video::flip()
 
 void Video::finish()
 {
-	Graphics::finish();
+	GL_TEST_RAII;
+	glFinish();
 }
 
 graphics::RenderTarget& Video::getRenderTarget()

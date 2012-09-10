@@ -6,7 +6,8 @@
  */
 
 #include "graphicstextureunit.hpp"
-#include <graphicslib>
+
+#include <stdgl>
 
 namespace orion {
 namespace graphics {
@@ -39,12 +40,18 @@ TextureUnit::~TextureUnit()
 
 void TextureUnit::bind( const Texture& texture )
 {
-	Graphics::bind( *this , texture );
+	GL_TEST_RAII;
+	// Bind the texture
+	glActiveTexture( GL_TEXTURE0 + id );
+	glBindTexture (GL_TEXTURE_2D, texture.getID() );
 }
 
 void TextureUnit::unbind()
 {
-	Graphics::unbind( *this );
+	GL_TEST_RAII;
+	// Bind the texture
+	glActiveTexture( GL_TEXTURE0 + id );
+	glBindTexture(GL_TEXTURE_2D, GL_NULL );
 }
 
 uint TextureUnit::getID() const

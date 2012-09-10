@@ -7,8 +7,6 @@
 
 #include "graphicsuniform.hpp"
 #include <glm/transform>
-
-#include <graphicslib>
 #include <stdgl>
 
 namespace orion {

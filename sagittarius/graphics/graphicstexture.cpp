@@ -6,13 +6,15 @@
  */
 
 #include "graphicstexture.hpp"
-#include <graphicslib>
+#include <stdgl>
 
 namespace orion {
 namespace graphics {
 
+const uint Texture::null = GL_NULL;
+
 Texture::Texture()
-: id( Graphics::NotInitialized )
+: id( null )
 {
 }
 
@@ -25,8 +27,8 @@ bool Texture::initialize()
 {
 	if( !initialized() )
 	{
-		Graphics::generateTextureID( 1 , &id );
-
+		GL_TEST_RAII;
+		glGenTextures( 1 , &id );
 		return true;
 	}
 	return false;
@@ -34,14 +36,16 @@ bool Texture::initialize()
 
 bool Texture::initialized() const
 {
-	return id != Graphics::NotInitialized;
+	return id != null;
 }
 
 void Texture::release()
 {
 	if( initialized() )
 	{
-		Graphics::releaseTextureID( 1 , &id );
+		GL_TEST_RAII;
+		glDeleteTextures( 1 , &id );
+		id = null;
 	}
 }
 

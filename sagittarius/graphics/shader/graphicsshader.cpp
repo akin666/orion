@@ -6,11 +6,7 @@
  */
 
 #include "graphicsshader.hpp"
-#include <graphicslib>
-
 #include <stdgl>
-
-#define GGNOTINITIALIZED Graphics::NotInitialized
 
 #define ORIONGRAPHICS_SHADER_NONE		0x0000
 #define ORIONGRAPHICS_SHADER_COMPILED	0x0001
@@ -237,4 +233,3 @@ namespace graphics {
 } // namespace graphics
 } // namespace orion
 
-#undef GGNOTINITIALIZED
