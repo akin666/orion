@@ -19,14 +19,14 @@ namespace graphics {
 
 class TextureUnit
 {
-protected:
+private:
 	static TextureUnit units[GRAPHICS_TEXTURE_UNITS];
 	static uint idat;
 	static uint generateID();
 	uint id;
 public:
 	TextureUnit();
-	virtual ~TextureUnit();
+	~TextureUnit();
 
 	static TextureUnit& access( int id );
 	static int max();

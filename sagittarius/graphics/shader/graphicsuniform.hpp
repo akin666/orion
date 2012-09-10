@@ -17,7 +17,7 @@ namespace graphics {
 	class Program;
 	class Uniform
 	{
-	protected:
+	private:
 		int id;
 		string8 name;
 	public:
@@ -30,7 +30,7 @@ namespace graphics {
 		Uniform( int id , string8 name );
 		// Copies the Uniform indicated, whether it is in error or not.
 		Uniform( const Uniform& other );
-		virtual ~Uniform();
+		~Uniform();
 
 		const Uniform& operator = ( const Uniform& other );
 

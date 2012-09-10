@@ -15,7 +15,7 @@ namespace graphics {
 
 	class Shader
 	{
-	protected:
+	private:
 		uint id;
 		ShaderType type;
 		string8 source;
@@ -26,7 +26,7 @@ namespace graphics {
 		static const unsigned int null;
 
 		Shader();
-		virtual ~Shader();
+		~Shader();
 
 		void set( const string8 source );
 		void setType( ShaderType type );

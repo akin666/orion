@@ -15,7 +15,7 @@ namespace graphics {
 
 	class Attribute
 	{
-	protected:
+	private:
 		int id;
 		string8 name;
 	public:
@@ -28,7 +28,7 @@ namespace graphics {
 		Attribute( int id , string8 name );
 		// Copies the attribute indicated, whether it is in error or not.
 		Attribute( const Attribute& other );
-		virtual ~Attribute();
+		~Attribute();
 
 		const Attribute& operator = ( const Attribute& other );
 

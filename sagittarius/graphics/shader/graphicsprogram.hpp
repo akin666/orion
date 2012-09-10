@@ -18,7 +18,7 @@ namespace graphics {
 
 	class Program
 	{
-	protected:
+	private:
 		uint id;
 		uint state;
 
@@ -27,7 +27,7 @@ namespace graphics {
 		static const unsigned int null;
 
 		Program();
-		virtual ~Program();
+		~Program();
 
 		uint getID() const;
 

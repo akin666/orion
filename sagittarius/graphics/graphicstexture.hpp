@@ -15,13 +15,13 @@ namespace graphics {
 
 class Texture
 {
-protected:
+private:
 	uint id;
 public:
 	static const uint null;
 
 	Texture();
-	virtual ~Texture();
+	~Texture();
 
 	bool initialize();
 	bool initialized() const;

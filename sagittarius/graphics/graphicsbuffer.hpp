@@ -15,7 +15,7 @@ class Buffer
 {
 public:
 	Buffer();
-	virtual ~Buffer();
+	~Buffer();
 };
 
 } // namespace graphics 
