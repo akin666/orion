@@ -12,12 +12,12 @@
 #include <iostream>
 #include <uthread>
 
-#include "renderipackage.h"
+#include "renderpackage.h"
 
 namespace render
 {
 
-template <class CType = IPackage>
+template <class CType = Package>
 class Queue
 {
 protected:

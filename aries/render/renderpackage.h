@@ -1,20 +1,20 @@
 /*
- * renderipackage.h
+ * renderpackage.h
  *
  *  Created on: 16.9.2012
  *      Author: akin
  */
 
-#ifndef RENDERIPACKAGE_H_
-#define RENDERIPACKAGE_H_
+#ifndef RENDERPACKAGE_H_
+#define RENDERPACKAGE_H_
 
 namespace render
 {
 
-class IPackage
+class Package
 {
 public:
-	virtual ~IPackage()
+	virtual ~Package()
 	{
 	}
 
@@ -22,4 +22,4 @@ public:
 };
 
 } // namespace render
-#endif // RENDERIPACKAGE_H_
+#endif // RENDERPACKAGE_H_
