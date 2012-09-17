@@ -17,14 +17,14 @@ class Memory : public Buffer
 {
 protected:
 	typedef unsigned char ByteType;
-	Size count;
+	std::size_t count;
 	ByteType *array;
 public:
-	Memory( Size size );
+	Memory( std::size_t size );
 	virtual ~Memory();
 
-	virtual Size size() const;
-	virtual void *at( Size position ) const;
+	virtual std::size_t size() const;
+	virtual void *at( std::size_t position ) const;
 	virtual void close();
 	virtual bool ok();
 };

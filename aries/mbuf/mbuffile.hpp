@@ -18,14 +18,14 @@ class File : public Buffer
 {
 private:
 	int fd;
-	int filesize;
+	std::size_t filesize;
 	void *data;
 public:
-	File( const std::string& path , int filesize  );
+	File( const std::string& path , std::size_t filesize  );
 	virtual ~File();
 
-	virtual Size size() const;
-	virtual void *at( Size position ) const;
+	virtual std::size_t size() const;
+	virtual void *at( std::size_t position ) const;
 	virtual void close();
 	virtual bool ok();
 };

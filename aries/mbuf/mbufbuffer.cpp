@@ -15,18 +15,18 @@ Buffer::Iterator::Iterator( const Iterator& other )
 {
 }
 
-Buffer::Iterator::Iterator( const Buffer& buffer , Size at )
+Buffer::Iterator::Iterator( const Buffer& buffer , std::size_t at )
 : buffer( buffer ),
   iter( at )
 {
 }
 
-Buffer::Size Buffer::Iterator::position() const
+std::size_t Buffer::Iterator::position() const
 {
 	return iter;
 }
 
-void Buffer::Iterator::jump( Buffer::Size size )
+void Buffer::Iterator::jump( std::size_t size )
 {
 	iter += size;
 	if( iter > buffer.size() )
@@ -35,7 +35,7 @@ void Buffer::Iterator::jump( Buffer::Size size )
 	}
 }
 
-void Buffer::Iterator::seek( Buffer::Size at )
+void Buffer::Iterator::seek( std::size_t at )
 {
 	iter = at;
 }

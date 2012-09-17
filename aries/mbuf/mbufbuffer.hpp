@@ -11,26 +11,26 @@
 #ifndef MBUFMAP_HPP_
 #define MBUFMAP_HPP_
 
+#include <cstdint>
+
 namespace mbuf {
 
 class Buffer
 {
 public:
-	typedef int Size;
-
 	class Iterator
 	{
 	private:
 		const Buffer& buffer;
-		Size iter;
+		std::size_t iter;
 	public:
 		Iterator( const Iterator& other );
-		Iterator( const Buffer& buffer , Size at );
+		Iterator( const Buffer& buffer , std::size_t at );
 
-		Size position() const;
-		Size remaining() const;
-		void jump( Size size );
-		void seek( Size at );
+		std::size_t position() const;
+		std::size_t remaining() const;
+		void jump( std::size_t size );
+		void seek( std::size_t at );
 		void *peek() const;
 
 		template <class CType> CType *data() const
@@ -38,19 +38,19 @@ public:
 			return (CType*)buffer.at( iter );
 		}
 
-		template <class CType> CType *data( Size at ) const
+		template <class CType> CType *data( std::size_t at ) const
 		{
 			return (CType*)buffer.at( at );
 		}
 
-		template <class CType> CType& access( Size at )
+		template <class CType> CType& access( std::size_t at )
 		{
 			return *((CType*)buffer.at( at ));
 		}
 
 		template <class CType> CType& read()
 		{
-			Size it = iter;
+			std::size_t it = iter;
 			iter += sizeof( CType );
 			return *((CType*)buffer.at( it ));
 		}
@@ -60,8 +60,8 @@ public:
 	{
 	}
 
-	virtual Size size() const = 0;
-	virtual void *at( Size position ) const = 0;
+	virtual std::size_t size() const = 0;
+	virtual void *at( std::size_t position ) const = 0;
 	virtual void close() = 0;
 	virtual bool ok() = 0;
 

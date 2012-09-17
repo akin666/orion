@@ -10,7 +10,7 @@
 
 namespace mbuf {
 
-Memory::Memory( Size size )
+Memory::Memory( std::size_t size )
 : count( size ),
   array( NULL )
 {
@@ -22,12 +22,12 @@ Memory::~Memory()
 	close();
 }
 
-Memory::Size Memory::size() const
+std::size_t Memory::size() const
 {
 	return count;
 }
 
-void *Memory::at( Memory::Size position ) const
+void *Memory::at( std::size_t position ) const
 {
 	return (void*)((long)array + position);
 }

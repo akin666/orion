@@ -10,10 +10,12 @@
 
 #include <mman>
 
+#include <cassert>
+
 namespace mbuf
 {
 
-File::File( const std::string& path , int filesize )
+File::File( const std::string& path , std::size_t filesize )
 : filesize(filesize)
 {
 	fd = open( path.c_str() , PROT_READ | PROT_WRITE );
@@ -22,8 +24,7 @@ File::File( const std::string& path , int filesize )
 	if (data == MAP_FAILED)
 	{
 		::close( fd );
-		perror("Error mmapping the file");
-		exit(EXIT_FAILURE);
+		assert( false );
 	}
 }
 
@@ -32,12 +33,12 @@ File::~File()
 	close();
 }
 
-File::Size File::size() const
+std::size_t File::size() const
 {
 	return filesize;
 }
 
-void *File::at( File::Size position ) const
+void *File::at( std::size_t position ) const
 {
 	return (void*)((long)data + position);
 }
@@ -50,7 +51,7 @@ void File::close()
 	}
     if( munmap( data , filesize ) == -1)
     {
-    	perror("Error un-mmapping the file");
+		assert( false );
     }
 
     ::close( fd );
