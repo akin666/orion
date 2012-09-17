@@ -1,13 +1,13 @@
 /*
- * mmapbuffer.cpp
+ * mbufbuffer.cpp
  *
  *  Created on: 17.9.2012
  *      Author: akin
  */
 
-#include "mmapbuffer.hpp"
+#include "mbufbuffer.hpp"
 
-namespace mmap {
+namespace mbuf {
 
 Buffer::Iterator::Iterator( const Iterator& other )
 : buffer( other.buffer ),
@@ -15,7 +15,7 @@ Buffer::Iterator::Iterator( const Iterator& other )
 {
 }
 
-Buffer::Iterator::Iterator( Buffer& buffer , Size& at )
+Buffer::Iterator::Iterator( const Buffer& buffer , Size at )
 : buffer( buffer ),
   iter( at )
 {
@@ -40,11 +40,6 @@ void Buffer::Iterator::seek( Buffer::Size at )
 	iter = at;
 }
 
-void *Buffer::Iterator::end() const
-{
-	return buffer.end();
-}
-
 Buffer::Iterator Buffer::begin() const
 {
 	return Iterator( *this , 0 );
@@ -55,5 +50,5 @@ Buffer::Iterator Buffer::end() const
 	return Iterator( *this , size() );
 }
 
-} // namespace mmap
+} // namespace mbuf
 

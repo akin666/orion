@@ -5,10 +5,10 @@
  *      Author: akin
  */
 
-#include "mmapmemory.hpp"
+#include "mbufmemory.hpp"
 #include <iostream> // NULL
 
-namespace mmap {
+namespace mbuf {
 
 Memory::Memory( Size size )
 : count( size ),

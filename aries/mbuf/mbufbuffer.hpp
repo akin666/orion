@@ -8,11 +8,10 @@
  *      MyDataStructure& data = iter.read<MyDataStructure>();
  */
 
-#ifndef MMAPMAP_HPP_
-#define MMAPMAP_HPP_
+#ifndef MBUFMAP_HPP_
+#define MBUFMAP_HPP_
 
-namespace mmap
-{
+namespace mbuf {
 
 class Buffer
 {
@@ -22,18 +21,17 @@ public:
 	class Iterator
 	{
 	private:
-		Buffer& buffer;
+		const Buffer& buffer;
 		Size iter;
 	public:
 		Iterator( const Iterator& other );
-		Iterator( Buffer& buffer , Size& at = 0 );
+		Iterator( const Buffer& buffer , Size at );
 
 		Size position() const;
 		Size remaining() const;
 		void jump( Size size );
 		void seek( Size at );
 		void *peek() const;
-		void *end() const;
 
 		template <class CType> CType *data() const
 		{
@@ -71,5 +69,5 @@ public:
 	Iterator end() const;
 };
 
-} // namespace mmap
-#endif // MMAPBUFFER_HPP_
+} // namespace mbuf
+#endif // MBUFMAP_HPP_

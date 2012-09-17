@@ -1,16 +1,16 @@
 /*
- * mmapmemory.hpp
+ * mbufmemory.hpp
  *
  *  Created on: 17.9.2012
  *      Author: akin
  */
 
-#ifndef MMAPMEMORY_HPP_
-#define MMAPMEMORY_HPP_
+#ifndef MBUFMEMORY_HPP_
+#define MBUFMEMORY_HPP_
 
-#include "mmapbuffer.hpp"
+#include "mbufbuffer.hpp"
 
-namespace mmap
+namespace mbuf
 {
 
 class Memory : public Buffer
@@ -29,5 +29,5 @@ public:
 	virtual bool ok();
 };
 
-} // namespace mmap
-#endif // MMAPMEMORY_HPP_ /
+} // namespace mbuf
+#endif // MBUFMEMORY_HPP_ /
