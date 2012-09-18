@@ -108,9 +108,10 @@ int resolveBindStyle( Buffer::Mode mode )
 
 
 Buffer::Buffer()
-: id(GL_NULL),
-  bsize(0),
-  mode( CLOSED )
+: id(GL_NULL)
+, bsize(0)
+, mode( CLOSED )
+, ptr( NULL )
 {
 }
 
@@ -147,15 +148,36 @@ std::size_t Buffer::size() const
 
 void *Buffer::at( std::size_t position ) const
 {
-	return NULL;
+	if( ptr == NULL )
+	{
+		return NULL;
+	}
+
+	return (void*)((long)ptr + position);
 }
 
 bool Buffer::open( Mode mode )
 {
+	if( mode != READ && mode != WRITE )
+	{
+		return false;
+	}
+
 	GL_TEST_RAII;
 	this->mode = mode;
 	int bindStyle = resolveBindStyle( mode );
 	glBindBuffer( bindStyle , id );
+
+	int buffstyle;
+	switch( mode )
+	{
+		case READ : buffstyle = GL_READ_ONLY; break;
+		case WRITE : buffstyle = GL_WRITE_ONLY; break;
+		case READWRITE : buffstyle = GL_READ_WRITE; break;
+		default: return false;
+	}
+
+	ptr = (void*)glMapBufferARB( bindStyle , buffstyle );
 
 	return true;
 }
@@ -164,7 +186,9 @@ void Buffer::close()
 {
 	GL_TEST_RAII;
 	int bindStyle = resolveBindStyle( mode );
+	glUnmapBuffer( bindStyle );
 	glBindBuffer( bindStyle , GL_NULL );
+	ptr = NULL;
 }
 
 bool Buffer::ok() const

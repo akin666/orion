@@ -32,6 +32,7 @@ private:
 	unsigned int id;
 	std::size_t bsize;
 	Mode mode;
+	void *ptr;
 public:
 	Buffer();
 	virtual ~Buffer();
