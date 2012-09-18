@@ -12,7 +12,7 @@ namespace orion {
 namespace graphics {
 
 // helper function for.. stuff..
-int resolveResidenceUpdates( const Buffer::Residence residence , const Buffer::Interval interval )
+int resolveResidenceUpdates( Buffer::Residence residence , Buffer::Interval interval )
 {
 	 //stream = disposable (single use)
 	 //static = STATIIC
