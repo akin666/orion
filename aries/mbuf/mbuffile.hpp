@@ -17,17 +17,21 @@ namespace mbuf
 class File : public Buffer
 {
 private:
-	int fd;
+	std::string path;
 	std::size_t filesize;
+	int fd;
 	void *data;
+	Mode mode;
 public:
 	File( const std::string& path , std::size_t filesize  );
 	virtual ~File();
 
 	virtual std::size_t size() const;
 	virtual void *at( std::size_t position ) const;
+	virtual bool open( Mode mode );
 	virtual void close();
-	virtual bool ok();
+	virtual bool ok() const;
+	virtual Mode getMode() const;
 };
 
 } // namespace mbuf

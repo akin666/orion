@@ -6,6 +6,7 @@
  */
 
 #include "mbufbuffer.hpp"
+#include <cassert>
 
 namespace mbuf {
 
@@ -13,12 +14,20 @@ Buffer::Iterator::Iterator( const Iterator& other )
 : buffer( other.buffer ),
   iter( other.iter )
 {
+	if( !buffer.ok() )
+	{
+		assert( false );
+	}
 }
 
 Buffer::Iterator::Iterator( const Buffer& buffer , std::size_t at )
 : buffer( buffer ),
   iter( at )
 {
+	if( !buffer.ok() )
+	{
+		assert( false );
+	}
 }
 
 std::size_t Buffer::Iterator::position() const

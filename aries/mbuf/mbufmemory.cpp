@@ -14,7 +14,6 @@ Memory::Memory( std::size_t size )
 : count( size ),
   array( NULL )
 {
-	array = new ByteType[size];
 }
 
 Memory::~Memory()
@@ -32,6 +31,16 @@ void *Memory::at( std::size_t position ) const
 	return (void*)((long)array + position);
 }
 
+bool Memory::open( Mode mode )
+{
+	if( array == NULL )
+	{
+		array = new ByteType[count];
+		return true;
+	}
+	return false;
+}
+
 void Memory::close()
 {
 	delete[] array;
@@ -39,9 +48,14 @@ void Memory::close()
 	count = 0;
 }
 
-bool Memory::ok()
+bool Memory::ok() const
 {
 	return ( array != NULL ) && count > 0;
+}
+
+Buffer::Mode Memory::getMode() const
+{
+	return READWRITE;
 }
 
 } // namespace mmap

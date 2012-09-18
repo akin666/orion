@@ -18,6 +18,14 @@ namespace mbuf {
 class Buffer
 {
 public:
+	enum Mode
+	{
+		CLOSED = 	0x000,
+		READ = 		0x001,
+		WRITE = 	0x002,
+		READWRITE = 0x003,
+	};
+
 	class Iterator
 	{
 	private:
@@ -62,8 +70,10 @@ public:
 
 	virtual std::size_t size() const = 0;
 	virtual void *at( std::size_t position ) const = 0;
+	virtual bool open( Mode mode ) = 0;
 	virtual void close() = 0;
-	virtual bool ok() = 0;
+	virtual bool ok() const = 0;
+	virtual Mode getMode() const = 0;
 
 	Iterator begin() const;
 	Iterator end() const;

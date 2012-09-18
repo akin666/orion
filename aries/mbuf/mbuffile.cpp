@@ -16,16 +16,12 @@ namespace mbuf
 {
 
 File::File( const std::string& path , std::size_t filesize )
-: filesize(filesize)
+: path( path )
+, filesize(filesize)
+, fd( -1 )
+, data( NULL )
+, mode( CLOSED )
 {
-	fd = open( path.c_str() , PROT_READ | PROT_WRITE );
-	data = mmap( 0 , filesize, PROT_READ, MAP_SHARED, fd , 0 );
-
-	if (data == MAP_FAILED)
-	{
-		::close( fd );
-		assert( false );
-	}
 }
 
 File::~File()
@@ -43,6 +39,29 @@ void *File::at( std::size_t position ) const
 	return (void*)((long)data + position);
 }
 
+bool File::open( Mode mode )
+{
+	int flags = 0;
+	switch( mode )
+	{
+		case READ : flags = PROT_READ; break;
+		case WRITE : flags = PROT_WRITE; break;
+		case READWRITE : flags = PROT_READ | PROT_WRITE; break;
+		default : return false;
+	}
+
+	this->mode = mode;
+	fd = ::open( path.c_str() , flags );
+	data = mmap( 0 , filesize, flags , MAP_SHARED, fd , 0 );
+
+	if( data == MAP_FAILED )
+	{
+		::close( fd );
+		return false;
+	}
+	return true;
+}
+
 void File::close()
 {
 	if( fd == -1 )
@@ -58,9 +77,14 @@ void File::close()
     fd = -1;
 }
 
-bool File::ok()
+bool File::ok() const
 {
 	return ( data != NULL ) && filesize > 0 && ( fd != -1 );
+}
+
+Buffer::Mode File::getMode() const
+{
+	return mode;
 }
 
 } // namespace mmap

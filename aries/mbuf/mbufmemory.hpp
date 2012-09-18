@@ -25,8 +25,10 @@ public:
 
 	virtual std::size_t size() const;
 	virtual void *at( std::size_t position ) const;
+	virtual bool open( Mode mode );
 	virtual void close();
-	virtual bool ok();
+	virtual bool ok() const;
+	virtual Mode getMode() const;
 };
 
 } // namespace mbuf
