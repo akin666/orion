@@ -8,7 +8,7 @@
 #ifndef GRAPHICSBUFFER_HPP_
 #define GRAPHICSBUFFER_HPP_
 
-#include "mbufbuffer.hpp"
+#include <mbuf/mbufbuffer.hpp>
 
 namespace orion {
 namespace graphics {
