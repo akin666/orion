@@ -21,6 +21,20 @@ Memory::~Memory()
 	close();
 }
 
+Memory& Memory::setSize( std::size_t filesize )
+{
+	count = filesize;
+	return *this;
+}
+
+void Memory::initialize()
+{
+	if( array == NULL )
+	{
+		array = new ByteType[count];
+	}
+}
+
 std::size_t Memory::size() const
 {
 	return count;
@@ -33,19 +47,12 @@ void *Memory::at( std::size_t position ) const
 
 bool Memory::open( Mode mode )
 {
-	if( array == NULL )
-	{
-		array = new ByteType[count];
-		return true;
-	}
-	return false;
+	initialize();
+	return array != NULL;
 }
 
 void Memory::close()
 {
-	delete[] array;
-	array = NULL;
-	count = 0;
 }
 
 bool Memory::ok() const

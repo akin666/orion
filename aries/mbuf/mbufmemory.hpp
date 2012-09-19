@@ -20,8 +20,11 @@ protected:
 	std::size_t count;
 	ByteType *array;
 public:
-	Memory( std::size_t size );
+	Memory( std::size_t size = 0 );
 	virtual ~Memory();
+
+	Memory& setSize( std::size_t filesize );
+	void initialize();
 
 	virtual std::size_t size() const;
 	virtual void *at( std::size_t position ) const;
