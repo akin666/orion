@@ -18,12 +18,16 @@ class Memory : public Buffer
 protected:
 	typedef unsigned char ByteType;
 	std::size_t count;
+	std::size_t alignment;
 	ByteType *array;
+	ByteType *begin;
 public:
-	Memory( std::size_t size = 0 );
+	Memory( std::size_t size = 0 , std::size_t alignment = 0 );
 	virtual ~Memory();
 
 	Memory& setSize( std::size_t filesize );
+	Memory& setAlignment( std::size_t alignment );
+
 	void initialize();
 
 	virtual std::size_t size() const;

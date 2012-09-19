@@ -10,15 +10,19 @@
 
 namespace mbuf {
 
-Memory::Memory( std::size_t size )
-: count( size ),
-  array( NULL )
+Memory::Memory( std::size_t size , std::size_t alignment )
+: count( size )
+, alignment( alignment )
+, array( NULL )
+, begin( NULL )
 {
 }
 
 Memory::~Memory()
 {
-	close();
+	delete[] begin;
+	begin = NULL;
+	array = NULL;
 }
 
 Memory& Memory::setSize( std::size_t filesize )
@@ -27,11 +31,20 @@ Memory& Memory::setSize( std::size_t filesize )
 	return *this;
 }
 
+Memory& Memory::setAlignment( std::size_t alignment )
+{
+	this->alignment = alignment;
+	return *this;
+}
+
 void Memory::initialize()
 {
 	if( array == NULL )
 	{
-		array = new ByteType[count];
+		begin = new ByteType[count + alignment];
+		long at = (long)(begin);
+		at += (at%((long)alignment));
+		array = (ByteType*)at;
 	}
 }
 
