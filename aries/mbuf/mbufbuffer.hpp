@@ -1,22 +1,29 @@
 /*
- * mmapbuffer.hpp
+ * mbufbuffer.hpp
  *
  *  Created on: 17.9.2012
  *      Author: akin
  *
- *      mmap::Buffer::Iterator iter = dictionary.get("HammerTime.txt").accessBuffer().begin();
+ *      mbuf::Buffer::Iterator iter = dictionary.get("HammerTime.txt").accessBuffer().begin();
  *      MyDataStructure& data = iter.read<MyDataStructure>();
  */
 
-#ifndef MBUFMAP_HPP_
-#define MBUFMAP_HPP_
+#ifndef MBUFBUFFER_HPP_
+#define MBUFBUFFER_HPP_
 
 #include <cstdint>
+#include <atomic>		// atomic things.
 
 namespace mbuf {
 
+class Iterator;
 class Buffer
 {
+private:
+	friend class Iterator;
+	std::atomic<std::size_t> ref_count;
+protected:
+	std::size_t getIteratorCount();
 public:
 	enum Mode
 	{
@@ -25,44 +32,6 @@ public:
 		WRITE = 	0x002,
 		READWRITE = 0x003,
 		NO_CREATE = 0x004,
-	};
-
-	class Iterator
-	{
-	private:
-		const Buffer& buffer;
-		std::size_t iter;
-	public:
-		Iterator( const Iterator& other );
-		Iterator( const Buffer& buffer , std::size_t at );
-
-		std::size_t position() const;
-		std::size_t remaining() const;
-		void jump( std::size_t size );
-		void seek( std::size_t at );
-		void *peek() const;
-
-		template <class CType> CType *data() const
-		{
-			return (CType*)buffer.at( iter );
-		}
-
-		template <class CType> CType *data( std::size_t at ) const
-		{
-			return (CType*)buffer.at( at );
-		}
-
-		template <class CType> CType& access( std::size_t at )
-		{
-			return *((CType*)buffer.at( at ));
-		}
-
-		template <class CType> CType& read()
-		{
-			std::size_t it = iter;
-			iter += sizeof( CType );
-			return *((CType*)buffer.at( it ));
-		}
 	};
 public:
 	virtual ~Buffer()
@@ -76,9 +45,8 @@ public:
 	virtual bool ok() const = 0;
 	virtual Mode getMode() const = 0;
 
-	Iterator begin() const;
-	Iterator end() const;
+	Iterator begin();
 };
 
 } // namespace mbuf
-#endif // MBUFMAP_HPP_
+#endif // MBUFBUFFER_HPP_

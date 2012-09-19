@@ -6,7 +6,7 @@
 // Windowz!
 #  include <unistd.h>
 #  include <sys/types.h>
-#  include <mman-win32/mman.h>
+#  include "mman-win32/mman.h"
 # else
 // Unixeh!
 #  include <unistd.h>
