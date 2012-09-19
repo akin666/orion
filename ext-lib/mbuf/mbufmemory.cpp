@@ -43,7 +43,7 @@ void Memory::initialize()
 	{
 		begin = new ByteType[count + alignment];
 		long at = (long)(begin);
-		at += (at%((long)alignment));
+		at += (alignment - (at%((long)alignment)));
 		array = (ByteType*)at;
 	}
 }
