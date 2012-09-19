@@ -24,6 +24,7 @@ public:
 		READ = 		0x001,
 		WRITE = 	0x002,
 		READWRITE = 0x003,
+		NO_CREATE = 0x004,
 	};
 
 	class Iterator

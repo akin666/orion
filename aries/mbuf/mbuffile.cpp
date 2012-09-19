@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include <mman>
+#include <sys/stat.h>
 
 #include <cassert>
 
@@ -29,6 +30,24 @@ File::~File()
 	close();
 }
 
+File& File::setFile( const std::string& path )
+{
+	if( mode == CLOSED )
+	{
+		this->path = path;
+	}
+	return *this;
+}
+
+File& File::setSize( std::size_t filesize )
+{
+	if( mode == CLOSED )
+	{
+		this->filesize = filesize;
+	}
+	return *this;
+}
+
 std::size_t File::size() const
 {
 	return filesize;
@@ -41,17 +60,26 @@ void *File::at( std::size_t position ) const
 
 bool File::open( Mode mode )
 {
+	bool nocreate = (mode & NO_CREATE) != 0;
+	bool read = (mode & READ) != 0;
+	bool write = (mode & WRITE) != 0;
+
 	int flags = 0;
-	switch( mode )
+	if( read ) flags |= PROT_READ;
+	if( write ) flags |= PROT_WRITE;
+
+	if( nocreate )
 	{
-		case READ : flags = PROT_READ; break;
-		case WRITE : flags = PROT_WRITE; break;
-		case READWRITE : flags = PROT_READ | PROT_WRITE; break;
-		default : return false;
+		struct stat st;
+		if( stat(path.c_str(), &st) == 0 )
+		{
+			filesize = st.st_size;
+		}
 	}
 
 	this->mode = mode;
 	fd = ::open( path.c_str() , flags );
+
 	data = mmap( 0 , filesize, flags , MAP_SHARED, fd , 0 );
 
 	if( data == MAP_FAILED )
@@ -75,6 +103,8 @@ void File::close()
 
     ::close( fd );
     fd = -1;
+
+    mode = CLOSED;
 }
 
 bool File::ok() const

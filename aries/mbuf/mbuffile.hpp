@@ -23,8 +23,11 @@ private:
 	void *data;
 	Mode mode;
 public:
-	File( const std::string& path , std::size_t filesize  );
+	File( const std::string& path = "" , std::size_t filesize = 0 );
 	virtual ~File();
+
+	File& setFile( const std::string& path );
+	File& setSize( std::size_t filesize );
 
 	virtual std::size_t size() const;
 	virtual void *at( std::size_t position ) const;
