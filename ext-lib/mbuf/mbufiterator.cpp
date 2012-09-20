@@ -68,11 +68,6 @@ void Iterator::seek( std::size_t at )
 	iter = at;
 }
 
-void *Iterator::peek() const
-{
-	return at( iter );
-}
-
 bool Iterator::finished() const
 {
 	return iter >= buffer.size();

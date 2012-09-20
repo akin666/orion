@@ -20,6 +20,7 @@ private:
 	std::size_t iter;
 
 	void *at( std::size_t it ) const;
+	std::size_t _size() const;
 public:
 	Iterator( const Iterator& other );
 	Iterator( Buffer& buffer , std::size_t at );
@@ -29,7 +30,6 @@ public:
 	std::size_t remaining() const;
 	void jump( std::size_t size );
 	void seek( std::size_t at );
-	void *peek() const;
 	bool finished() const;
 	void reset();
 
@@ -63,6 +63,11 @@ public:
 		std::size_t it = iter;
 		iter += sizeof( CType );
 		return *((CType*)at( it ));
+	}
+
+	template <class CType> std::size_t size()
+	{
+		return _size() / sizeof(CType);
 	}
 };
 
