@@ -20,12 +20,12 @@ private:
 	std::size_t iter;
 
 	void *at( std::size_t it ) const;
-	std::size_t _size() const;
 public:
 	Iterator( const Iterator& other );
 	Iterator( Buffer& buffer , std::size_t at );
 	~Iterator();
 
+	std::size_t size() const;
 	std::size_t position() const;
 	std::size_t remaining() const;
 	void jump( std::size_t size );
@@ -40,20 +40,10 @@ public:
 
 	template <class CType> CType *data( std::size_t it ) const
 	{
-		return (CType*)at( it * sizeof(CType) );
-	}
-
-	template <class CType> CType& access( std::size_t it )
-	{
-		return *((CType*)at( it * sizeof(CType) ));
-	}
-
-	template <class CType> CType *byteAccess( std::size_t it ) const
-	{
 		return (CType*)at( it );
 	}
 
-	template <class CType> CType& byteAccess( std::size_t it )
+	template <class CType> CType& access( std::size_t it ) const
 	{
 		return *((CType*)at( it ));
 	}
@@ -63,11 +53,6 @@ public:
 		std::size_t it = iter;
 		iter += sizeof( CType );
 		return *((CType*)at( it ));
-	}
-
-	template <class CType> std::size_t size()
-	{
-		return _size() / sizeof(CType);
 	}
 };
 

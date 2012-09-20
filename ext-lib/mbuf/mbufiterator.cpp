@@ -44,6 +44,11 @@ Iterator::~Iterator()
 	--buffer.ref_count;
 }
 
+std::size_t Iterator::size() const
+{
+	return buffer.size();
+}
+
 std::size_t Iterator::position() const
 {
 	return iter;
