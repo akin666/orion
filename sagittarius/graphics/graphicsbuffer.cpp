@@ -50,7 +50,7 @@ std::size_t Buffer::size() const
 	return bsize;
 }
 
-void *Buffer::at( std::size_t position ) const
+void *Buffer::retain( std::size_t position , std::size_t count )
 {
 	if( ptr == NULL )
 	{
@@ -58,6 +58,10 @@ void *Buffer::at( std::size_t position ) const
 	}
 
 	return (void*)((long)ptr + position);
+}
+
+void Buffer::release( void *buffer )
+{
 }
 
 bool Buffer::open( Mode mode )

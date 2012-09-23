@@ -53,9 +53,13 @@ std::size_t Memory::size() const
 	return count;
 }
 
-void *Memory::at( std::size_t position ) const
+void *Memory::retain( std::size_t position , std::size_t count )
 {
 	return (void*)((long)array + position);
+}
+
+void Memory::release( void *buffer )
+{
 }
 
 bool Memory::open( Mode mode )

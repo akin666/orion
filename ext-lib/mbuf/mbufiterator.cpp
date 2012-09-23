@@ -12,14 +12,26 @@
 namespace mbuf
 {
 
-void *Iterator::at( std::size_t it ) const
+void *Iterator::retain( std::size_t it , std::size_t count )
 {
-	return buffer.at( it );
+	release();
+	datas = buffer.retain( it , count );
+	return datas;
+}
+
+void Iterator::release()
+{
+	if( datas != NULL )
+	{
+		buffer.release( datas );
+		datas = NULL;
+	}
 }
 
 Iterator::Iterator( const Iterator& other )
-: buffer( other.buffer ),
-  iter( other.iter )
+: buffer( other.buffer )
+, iter( other.iter )
+, datas( NULL )
 {
 	if( !buffer.ok() )
 	{
@@ -29,8 +41,9 @@ Iterator::Iterator( const Iterator& other )
 }
 
 Iterator::Iterator( Buffer& buffer , std::size_t at )
-: buffer( buffer ),
-  iter( at )
+: buffer( buffer )
+, iter( at )
+, datas( NULL )
 {
 	if( !buffer.ok() )
 	{
@@ -41,6 +54,7 @@ Iterator::Iterator( Buffer& buffer , std::size_t at )
 
 Iterator::~Iterator()
 {
+	release();
 	--buffer.ref_count;
 }
 
@@ -80,6 +94,7 @@ bool Iterator::finished() const
 
 void Iterator::reset()
 {
+	release();
 	iter = 0;
 }
 

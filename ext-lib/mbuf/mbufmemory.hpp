@@ -31,7 +31,10 @@ public:
 	void initialize();
 
 	virtual std::size_t size() const;
-	virtual void *at( std::size_t position ) const;
+
+	virtual void *retain( std::size_t position , std::size_t count );
+	virtual void release( void *buffer );
+
 	virtual bool open( Mode mode );
 	virtual void close();
 	virtual bool ok() const;

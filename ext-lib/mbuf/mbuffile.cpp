@@ -53,9 +53,13 @@ std::size_t File::size() const
 	return filesize;
 }
 
-void *File::at( std::size_t position ) const
+void *File::retain( std::size_t position , std::size_t count )
 {
 	return (void*)((long)data + position);
+}
+
+void File::release( void *buffer )
+{
 }
 
 bool File::open( Mode mode )

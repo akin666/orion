@@ -9,6 +9,7 @@
 #define MBUFITERATOR_HPP_
 
 #include <cstdint>
+#include <cstdio>
 
 namespace mbuf
 {
@@ -19,7 +20,9 @@ private:
 	Buffer& buffer;
 	std::size_t iter;
 
-	void *at( std::size_t it ) const;
+	void *datas;
+
+	void *retain( std::size_t it , std::size_t count );
 public:
 	Iterator( const Iterator& other );
 	Iterator( Buffer& buffer , std::size_t at );
@@ -32,27 +35,33 @@ public:
 	void seek( std::size_t at );
 	bool finished() const;
 	void reset();
+	void release();
 
-	template <class CType> CType *data() const
+	template <class CType> CType *data( std::size_t count )
 	{
-		return (CType*)at( iter );
+		std::size_t tmpsize = sizeof( CType ) * count;
+		std::size_t tmpit = iter;
+		iter += tmpsize;
+		return (CType*)retain( tmpit , tmpsize );
 	}
 
-	template <class CType> CType *data( std::size_t it ) const
+	template <class CType> CType *data( std::size_t it = 0  , std::size_t count )
 	{
-		return (CType*)at( it );
+		std::size_t tmpsize = sizeof( CType ) * count;
+		return (CType*)retain( it , tmpsize );
 	}
 
-	template <class CType> CType& access( std::size_t it ) const
+	template <class CType> CType& read( std::size_t it )
 	{
-		return *((CType*)at( it ));
+		return *((CType*)retain( it , sizeof( CType ) ));
 	}
 
 	template <class CType> CType& read()
 	{
+		std::size_t tmpsize = sizeof( CType );
 		std::size_t it = iter;
-		iter += sizeof( CType );
-		return *((CType*)at( it ));
+		iter += tmpsize;
+		return *((CType*)retain( it , tmpsize ));
 	}
 };
 
