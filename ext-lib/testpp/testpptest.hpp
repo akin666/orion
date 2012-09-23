@@ -24,7 +24,7 @@ public:
 	Test();
 	virtual ~Test();
 
-	virtual std::string getName() const;
+	virtual std::string getName() const = 0;
 
 	virtual bool init() = 0;
 	virtual bool run() = 0;

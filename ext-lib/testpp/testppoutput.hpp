@@ -20,7 +20,7 @@ public:
 
 	// Evaluate, if we can still continue, even after the module
 	// failed, errorously, or critically, or it passed..
-	virtual bool eval( int number , const std::string& module , Test::Success success , const std::string& str );
+	virtual bool eval( Test *test );
 };
 
 } // namespace testpp

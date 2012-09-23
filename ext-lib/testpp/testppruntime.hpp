@@ -3,6 +3,17 @@
  *
  *  Created on: Sep 23, 2012
  *      Author: mkorpela
+ *
+ *
+ *  use:
+ *  {
+ *  	Runtime<Output> runtime;		// Runtime using output class Output
+ *  	runtime.add<mbuf::Test>();		// run module mbuf tests
+ *  	runtime.add<graphics::Test>();	// run module graphics tests
+ *  	runtime.add<audio::Test>();		// run module audio tests
+ *  	runtime.add<input::Test>();		// run module input tests
+ *  	runtime.run();					// run the batch
+ *  }
  */
 
 #ifndef TESTPPRUNTIME_HPP_
@@ -15,15 +26,22 @@
 namespace testpp
 {
 
+template <class OutputProperty>
 class Runtime
 {
 private:
 	typedef std::vector<Test*> TestSet;
 	TestSet tests;
-	Output& output;
+	OutputProperty output;
 public:
-	Runtime( Output& output );
-	~Runtime();
+	Runtime()
+	{
+	}
+
+	~Runtime()
+	{
+		clear();
+	}
 
 	template <class TestClass> void add()
 	{
@@ -31,9 +49,27 @@ public:
 		tests.push_back( test );
 	}
 
-	void clear();
+	void clear()
+	{
+		for( TestSet::iterator iter = tests.begin() ; iter != tests.end() ; ++iter )
+		{
+			delete *iter;
+		}
+		tests.clear();
+	}
 
-	void run();
+	void run()
+	{
+		for( TestSet::iterator iter = tests.begin() ; iter != tests.end() ; ++iter )
+		{
+			// Measure success..
+			// And possibly Log it.
+			if( !output.eval( *iter ) )
+			{
+				break;
+			}
+		}
+	}
 };
 
 } // namespace testpp
