@@ -16,11 +16,11 @@ class Output
 {
 public:
 	Output();
-	virtual ~Output();
+	~Output();
 
 	// Evaluate, if we can still continue, even after the module
 	// failed, errorously, or critically, or it passed..
-	virtual bool eval( Test *test );
+	bool eval( Test *test );
 };
 
 } // namespace testpp
