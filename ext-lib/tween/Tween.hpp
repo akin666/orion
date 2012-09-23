@@ -18,7 +18,7 @@ namespace tween
 class Linear
 {
 public:
-	template <class CType> void update( CType& value , CType total , double position , double delta )
+	template <class CType> bool update( CType& value , CType total , double position , double delta )
 	{
 		double tt = position + delta;
 		double tpos = glm::max( tt , 1.0 );
@@ -26,15 +26,17 @@ public:
 
 		// add to value, delta amount, from last,
 		value += total * delta;
+
+		return false;
 	}
 };
 
 class EaseIn
 {
 public:
-	template <class CType> void update( CType& value , CType total , double position , double delta )
+	template <class CType> bool update( CType& value , CType total , double position , double delta )
 	{
-
+		return false;
 	}
 };
 

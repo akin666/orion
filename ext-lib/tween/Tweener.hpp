@@ -30,14 +30,16 @@ public:
 	{
 	}
 
-	void update( double at )
+	bool update( double at )
 	{
 		// normalize all
 		double delta = (at - last) / length;
 		double position = (last - begin) / length;
 
-		TweenType::update<CType>( value , total , position , delta );
+		bool finished = TweenType::update<CType>( value , total , position , delta );
 		last = at;
+
+		return finished;
 	}
 
 	bool finished()
