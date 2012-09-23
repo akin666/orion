@@ -8,6 +8,8 @@
 #ifndef TWEEN_HPP_
 #define TWEEN_HPP_
 
+// TODO! http://libclaw.sourceforge.net/tweeners.html
+
 #include <glm/glm.hpp>
 
 namespace tween
