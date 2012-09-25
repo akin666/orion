@@ -12,7 +12,8 @@
  (http://code.google.com/p/tweener/)
  
  
- 
+ // TODO Refactor this, to something like:
+  * tween::in<Bounce>( x , x + 200 , 1000 , this );
  
  **********************/
 
