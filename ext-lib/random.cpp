@@ -5,10 +5,8 @@
  *      Author: akin
  */
 
-#include "random.hpp"
+#include "random"
 #include <cmath>
-
-namespace orion {
 
 template <>
 float32 random()
@@ -35,4 +33,3 @@ template <> float64 random( const float64 min , const float64 max )
 }
 
 
-}

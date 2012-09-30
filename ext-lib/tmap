@@ -7,8 +7,6 @@
 #include <iterator>
 #include <uthread>
 
-namespace orion {
-
 template <class KClass , class VClass>
 class TMap
 {
@@ -133,6 +131,5 @@ public:
     	storage[ key ] = value;
     }
 };
-
-} // namespace orion 
-#endif // TQUE_H_ 
+ 
+#endif // TMAP_H_ 

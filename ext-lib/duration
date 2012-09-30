@@ -8,10 +8,7 @@
 #ifndef DURATION_HPP_
 #define DURATION_HPP_
 
-#include <orion>
-
-namespace orion
-{
+#include <stdtypes>
 
 class Duration
 {
@@ -36,5 +33,4 @@ public:
 	void setup( PreciseTime begin , PreciseTime length , const string8& name );
 };
 
-} // namespace orion 
 #endif // DURATION_HPP_ 

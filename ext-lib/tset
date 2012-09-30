@@ -7,8 +7,6 @@
 #include <iterator>
 #include <uthread>
 
-namespace orion {
-
 template <class CType>
 class TSet
 {
@@ -70,5 +68,4 @@ public:
     }
 };
 
-} // namespace orion 
 #endif // TSET_H_ 

@@ -8,9 +8,31 @@
 #ifndef TIME_HPP_
 #define TIME_HPP_
 
-#include <common/common.hpp>
+#include <stdtypes>
 
-namespace orion {
+#define US_TO_S 0.000001
+#define US_TO_MS 0.001
+#define S_TO_US  1000000
+#define MS_TO_S 1000
+#define H_IN_DAY 24
+#define MIN_IN_H 60
+#define S_IN_MIN 60
+
+// Time
+typedef int32			Year;
+typedef int32			Month;
+typedef int32			Day;
+typedef int32			Hour;
+typedef int32			Minute;
+typedef int32		 	Second;
+typedef int32 			MicroSecond;
+typedef int32 			MilliSecond;
+typedef int32		 	Tick;
+typedef int32			Timezone;
+
+// Time
+typedef uint64			PreciseTime;
+typedef float64			FloatTime;
 
 class Time
 {
@@ -45,7 +67,5 @@ public:
 		return us;
 	}
 };
-
-} // orion
 
 #endif // TIME_HPP_

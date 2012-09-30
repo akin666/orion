@@ -5,10 +5,7 @@
  *      Author: akin
  */
 
-#include "duration.hpp"
-
-namespace orion
-{
+#include "duration"
 
 Duration::Duration()
 : begin( 0 ),
@@ -58,4 +55,3 @@ void Duration::setup( PreciseTime begin , PreciseTime length , const string8& na
 	this->name = name;
 }
 
-} // namespace orion 

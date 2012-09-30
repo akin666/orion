@@ -12,9 +12,6 @@
 #include <uthread>
 #include <stdexcept>
 
-namespace orion
-{
-
 template <class CType>
 class Global
 {
@@ -99,8 +96,6 @@ template <class CType>
 void unsetGlobal() 
 {
 	Global<CType>::unset();
-}
-
 }
 
 #endif /* SINGLETON_HPP_ */

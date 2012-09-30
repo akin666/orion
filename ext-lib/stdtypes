@@ -16,6 +16,25 @@
 #include <cfloat>	// float limits
 #include <cstdint>	// int8_t, int16_t, int32_t,int64_t , uint8_t, uint16_t, uint32_t, uint64_t etc.
 
+// Common defines:
+#ifndef DELTA
+# define DELTA 0.0001f
+#endif
+#ifndef PI
+# define PI 3.141593f
+#endif
+#ifndef PI2
+# define PI2 6.283185f
+#endif
+#ifndef DEG2RAD
+# define DEG2RAD 0.017453292519943
+#endif
+ // PI/360.0f =
+#ifndef PI_OVER_360
+# define PI_OVER_360 0.0087266462599716478846184538424431
+#endif
+
+// Standard types
 #ifndef SKIP_STANDARD_TYPES
 	// signed types
 	typedef int8_t 		int8;
@@ -48,5 +67,18 @@
 # endif
     typedef float32			vec;
 #endif
+
+// Codepoints
+typedef uint32		 	UNICODE;
+typedef uint32		 	UTF32;
+typedef uint16		 	UNICODE16;
+typedef uint16		 	UTF16;
+typedef uint8		 	UTF8;
+
+// Common
+typedef uint32		 	BufferIndex;
+
+// String types
+typedef std::string string8;
 
 #endif // STDTYPES_H_123_

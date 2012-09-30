@@ -1,0 +1,20 @@
+
+#ifndef WORK_H_
+#define WORK_H_
+
+#include <tque>
+
+class Work
+{
+public:
+	Work() {}
+	virtual ~Work() {}
+
+	virtual bool begin() = 0;
+	virtual void run() = 0;
+	virtual void end() = 0;
+};
+
+typedef TQue<Work*> WorkQue;
+	
+#endif //  WORK_H_ 

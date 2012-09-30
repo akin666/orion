@@ -6,9 +6,6 @@
 #include <deque>
 #include <uthread>
 
-namespace orion
-{
-
 template <class tclass>
 class TQue
 {
@@ -69,5 +66,4 @@ tclass TQue<tclass>::pop( unsigned char flags )
 	return popped;
 }
 
-} // namespace orion 
 #endif // TQUE_H_ 
