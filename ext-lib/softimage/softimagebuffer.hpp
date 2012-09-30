@@ -11,6 +11,7 @@
 #include <stdtypes>
 #include <colortypes>
 #include <glm/glm>
+#include <mbuf/mbufbuffer.hpp>
 
 namespace simg
 {
@@ -20,6 +21,7 @@ class Buffer
 protected:
 	int8 *buffer;		// does not have ownership
 	int8 *realbuffer; 	// ownership
+	mbuf::Iterator *iterator;
 	int totalSize;
 	Color::Type mode;
 	glm::ivec2 resolution;
@@ -28,6 +30,7 @@ public:
 	Buffer();
 	// Wrap Buffer around existing buffer, does not transfer ownership.
 	Buffer( const glm::ivec2& resolution , Color::Type mode , void *pixelbuffer );
+	Buffer( const glm::ivec2& resolution , Color::Type mode , mbuf::Buffer& pixelbuffer );
 	virtual ~Buffer();
 
 	void setMode( Color::Type mode );

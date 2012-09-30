@@ -12,23 +12,41 @@ namespace simg
 {
 
 Buffer::Buffer()
-: buffer( NULL ),
-  realbuffer( NULL ),
-  totalSize( 0 ),
-  mode( Color::RGBA8 ),
-  bytespp( 0 )
+: buffer( NULL )
+, realbuffer( NULL )
+, totalSize( 0 )
+, mode( Color::RGBA8 )
+, bytespp( 0 )
+, iterator( NULL )
 {
 }
 
 Buffer::Buffer( const glm::ivec2& resolution , Color::Type mode , void *pixelbuffer )
-: buffer( (int8*)pixelbuffer ),
-  realbuffer( NULL ),
-  totalSize( 0 ),
-  mode( mode ),
-  resolution( resolution ),
-  bytespp( getByteSize( mode ) )
+: buffer( (int8*)pixelbuffer )
+, realbuffer( NULL )
+, totalSize( 0 )
+, mode( mode )
+, resolution( resolution )
+, bytespp( getByteSize( mode ) )
+, iterator( NULL )
 {
 	totalSize = bytespp * resolution.x * resolution.y;
+}
+
+Buffer::Buffer( const glm::ivec2& resolution , Color::Type mode , mbuf::Buffer& pixelbuffer )
+: buffer( NULL )
+, realbuffer( NULL )
+, totalSize( 0 )
+, mode( mode )
+, resolution( resolution )
+, bytespp( getByteSize( mode ) )
+, iterator( NULL )
+{
+	// Open etc with pixelbuffer.. init et al.
+	totalSize = bytespp * resolution.x * resolution.y;
+
+	iterator = new mbuf::Iterator( pixelbuffer.begin() );
+	buffer = iterator->data<int8>( 0  , totalSize );
 }
 
 Buffer::~Buffer()
@@ -106,6 +124,9 @@ void Buffer::release()
 	delete[] realbuffer;
 	buffer = realbuffer = NULL;
 	bytespp = 0;
+
+	delete iterator;
+	iterator = NULL;
 }
 
 bool Buffer::drawRect(const glm::ivec2& position, const Buffer& other)
