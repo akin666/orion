@@ -20,6 +20,8 @@ public:
 
 	virtual void activate() = 0;
 	virtual void run() = 0;
+	virtual bool canExit() = 0;
+	virtual void exit() = 0;
 };
 
 } // namespace orion

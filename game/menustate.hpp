@@ -24,6 +24,8 @@ public:
 
 	virtual void activate();
 	virtual void run();
+	virtual bool canExit();
+	virtual void exit();
 };
 
 } // namespace orion

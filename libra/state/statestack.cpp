@@ -6,12 +6,11 @@
  */
 
 #include "statestack.hpp"
+#include <deque>
 
 namespace orion {
 
 StateStack::StateStack()
-: last( NULL ),
-  current( NULL )
 {
 }
 
@@ -34,34 +33,43 @@ void StateStack::destroy( State *state )
 
 void StateStack::run()
 {
-	State *current = this->current;
-	if( current != last )
+	// Creation activation.
+	if( activateList.size() > 0 )
 	{
-		if( current != NULL )
+		StateSet tmplist;
+		// critical section, copies the activatelist.
 		{
+			std::lock_guard<std::mutex> lock( addmutex );
+			tmplist = activateList;
+			activateList.clear();
+		}
+
+		for( StateSet::iterator iter = tmplist.begin() ; iter != tmplist.end() ; ++iter )
+		{
+			State *current = *this;
 			current->activate();
+
+			states.push_back( current );
 		}
 	}
 
-	if( current != NULL )
+	typedef std::deque<StateSet::iterator> RemoveSet;
+	RemoveSet rmSet;
+	for( StateSet::iterator iter = states.begin() ; iter != states.end() ; ++iter )
 	{
+		State *current = *iter;
 		current->run();
-	}
 
-	last = current;
-}
-
-void StateStack::pop()
-{
-	if( current != NULL )
-	{
-		destroy( current );
-		current = NULL;
+		if( current->canExit() )
+		{
+			current->exit();
+			destroy( state );
+			rmSet.push_front( iter );
+		}
 	}
-	if( states.size() > 0 )
+	for( RemoveSet::iterator iter = rmSet.begin() ; iter != rmSet.end() ; ++iter )
 	{
-		current = states.back();
-		states.pop_back();
+		states.erase( *iter );
 	}
 }
 

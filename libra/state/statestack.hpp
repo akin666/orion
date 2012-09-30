@@ -9,6 +9,7 @@
 #define STATESTACK_HPP_
 
 #include "state.hpp"
+#include <uthread>
 
 namespace orion {
 
@@ -16,11 +17,10 @@ class StateStack
 {
 protected:
 	typedef std::vector<State*> StateSet;
-
 	StateSet states;
+	StateSet activateList;
 
-	State *last;
-	State *current;
+	std::mutex addmutex;
 
 	void destroy( State *state );
 public:
@@ -29,27 +29,16 @@ public:
 
 	void run();
 
-	void pop();
-
 	// The allocation is managed by the stack, if you want to modify the thing, then use the returned reference.
 	template <class CType>
 	CType& push()
 	{
-		if( current != NULL )
-		{
-			states.push_back( current );
-		}
+		std::lock_guard<std::mutex> lock( addmutex );
 		CType *tmp = new CType;
-		current = tmp;
-		return *tmp;
-	}
 
-	// The allocation is managed by the stack, if you want to modify the thing, then use the returned reference.
-	template <class CType>
-	CType& replace()
-	{
-		pop();
-		return push<CType>();
+		activateList.push_back( tmp );
+
+		return *tmp;
 	}
 };
 

@@ -40,4 +40,13 @@ void MenuState::run()
 	}
 }
 
+bool MenuState::canExit()
+{
+	return false;
+}
+
+void MenuState::exit()
+{
+}
+
 } // namespace orion
