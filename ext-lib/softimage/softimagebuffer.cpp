@@ -42,6 +42,16 @@ Buffer::Buffer( const glm::ivec2& resolution , Color::Type mode , mbuf::Buffer& 
 , bytespp( getByteSize( mode ) )
 , iterator( NULL )
 {
+	// We need readwrite access!
+	if( (pixelbuffer.getMode() & mbuf::Buffer::READWRITE) != mbuf::Buffer::READWRITE )
+	{
+		if( !pixelbuffer.open( mbuf::Buffer::READWRITE ) )
+		{
+			// ERROR! could not open the requested mode!
+			throw "";
+		}
+	}
+
 	// Open etc with pixelbuffer.. init et al.
 	totalSize = bytespp * resolution.x * resolution.y;
 
