@@ -1,14 +1,14 @@
 /*
- * stdtypes.h
+ * stdtypes
  *
  *  Created on: 1.7.2012
  *      Author: akin
  *
- *      defines orion specific standard types.
+ *      defines standard types.
  */
 
-#ifndef STDTYPES_H_
-#define STDTYPES_H_
+#ifndef STDTYPES_H_123_
+#define STDTYPES_H_123_
 
 #include <os>
 #include <limits>	// c++ limits
@@ -49,4 +49,4 @@
     typedef float32			vec;
 #endif
 
-#endif // STDTYPES_H_
+#endif // STDTYPES_H_123_

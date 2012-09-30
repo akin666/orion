@@ -15,12 +15,12 @@ Buffer::Buffer()
 : buffer( NULL ),
   realbuffer( NULL ),
   totalSize( 0 ),
-  mode( orion::RGBA8 ),
+  mode( Color::RGBA8 ),
   bytespp( 0 )
 {
 }
 
-Buffer::Buffer( const glm::ivec2& resolution , orion::ColorMode mode , void *pixelbuffer )
+Buffer::Buffer( const glm::ivec2& resolution , Color::Type mode , void *pixelbuffer )
 : buffer( (int8*)pixelbuffer ),
   realbuffer( NULL ),
   totalSize( 0 ),
@@ -36,7 +36,7 @@ Buffer::~Buffer()
 	release();
 }
 
-void Buffer::setMode(orion::ColorMode mode)
+void Buffer::setMode(Color::Type mode)
 {
 	if( buffer == NULL )
 	{
@@ -54,7 +54,7 @@ void Buffer::setResolution(const glm::ivec2& resolution)
 	this->resolution = resolution;
 }
 
-orion::ColorMode Buffer::getMode() const
+Color::Type Buffer::getMode() const
 {
 	return mode;
 }

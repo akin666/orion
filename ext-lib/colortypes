@@ -1,0 +1,41 @@
+/*
+ * STDCOLOR_H_123_
+ *
+ *  Created on: 1.7.2012
+ *      Author: akin
+ *
+ *      defines standard color types.
+ */
+
+#ifndef STDCOLOR_H_123_
+#define STDCOLOR_H_123_
+
+#include <iostream>
+
+namespace Color {
+
+enum Type
+{
+	RGB8 = 1,
+	RGBA8 = 2,
+	ARGB8 = 3,
+	ALPHA8 = 4,
+	LUMINANCE = 5,
+	INTENSITY = 6,
+	RGBA12 = 7,
+	RGBA16 = 8,
+	RGBA32 = 9,
+	RGBA32F = 10,
+	DEPTH8 = 11,
+	DEPTH16 = 12,
+	DEPTH24 = 13,
+	DEPTH32 = 14,
+};
+
+// Utility functions
+std::size_t getByteSize( Type mode );
+std::size_t getNumberOfElements( Type mode );
+
+}
+
+#endif // STDCOLOR_H_123_

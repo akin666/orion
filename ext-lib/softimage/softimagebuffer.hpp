@@ -8,7 +8,9 @@
 #ifndef SOFTIMAGE_BUFFER_HPP_
 #define SOFTIMAGE_BUFFER_HPP_
 
-#include <orion>
+#include <stdtypes>
+#include <colortypes>
+#include <glm/glm>
 
 namespace simg
 {
@@ -19,19 +21,19 @@ protected:
 	int8 *buffer;		// does not have ownership
 	int8 *realbuffer; 	// ownership
 	int totalSize;
-	orion::ColorMode mode;
+	Color::Type mode;
 	glm::ivec2 resolution;
 	uint8 bytespp;
 public:
 	Buffer();
 	// Wrap Buffer around existing buffer, does not transfer ownership.
-	Buffer( const glm::ivec2& resolution , orion::ColorMode mode , void *pixelbuffer );
+	Buffer( const glm::ivec2& resolution , Color::Type mode , void *pixelbuffer );
 	virtual ~Buffer();
 
-	void setMode( orion::ColorMode mode );
+	void setMode( Color::Type mode );
 	void setResolution( const glm::ivec2& resolution );
 
-	orion::ColorMode getMode() const;
+	Color::Type getMode() const;
 	glm::ivec2 getResolution() const;
 
 	void *access() const;

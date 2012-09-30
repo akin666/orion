@@ -11,7 +11,8 @@
 #include <defines.hpp>	// From the game itself.
 
 #include <os>			// Operating system
-#include "stdtypes.h"	// takes care of orion standard types.
+#include <stdtypes>		// takes care of orion standard types.
+#include <colortypes>	// takes care of orion standard types.
 #include <iostream>		// C++ base
 #include <vector>		// Vector container
 #include <map>			// Map container
@@ -81,24 +82,6 @@ namespace orion {
 
 	typedef string8			ResourceID;
 
-	enum ColorMode
-	{
-		RGB8 = 1,
-		RGBA8 = 2,
-		ARGB8 = 3,
-		ALPHA8 = 4,
-		LUMINANCE = 5,
-		INTENSITY = 6,
-		RGBA12 = 7,
-		RGBA16 = 8,
-		RGBA32 = 9,
-		RGBA32F = 10,
-		DEPTH8 = 11,
-		DEPTH16 = 12,
-		DEPTH24 = 13,
-		DEPTH32 = 14,
-	};
-
 	enum ShaderType {
 		ShaderUnknown = 0,   // 0.0
 		ShaderFragment = 1,  // 2.0
@@ -107,10 +90,6 @@ namespace orion {
 		ShaderControl = 4,   // 4.0
 		ShaderEvaluation = 5 // 4.0
 	};
-
-	// Utility functions
-	uint8 getByteSize( ColorMode mode );
-	uint8 getNumberOfElements( ColorMode mode );
 
 	// UNICODE <==> UTF8 String conversion operations:
 	// THROWS EXCEPTIONS!
