@@ -1,0 +1,19 @@
+
+#ifndef RECTANGLE_UBER_CLASS_
+#define RECTANGLE_UBER_CLASS_
+
+#include <glm/glm>
+#include <stdtypes>
+
+template <class CType>
+class Rectangle
+{
+public:
+	CType x,y;
+	CType width,height;
+};
+
+typedef Rectangle<float32> Rectanglef;
+typedef Rectangle<int32> Rectanglei;
+
+#endif // RECTANGLE_UBER_CLASS_
