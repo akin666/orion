@@ -2,9 +2,7 @@
 #ifndef _STDGL_H_
 #define _STDGL_H_
 
-#include <orion>
-
-namespace orion {
+#include <stdtypes>
 
 //#define USE_GLEE
 //#define USE_GLEW

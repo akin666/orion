@@ -10,7 +10,7 @@
 #ifdef USE_COMMON_NATIVE
 
 #include <iostream>
-#include <sys/time.h>
+#include <time>
 #include <cstdio>
 
 #include <stb_image.h>
@@ -28,7 +28,7 @@
 # define MAX_IMAGE_RESOLUTION 8192 // So, max to be 8192*8192 ~ 268,435,456 bytes, 268Mb, thats quite alot..
 #endif
 
-namespace orion {
+namespace native {
 
 void message( const char *message )
 {
@@ -247,7 +247,7 @@ bool saveImageFile( std::string path , simg::Buffer& softimage )
 	return false;
 }
 
-} // orion
+} // native
 
 #endif // USE_COMMON_NATIVE
 

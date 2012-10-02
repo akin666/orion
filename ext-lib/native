@@ -11,10 +11,10 @@
 #ifndef NATIVE_H_
 #define NATIVE_H_
 
-#include <orion>
+#include <stdtypes>
 #include <simg>
 
-namespace orion {
+namespace native {
 
 // Logging..
 void message( const char *message );
@@ -26,15 +26,15 @@ void getTime( Time& time ); // UTC Time!
 void getTime( LocalTime& time ); // Local Time!
 
 // File I/O
-FILE *openFileRead( std::string path );
-FILE *openFileWrite( std::string path );
+FILE *openFileRead( const string8& path );
+FILE *openFileWrite( const string8& path );
 void closeFile( FILE *file );
-bool readFile( std::string path , std::string& content );
+bool readFile( const std::string& path , std::string& content );
 
 // Image loading functionality _always_ happens through softimage
-bool loadImageFile( std::string path , simg::Buffer& softimage );
-bool saveImageFile( std::string path , simg::Buffer& softimage );
+bool loadImageFile( const std::string& path , simg::Buffer& softimage );
+bool saveImageFile( const std::string& path , simg::Buffer& softimage );
 
-} // orion
+} // namespace native
 
 #endif // NATIVE_H_

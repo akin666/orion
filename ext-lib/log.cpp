@@ -14,8 +14,6 @@
 
 #define MAX_LOG_MSG_LEN 2048
 
-namespace orion {
-
 Log::Log()
 {
 }
@@ -69,4 +67,3 @@ void Log::warning( const char* format , ... )
 	printWarning( string8(buffer) );
 }
 
-} // namespace orion
