@@ -7,9 +7,9 @@
 
 // include all _minimal_ orion common headers.
 #include "common/common.hpp"
-#include "time/time.hpp"
+#include <time>
 #include "time/localtime.hpp"
-#include "log/log.hpp"
-#include "global"
+#include <log>
+#include <global>
 
 #endif
